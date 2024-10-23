@@ -93,6 +93,7 @@ export const AccountManagements = () => {
   //* Payment handling
   const onSubmit = async (data: FormData) => {
     if (isSubmitting) {
+      //isLoading
       return
     }
     //put in autoRenewal actual state of checkbox
@@ -116,16 +117,16 @@ export const AccountManagements = () => {
   }
 
   //* Modal handling
-
+  // TODO: rebase in useModal
   const handleModalClose = () => {
     setIsModalOpen(false)
   }
 
   const handleConfirmation = () => {
-    setModalTitle(null)
+    setModalTitle('')
     setIsModalOpen(false)
   }
-
+  //TODO: add memo for component | delete useCallback
   const handleSuccessfulPayment = useCallback(() => {
     setModalTitle('Success')
     setIsModalOpen(true)
@@ -151,7 +152,7 @@ export const AccountManagements = () => {
       setIsModalOpen(true)
       router.replace(router.pathname, undefined, { shallow: true })
     }
-  }, [router.query.success, handleSuccessfulPayment, isSubscriptionActive])
+  }, [router.query.success, isSubscriptionActive])
 
   const classNames = {
     form: styles.form,
@@ -196,7 +197,7 @@ export const AccountManagements = () => {
           content={contentModal}
           isOpen={isModalOpen}
           isTwoButtons={false}
-          title={modalTitle ?? ''}
+          title={modalTitle}
         />
       )}
     </form>
