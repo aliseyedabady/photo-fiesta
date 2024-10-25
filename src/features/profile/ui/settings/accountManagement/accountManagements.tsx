@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
+  AccountType,
+  useCreateSubscriptionMutation,
   useGetCurrentPaymentQuery,
   useGetProfileQuery,
-  usePostSubscriptionMutation,
 } from '@/features'
 import { ErrorResponse } from '@/shared/api'
 import { LOADING_DELAY } from '@/shared/config'
@@ -29,9 +30,6 @@ import { CurrentSubscription } from './currentSubscription'
 import { PaymentMethodSelector } from './paymentMethodSelector'
 import { SubscriptionCosts } from './subscriptionCosts'
 
-export type AccountType = 'business' | 'personal'
-export type SubscriptionType = 'DAY' | 'MONTHLY' | 'WEEKLY'
-
 const formSchema = z.object({
   amount: z.number(),
   autoRenewal: z.boolean(),
@@ -46,15 +44,13 @@ export type FormData = z.infer<typeof formSchema>
  * AccountManagements component for managing user account settings
  */
 
-export const AccountManagements = () => {
+export const AccountManagements = memo(() => {
   const router = useRouter()
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const { isModalOpen, modalTitle, setIsModalOpen, setModalTitle } = useModal()
+  const { handleModalClose, isModalOpen, modalTitle, setIsModalOpen, setModalTitle } = useModal()
 
   const { isLoading: isFetchingProfile } = useGetProfileQuery()
-  const [postSubscription, { isLoading }] = usePostSubscriptionMutation()
+  const [postSubscription, { isLoading }] = useCreateSubscriptionMutation()
   const {
     data: currentPaymentData,
     isLoading: isFetchingCurrentPayment,
@@ -92,8 +88,7 @@ export const AccountManagements = () => {
 
   //* Payment handling
   const onSubmit = async (data: FormData) => {
-    if (isSubmitting) {
-      //isLoading
+    if (isLoading) {
       return
     }
     //put in autoRenewal actual state of checkbox
@@ -102,7 +97,6 @@ export const AccountManagements = () => {
       autoRenewal: autoRenewalEnabled, // use current state of checkbox
     }
 
-    setIsSubmitting(true)
     try {
       const response = await postSubscription(updatedData).unwrap()
 
@@ -111,22 +105,15 @@ export const AccountManagements = () => {
       setModalTitle('Error')
       setIsModalOpen(true)
       checkErrorMessages(error as ErrorResponse, setError)
-    } finally {
-      setIsSubmitting(false)
     }
   }
 
   //* Modal handling
-  // TODO: rebase in useModal
-  const handleModalClose = () => {
-    setIsModalOpen(false)
-  }
-
   const handleConfirmation = () => {
     setModalTitle('')
-    setIsModalOpen(false)
+    handleModalClose()
   }
-  //TODO: add memo for component | delete useCallback
+
   const handleSuccessfulPayment = useCallback(() => {
     setModalTitle('Success')
     setIsModalOpen(true)
@@ -183,7 +170,7 @@ export const AccountManagements = () => {
           <SubscriptionCosts control={control} setValue={setValue} />
           <PaymentMethodSelector
             handleSubmit={handleSubmit}
-            isSubmitting={isSubmitting}
+            isLoading={isLoading}
             onSubmit={onSubmit}
             setValue={setValue}
           />
@@ -202,4 +189,4 @@ export const AccountManagements = () => {
       )}
     </form>
   )
-}
+})

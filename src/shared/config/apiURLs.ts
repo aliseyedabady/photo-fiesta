@@ -40,11 +40,11 @@ export const API_URLS = {
     GET_TOTAL_COUNT_USERS: 'v1/public-user',
   },
   SUBSCRIPTIONS: {
+    CANCEL_AUTO_RENEWAL: 'v1/subscriptions/canceled-auto-renewal',
+    CREATE_SUBSCRIPTIONS: 'v1/subscriptions',
     GET_MY_PAYMENTS: 'v1/subscriptions/my-payments',
     GET_SUBSCRIPTIONS_COST_PAYMENT: 'v1/subscriptions/cost-of-payment-subscriptions',
     GET_SUBSCRIPTIONS_CURRENT_PAYMENT: 'v1/subscriptions/current-payment-subscriptions',
-    POST_SUBSCRIPTIONS: 'v1/subscriptions',
-    POST_SUBSCRIPTIONS_CANCEL_AUTO_RENEWAL: 'v1/subscriptions/canceled-auto-renewal',
   },
 }
 

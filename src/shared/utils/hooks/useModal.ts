@@ -9,8 +9,10 @@ type ModalType = '' | 'Error' | 'Success'
 export const useModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalTitle, setModalTitle] = useState<ModalType>('')
+  const handleModalClose = () => setIsModalOpen(false)
 
   return {
+    handleModalClose,
     isModalOpen,
     modalTitle,
     setIsModalOpen,

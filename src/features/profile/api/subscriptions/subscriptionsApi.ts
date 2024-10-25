@@ -11,15 +11,38 @@ import { API_URLS, METHOD } from '@/shared/config'
 const { POST } = METHOD
 
 const {
+  CANCEL_AUTO_RENEWAL,
+  CREATE_SUBSCRIPTIONS,
   GET_MY_PAYMENTS,
   GET_SUBSCRIPTIONS_COST_PAYMENT,
   GET_SUBSCRIPTIONS_CURRENT_PAYMENT,
-  POST_SUBSCRIPTIONS,
-  POST_SUBSCRIPTIONS_CANCEL_AUTO_RENEWAL,
 } = API_URLS.SUBSCRIPTIONS
 
 export const subscriptionsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
+    /**
+     * Cancel the auto-renewal of the user's subscription.
+     */
+    cancelAutoRenewal: builder.mutation<void, void>({
+      invalidatesTags: ['Subscriptions'],
+      query: () => ({
+        method: POST,
+        url: CANCEL_AUTO_RENEWAL,
+      }),
+    }),
+    /**
+     * Create a new subscription.
+     * @param {RequestSubscription} params - The subscription details.
+     * @returns {Promise<ResponseSubscription>} The response containing the new subscription details.
+     */
+    createSubscription: builder.mutation<ResponseSubscription, RequestSubscription>({
+      invalidatesTags: ['Subscriptions'],
+      query: params => ({
+        body: params,
+        method: POST,
+        url: CREATE_SUBSCRIPTIONS,
+      }),
+    }),
     /**
      * Fetch the cost of available subscription payments.
      * @returns {Promise<ResponseCostPayment>} The cost of available subscription payments.
@@ -44,36 +67,13 @@ export const subscriptionsApi = baseApi.injectEndpoints({
       providesTags: ['Subscriptions'],
       query: () => GET_MY_PAYMENTS,
     }),
-    /**
-     * Cancel the auto-renewal of the user's subscription.
-     */
-    postCancelAutoRenewal: builder.mutation<void, void>({
-      invalidatesTags: ['Subscriptions'],
-      query: () => ({
-        method: POST,
-        url: POST_SUBSCRIPTIONS_CANCEL_AUTO_RENEWAL,
-      }),
-    }),
-    /**
-     * Create a new subscription.
-     * @param {RequestSubscription} params - The subscription details.
-     * @returns {Promise<ResponseSubscription>} The response containing the new subscription details.
-     */
-    postSubscription: builder.mutation<ResponseSubscription, RequestSubscription>({
-      invalidatesTags: ['Subscriptions'],
-      query: params => ({
-        body: params,
-        method: POST,
-        url: POST_SUBSCRIPTIONS,
-      }),
-    }),
   }),
 })
 
 export const {
+  useCancelAutoRenewalMutation,
+  useCreateSubscriptionMutation,
   useGetCostPaymentQuery,
   useGetCurrentPaymentQuery,
   useGetMyPaymentsQuery,
-  usePostCancelAutoRenewalMutation,
-  usePostSubscriptionMutation,
 } = subscriptionsApi
