@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Control, Controller, UseFormSetValue } from 'react-hook-form'
 
+import { FormData, SubscriptionType } from '@/features'
 import { RadioGroup, Typography } from '@photo-fiesta/ui-lib'
 
 import styles from './subscriptionCosts.module.scss'
 
-import { FormData, SubscriptionType } from '../accountManagements'
 import { RadioBlock } from '../radioBlock'
 
 const subscriptionCosts = [

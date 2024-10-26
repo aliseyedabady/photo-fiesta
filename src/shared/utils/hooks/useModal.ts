@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-type ModalType = 'Error' | 'Success' | null
+type ModalType = '' | 'Error' | 'Success'
 
 /**
  * This hook provides functionality to control the visibility of a modal
@@ -8,9 +8,11 @@ type ModalType = 'Error' | 'Success' | null
  */
 export const useModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [modalTitle, setModalTitle] = useState<ModalType>(null)
+  const [modalTitle, setModalTitle] = useState<ModalType>('')
+  const handleModalClose = () => setIsModalOpen(false)
 
   return {
+    handleModalClose,
     isModalOpen,
     modalTitle,
     setIsModalOpen,

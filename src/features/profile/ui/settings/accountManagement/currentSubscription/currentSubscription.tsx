@@ -2,15 +2,18 @@
 import { useEffect } from 'react'
 import { Control } from 'react-hook-form'
 
-import { ResponseCurrentPayment, usePostCancelAutoRenewalMutation } from '@/features'
+import {
+  AccountType,
+  FormData,
+  ResponseCurrentPayment,
+  useCancelAutoRenewalMutation,
+} from '@/features'
 import { Loader } from '@/shared/ui'
 import { computeSubscriptionDates } from '@/shared/utils'
 import { FormCheckbox, Typography } from '@photo-fiesta/ui-lib'
 import clsx from 'clsx'
 
 import styles from './currentSubscription.module.scss'
-
-import { AccountType, FormData } from '../accountManagements'
 
 type CurrentSubscriptionProps = {
   accountType: AccountType
@@ -27,7 +30,7 @@ export const CurrentSubscription = ({
   currentPaymentData,
   setAutoRenewalEnabled,
 }: CurrentSubscriptionProps) => {
-  const [postCancelAutoRenewal, { isLoading }] = usePostCancelAutoRenewalMutation()
+  const [postCancelAutoRenewal, { isLoading }] = useCancelAutoRenewalMutation()
 
   const currentPayments = currentPaymentData?.data || []
 
