@@ -7,7 +7,7 @@ import {
   useDeleteUploadImageMutation,
   useGetPostByIdQuery,
 } from '@/features'
-import { Close, CloseOutline, Edit2 } from '@/shared/assets'
+import { Close, CloseOutline, Edit2, MoreHorizontalOutline } from '@/shared/assets'
 import { ProfileAvatar } from '@/shared/ui'
 import { useChangeTitle } from '@/shared/utils'
 import { Carousel, ConfirmationModal } from '@/widgets'
@@ -91,10 +91,11 @@ export const ImagePostModal = forwardRef<HTMLFormElement, ImagePostModalProps>(
             </section>
             <section className={styles.viewMode}>
               <div className={styles.profileInfo}>
-                <CloseOutline onClick={() => setShowConfirmDeleteModal(true)} />
-                <Edit2 onClick={() => setIsEditing(true)} />
                 <ProfileAvatar avatarOwner={avatar?.[0]?.url} />
                 <Typography variant={'h3'}>{userId}</Typography>
+                <Edit2 onClick={() => setIsEditing(true)} />
+                <CloseOutline onClick={() => setShowConfirmDeleteModal(true)} />
+                <MoreHorizontalOutline />
               </div>
               <div className={styles.postDetails}>
                 {isEditing ? (
