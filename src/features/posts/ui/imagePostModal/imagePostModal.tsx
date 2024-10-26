@@ -10,7 +10,7 @@ import {
 import { Close, CloseOutline, Edit2 } from '@/shared/assets'
 import { ProfileAvatar } from '@/shared/ui'
 import { useChangeTitle } from '@/shared/utils'
-import { Carousel, ConfirmationModal, PopoverRoot } from '@/widgets'
+import { Carousel, ConfirmationModal } from '@/widgets'
 import { Typography } from '@photo-fiesta/ui-lib'
 import clsx from 'clsx'
 
@@ -91,7 +91,6 @@ export const ImagePostModal = forwardRef<HTMLFormElement, ImagePostModalProps>(
             </section>
             <section className={styles.viewMode}>
               <div className={styles.profileInfo}>
-                <PopoverRoot></PopoverRoot>
                 <CloseOutline onClick={() => setShowConfirmDeleteModal(true)} />
                 <Edit2 onClick={() => setIsEditing(true)} />
                 <ProfileAvatar avatarOwner={avatar?.[0]?.url} />
