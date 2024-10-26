@@ -86,6 +86,25 @@
   justify-content: space-between;
 }
 
+.info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.popover button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  @include font(var(--font-size-s), var(--line-height-m), var(--font-weight-regular));
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
 .profileInfo {
   display: flex;
   flex-direction: row;

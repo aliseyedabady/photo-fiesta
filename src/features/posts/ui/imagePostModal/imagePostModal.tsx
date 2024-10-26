@@ -8,11 +8,11 @@ import {
   useGetPostByIdQuery,
 } from '@/features'
 import { Close, CloseOutline, Edit2, MoreHorizontalOutline } from '@/shared/assets'
-import { ProfileAvatar } from '@/shared/ui'
+import { PopoverContent, PopoverTrigger, ProfileAvatar } from '@/shared/ui'
 import { useChangeTitle } from '@/shared/utils'
 import { Carousel, ConfirmationModal } from '@/widgets'
 import { Button, Typography } from '@photo-fiesta/ui-lib'
-import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
+import { Popover } from '@radix-ui/react-popover'
 import clsx from 'clsx'
 
 import styles from './imagePostModal.module.scss'
@@ -91,22 +91,24 @@ export const ImagePostModal = forwardRef<HTMLFormElement, ImagePostModalProps>(
               )}
             </section>
             <section className={styles.viewMode}>
-              <div className={styles.profileInfo}>
-                <ProfileAvatar avatarOwner={avatar?.[0]?.url} />
-                <Typography variant={'h3'}>{userId}</Typography>
-                <div>
+              <div className={styles.info}>
+                <div className={styles.profileInfo}>
+                  <ProfileAvatar avatarOwner={avatar?.[0]?.url} />
+                  <Typography variant={'h3'}>{userId}</Typography>
+                </div>
+                <div className={styles.popover}>
                   <Popover>
-                    <PopoverTrigger>
-                      <MoreHorizontalOutline />
+                    <PopoverTrigger asChild>
+                      <MoreHorizontalOutline className={styles.icon} />
                     </PopoverTrigger>
-                    <PopoverContent>
-                      <Button variant={'icon-link'}>
-                        <Edit2 onClick={() => setIsEditing(true)} />
-                        Edit
+                    <PopoverContent align={'start'} alignOffset={20} side={'right'} sideOffset={1}>
+                      <Button onClick={() => setIsEditing(true)} variant={'icon-link'}>
+                        <Edit2 className={styles.icon} />
+                        Edit Post
                       </Button>
-                      <Button variant={'icon-link'}>
-                        <CloseOutline onClick={() => setShowConfirmDeleteModal(true)} />
-                        Close
+                      <Button onClick={() => setShowConfirmDeleteModal(true)} variant={'icon-link'}>
+                        <CloseOutline className={styles.icon} />
+                        Delete Post
                       </Button>
                     </PopoverContent>
                   </Popover>
