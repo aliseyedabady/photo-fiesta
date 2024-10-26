@@ -36,7 +36,7 @@
 .btn {
   display: flex;
   gap: 12px;
-  color: white !important;
+  color: var(--light-100) !important;
 
   &:active {
     color: var(--light-900) !important;

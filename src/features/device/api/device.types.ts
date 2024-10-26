@@ -1,4 +1,4 @@
-export type DeviceType = {
+export type Device = {
   browserName: string
   browserVersion: string
   deviceId: number
@@ -11,6 +11,6 @@ export type DeviceType = {
 }
 
 export type GetSessions = {
-  current: DeviceType
-  others: DeviceType[]
+  current: Device
+  others: Device[]
 }

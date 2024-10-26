@@ -1,23 +1,23 @@
 import { useDeleteByIdMutation } from '@/features/device/api/device.api'
-import { DeviceType } from '@/features/device/api/device.types'
+import { Device } from '@/features/device/api/device.types'
 import { Chrome, LogOut, PC, Phone } from '@/shared/assets'
 import { formatDateTo, useTranslation } from '@/shared/utils'
 import { Button, Typography } from '@photo-fiesta/ui-lib'
 
 import styles from './device.module.scss'
 
-type Props = {
-  device: DeviceType
+type DeviceCompProps = {
+  device: Device
   other?: boolean
 }
 
 /**
  * A React component that displays device information with the option to log out from a session.
- * @param {DeviceType} device - The device object containing details such as device type, name, browser name, IP, and last active time.
+ * @param {DeviceComp} device - The device object containing details such as device type, name, browser name, IP, and last active time.
  * @param {boolean} [other=false] - Indicates whether the device is an "other" device (not the current session).
  */
 
-export const Device = ({ device, other = false }: Props) => {
+export const DeviceComp = ({ device, other = false }: DeviceCompProps) => {
   const { t } = useTranslation()
   const [logout] = useDeleteByIdMutation()
   const classNames = {

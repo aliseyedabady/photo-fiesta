@@ -1,8 +1,10 @@
 import { baseApi } from '@/app/api'
 import { GetSessions } from '@/features/device/api/device.types'
-import { API_URLS } from '@/shared/config'
+import { API_URLS, METHOD } from '@/shared/config'
 
 const { DELETE_SESSION_BY_DEVICE_ID, DELETE_SESSION_TEMPLATE_ALL, GET_SESSIONS } = API_URLS.DEVICES
+
+const { DELETE } = METHOD
 
 /**
  * API endpoints for managing device sessions.
@@ -17,7 +19,7 @@ export const deviceApi = baseApi.injectEndpoints({
       deleteAll: builder.mutation<void, void>({
         invalidatesTags: ['Devices'],
         query: () => ({
-          method: 'DELETE',
+          method: DELETE,
           url: DELETE_SESSION_TEMPLATE_ALL,
         }),
       }),
@@ -27,14 +29,14 @@ export const deviceApi = baseApi.injectEndpoints({
       deleteById: builder.mutation<void, { deviceId: number }>({
         invalidatesTags: ['Devices'],
         query: params => ({
-          method: 'DELETE',
+          method: DELETE,
           url: DELETE_SESSION_BY_DEVICE_ID(params.deviceId),
         }),
       }),
       /**
        * Query to fetch all active device sessions.
        */
-      sessions: builder.query<GetSessions, void>({
+      getSessions: builder.query<GetSessions, void>({
         providesTags: ['Devices'],
         query: () => GET_SESSIONS,
       }),
@@ -42,4 +44,4 @@ export const deviceApi = baseApi.injectEndpoints({
   },
 })
 
-export const { useDeleteAllMutation, useDeleteByIdMutation, useSessionsQuery } = deviceApi
+export const { useDeleteAllMutation, useDeleteByIdMutation, useGetSessionsQuery } = deviceApi
