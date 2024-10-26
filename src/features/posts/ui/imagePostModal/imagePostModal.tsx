@@ -11,7 +11,8 @@ import { Close, CloseOutline, Edit2, MoreHorizontalOutline } from '@/shared/asse
 import { ProfileAvatar } from '@/shared/ui'
 import { useChangeTitle } from '@/shared/utils'
 import { Carousel, ConfirmationModal } from '@/widgets'
-import { Typography } from '@photo-fiesta/ui-lib'
+import { Button, Typography } from '@photo-fiesta/ui-lib'
+import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
 import clsx from 'clsx'
 
 import styles from './imagePostModal.module.scss'
@@ -93,9 +94,23 @@ export const ImagePostModal = forwardRef<HTMLFormElement, ImagePostModalProps>(
               <div className={styles.profileInfo}>
                 <ProfileAvatar avatarOwner={avatar?.[0]?.url} />
                 <Typography variant={'h3'}>{userId}</Typography>
-                <Edit2 onClick={() => setIsEditing(true)} />
-                <CloseOutline onClick={() => setShowConfirmDeleteModal(true)} />
-                <MoreHorizontalOutline />
+                <div>
+                  <Popover>
+                    <PopoverTrigger>
+                      <MoreHorizontalOutline />
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <Button variant={'icon-link'}>
+                        <Edit2 onClick={() => setIsEditing(true)} />
+                        Edit
+                      </Button>
+                      <Button variant={'icon-link'}>
+                        <CloseOutline onClick={() => setShowConfirmDeleteModal(true)} />
+                        Close
+                      </Button>
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </div>
               <div className={styles.postDetails}>
                 {isEditing ? (
