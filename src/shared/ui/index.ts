@@ -1,6 +1,7 @@
 export * from './FormDatePicker'
 export * from './datePicker'
 export * from './languageSelect'
+export * from './popover'
 export * from './preloader'
 export * from './profileAvatar'
 export * from './profileStat'
