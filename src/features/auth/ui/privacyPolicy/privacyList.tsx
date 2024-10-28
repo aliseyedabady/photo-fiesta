@@ -39,8 +39,8 @@ type TermsItemProps = {
 const PrivacyItem = ({ term }: TermsItemProps) => {
   return (
     <>
-      <Typography variant={'h2'}>{term.title}</Typography>
-      <Typography as={'div'}>
+      <Typography variant={'textBold16'}>{term.title}</Typography>
+      <Typography as={'div'} variant={'text14'}>
         {term.description}
         {term?.extra ? (
           <ul>

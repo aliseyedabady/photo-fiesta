@@ -18,6 +18,7 @@ export const PrivacyPolicy = () => {
     terms: styles.terms,
     text: styles.text,
     title: styles.title,
+    wrapper: styles.wrapper,
   }
 
   /**
@@ -29,13 +30,17 @@ export const PrivacyPolicy = () => {
 
   return (
     <div className={classNames.container}>
-      <Link className={classNames.link} href={ROUTES.SIGN_UP}>
-        <ArrowBackOutline className={classNames.svg} />
-        <Typography className={classNames.signUp}>{t.auth.backToSignUp}</Typography>
-      </Link>
-      <Typography as={'h1'} className={classNames.title}>
-        {t.auth.privacyPolicy}
-      </Typography>
+      <div className={classNames.wrapper}>
+        <Link className={classNames.link} href={ROUTES.SIGN_UP}>
+          <ArrowBackOutline className={classNames.svg} />
+          <Typography className={classNames.signUp} variant={'text14'}>
+            {t.auth.backToSignUp}
+          </Typography>
+        </Link>
+        <Typography as={'h1'} className={classNames.title} variant={'h1'}>
+          {t.auth.privacyPolicy}
+        </Typography>
+      </div>
       <div className={classNames.terms}>
         <PrivacyList />
       </div>
