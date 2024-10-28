@@ -7,11 +7,11 @@ import {
   useDeleteUploadImageMutation,
   useGetPostByIdQuery,
 } from '@/features'
-import { Close, CloseOutline, Edit2 } from '@/shared/assets'
-import { ProfileAvatar } from '@/shared/ui'
+import { Close, CloseOutline, Edit2, MoreHorizontalOutline } from '@/shared/assets'
+import { PopoverContent, PopoverRoot, PopoverTrigger, ProfileAvatar } from '@/shared/ui'
 import { useChangeTitle } from '@/shared/utils'
 import { Carousel, ConfirmationModal } from '@/widgets'
-import { Typography } from '@photo-fiesta/ui-lib'
+import { Button, Typography } from '@photo-fiesta/ui-lib'
 import clsx from 'clsx'
 
 import styles from './imagePostModal.module.scss'
@@ -64,20 +64,34 @@ export const ImagePostModal = forwardRef<HTMLFormElement, ImagePostModalProps>(
       handleClose()
     }
 
+    const classNames = {
+      body: styles.body,
+      closeIcon: styles.closeIcon,
+      header: styles.header,
+      icon: styles.icon,
+      imageSection: styles.imageSection,
+      info: styles.info,
+      modalContent: styles.modalContent,
+      overlay: styles.overlay,
+      popover: styles.popover,
+      postDetails: styles.postDetails,
+      profileInfo: styles.profileInfo,
+      viewMode: styles.viewMode,
+    }
     // TODO: addTranslate
 
     return (
-      <div className={styles.overlay}>
-        <div className={clsx(styles.modalContent)}>
-          {!isEditing && <CloseOutline className={styles.closeIcon} onClick={handleClose} />}
+      <div className={classNames.overlay}>
+        <div className={clsx(classNames.modalContent)}>
+          {!isEditing && <CloseOutline className={classNames.closeIcon} onClick={handleClose} />}
           {isEditing && (
-            <div className={styles.header}>
+            <div className={classNames.header}>
               <Typography variant={'h1'}>{getStepTitle()}</Typography>
               <Close onClick={() => setShowConfirmCloseModal(true)} />
             </div>
           )}
-          <div className={styles.body}>
-            <section className={styles.imageSection}>
+          <div className={classNames.body}>
+            <section className={classNames.imageSection}>
               {selectedImage ? (
                 <Carousel
                   handleCloseModal={handleClose}
@@ -89,14 +103,31 @@ export const ImagePostModal = forwardRef<HTMLFormElement, ImagePostModalProps>(
                 <Typography variant={'h2'}>No image selected</Typography>
               )}
             </section>
-            <section className={styles.viewMode}>
-              <div className={styles.profileInfo}>
-                <CloseOutline onClick={() => setShowConfirmDeleteModal(true)} />
-                <Edit2 onClick={() => setIsEditing(true)} />
-                <ProfileAvatar avatarOwner={avatar?.[0]?.url} />
-                <Typography variant={'h3'}>{userId}</Typography>
+            <section className={classNames.viewMode}>
+              <div className={classNames.info}>
+                <div className={classNames.profileInfo}>
+                  <ProfileAvatar avatarOwner={avatar?.[0]?.url} />
+                  <Typography variant={'h3'}>{userId}</Typography>
+                </div>
+                <div className={classNames.popover}>
+                  <PopoverRoot>
+                    <PopoverTrigger asChild>
+                      <MoreHorizontalOutline className={classNames.icon} />
+                    </PopoverTrigger>
+                    <PopoverContent align={'start'} alignOffset={20} side={'right'} sideOffset={1}>
+                      <Button onClick={() => setIsEditing(true)} variant={'icon-link'}>
+                        <Edit2 className={classNames.icon} />
+                        Edit Post
+                      </Button>
+                      <Button onClick={() => setShowConfirmDeleteModal(true)} variant={'icon-link'}>
+                        <CloseOutline className={classNames.icon} />
+                        Delete Post
+                      </Button>
+                    </PopoverContent>
+                  </PopoverRoot>
+                </div>
               </div>
-              <div className={styles.postDetails}>
+              <div className={classNames.postDetails}>
                 {isEditing ? (
                   <div>
                     <PostForm
