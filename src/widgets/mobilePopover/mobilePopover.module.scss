@@ -1,0 +1,25 @@
+@use '@/app/styles/mixins' as *;
+
+.more {
+  display: none;
+
+  @include mobile {
+    display: block;
+  }
+
+  &[data-state='closed'] {
+    color: inherit;
+  }
+}
+
+.popoverContent {
+  z-index: 1;
+  gap: 24px;
+  max-width: 260px;
+  padding-block: 18px;
+
+  & a {
+    color: inherit;
+    text-decoration: none;
+  }
+}

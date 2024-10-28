@@ -123,7 +123,7 @@ type SidebarElementProps = {
  * It's used for both navigation items and the logout button in the sidebar.
  *
  */
-const SidebarElement = ({
+export const SidebarElement = ({
   href,
   icon: Icon,
   isActive,

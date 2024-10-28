@@ -77,11 +77,3 @@
     display: none;
   }
 }
-
-.more {
-  display: none;
-
-  @include mobile {
-    display: block;
-  }
-}
