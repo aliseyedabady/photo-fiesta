@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { MoreHorizontal, OutlineBell } from '@/shared/assets'
+import { Notifications } from '@/features'
+import { MoreHorizontal } from '@/shared/assets'
 import { ROUTES } from '@/shared/config'
 import { LanguageSelect } from '@/shared/ui'
 import { Button, Typography } from '@photo-fiesta/ui-lib'
@@ -24,7 +25,7 @@ export type HeaderProps = {
 export const Header = forwardRef<ElementRef<'div'>, HeaderProps>(
   ({ className, isAuth = true, ...rest }, ref) => {
     const classNames = {
-      bell: styles.bell,
+      // bell: styles.bell,
       buttonsContainer: styles.buttonsContainer,
       flag: styles.flag,
       header: clsx(styles.header, className),
@@ -43,7 +44,7 @@ export const Header = forwardRef<ElementRef<'div'>, HeaderProps>(
         </Link>
         <div className={classNames.buttonsContainer}>
           {/**TODO: add dropdown menu using icon for desktop*/}
-          {isAuth && <OutlineBell className={classNames.bell} />}
+          {isAuth && <Notifications />}
           <LanguageSelect className={classNames.select} />
           {/**TODO: add dropdown menu using icon for mobile*/}
           {isAuth && <MoreHorizontal className={classNames.more} />}
