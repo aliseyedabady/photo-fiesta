@@ -12,11 +12,16 @@ import styles from './sidebar.module.scss'
 
 import { Icon, useSidebar } from './useSidebar'
 
+/** Props for the Sidebar component */
+type SidebarProps = {
+  className?: string
+}
+
 /**
  * Sidebar component that displays navigation items and logout option
  */
 
-export const Sidebar = () => {
+export const Sidebar = ({ className }: SidebarProps) => {
   const {
     confirmLogout,
     handleCloseAddPhotoModal,
@@ -37,8 +42,8 @@ export const Sidebar = () => {
 
   const classNames = {
     icons: styles.icons,
-    root: styles.root,
-  }
+    root: clsx(styles.root, className),
+  } as const
 
   const renderedSidebarItems = sidebarItems.map(item => (
     <SidebarElement
@@ -123,7 +128,7 @@ type SidebarElementProps = {
  * It's used for both navigation items and the logout button in the sidebar.
  *
  */
-const SidebarElement = ({
+export const SidebarElement = ({
   href,
   icon: Icon,
   isActive,
