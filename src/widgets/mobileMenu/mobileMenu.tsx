@@ -6,6 +6,7 @@ import clsx from 'clsx'
 
 import styles from './mobileMenu.module.scss'
 
+/** Props of MobileMenu component */
 type MobileMenuProps = {
   className: string
 }
