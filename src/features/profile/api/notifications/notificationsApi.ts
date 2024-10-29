@@ -2,7 +2,7 @@ import { baseApi } from '@/app/api'
 import { GetNotificationsArgs, GetNotificationsResponse } from '@/features'
 import { API_URLS, METHOD } from '@/shared/config'
 
-const { DELETE, POST } = METHOD
+const { DELETE, PUT } = METHOD
 const { DELETE_NOTIFICATIONS, GET_ALL_NOTIFICATIONS, MARK_NOTIFICATION_AS_READ } =
   API_URLS.NOTIFICATIONS
 
@@ -37,7 +37,7 @@ export const notificationsApi = baseApi.injectEndpoints({
       invalidatesTags: ['Notifications'],
       query: params => ({
         body: params,
-        method: POST,
+        method: PUT,
         url: MARK_NOTIFICATION_AS_READ,
       }),
     }),
