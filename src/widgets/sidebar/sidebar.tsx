@@ -12,7 +12,6 @@ import styles from './sidebar.module.scss'
 
 import { Icon, useSidebar } from './useSidebar'
 
-/** Props for the Sidebar component */
 type SidebarProps = {
   className?: string
 }

@@ -1,17 +1,15 @@
 import { ROUTES } from '@/shared/config'
-import { ModalAddPhoto, SidebarElement } from '@/widgets'
-import { useSidebar } from '@/widgets/sidebar/useSidebar'
+import { ModalAddPhoto, SidebarElement, useSidebar } from '@/widgets'
 import { MenuMobile } from '@photo-fiesta/ui-lib'
 import clsx from 'clsx'
 
 import styles from './mobileMenu.module.scss'
 
-/** Props of MobileMenu component */
 type MobileMenuProps = {
   className: string
 }
 
-/** MobileMenu component for rendering menu in a mobile view */
+/** MobileMenu component for rendering the menu in a mobile view (360px width) */
 export const MobileMenu = ({ className }: MobileMenuProps) => {
   const { handleCloseAddPhotoModal, isActive, modalState, setSelectedImage, sidebarItems } =
     useSidebar()
@@ -38,13 +36,13 @@ export const MobileMenu = ({ className }: MobileMenuProps) => {
   ))
 
   const classNames = {
-    mobileMenuContainer: styles.mobileMenuContainer,
-    mobileMenuRootContainer: clsx(styles.mobileMenuRootContainer, className),
+    container: styles.container,
+    root: clsx(styles.root, className),
   } as const
 
   return (
-    <div className={classNames.mobileMenuRootContainer}>
-      <MenuMobile className={classNames.mobileMenuContainer}>{renderSidebarItems}</MenuMobile>
+    <div className={classNames.root}>
+      <MenuMobile className={classNames.container}>{renderSidebarItems}</MenuMobile>
       {isCreateModalOpen && (
         <ModalAddPhoto
           handleCloseModal={handleCloseAddPhotoModal}

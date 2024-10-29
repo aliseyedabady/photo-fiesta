@@ -60,8 +60,12 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     <>
       <Header isAuth={isAuthenticated} />
       <div className={classNames.wrapper}>
-        {isAuthenticated && <Sidebar className={classNames.sidebar} />}
-        {isAuthenticated && <MobileMenu className={classNames.menu} />}
+        {isAuthenticated && (
+          <>
+            <Sidebar className={classNames.sidebar} />
+            <MobileMenu className={classNames.menu} />
+          </>
+        )}
         <main className={classNames.main}>{children}</main>
       </div>
     </>
