@@ -26,14 +26,16 @@ export const MobilePopover = () => {
 
   const { handleProfileSettings } = useProfile()
 
+  const profileSettingsOnClickHandler = () => {
+    handleProfileSettings()
+    setOpenPopover(false)
+  }
+
   const renderProfileSettings = (
     <SidebarElement
       icon={SettingsOutline}
       isActive={() => ''}
-      onClick={() => {
-        handleProfileSettings()
-        setOpenPopover(false)
-      }}
+      onClick={profileSettingsOnClickHandler}
       text={t.myProfile.settings}
     />
   )
