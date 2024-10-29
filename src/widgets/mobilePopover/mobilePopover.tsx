@@ -39,7 +39,7 @@ export const MobilePopover = () => {
   )
 
   const renderRestItems = sidebarItems
-    .filter(item => item.href === ROUTES.STATICS || item.href === ROUTES.FAVORITES)
+    .filter(item => item.href.startsWith(ROUTES.STATICS) || item.href.startsWith(ROUTES.FAVORITES))
     .map(item => (
       <SidebarElement
         href={item.href}
