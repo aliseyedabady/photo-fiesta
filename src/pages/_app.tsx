@@ -5,7 +5,6 @@ import { ToastContainer } from 'react-toastify'
 
 import { wrapper } from '@/app/store'
 import { Layout } from '@/widgets'
-import Head from 'next/head'
 
 import '@/app/styles/index.scss'
 import '@fontsource/inter/400.css'
@@ -20,16 +19,6 @@ function MyApp({ Component, ...rest }: AppProps) {
 
   return (
     <Provider store={store}>
-      <Head>
-        <title>Photo Fiesta</title>
-        <meta
-          content={
-            'Photo Fiesta is a place where you can share your photos with your friends and family.'
-          }
-          name={'description'}
-        />
-        <link href={'/favicon.jpg'} rel={'icon'} sizes={'32x32'} type={'image/png'} />
-      </Head>
       <Layout>
         <Component {...props.pageProps} />
         <ToastContainer />
