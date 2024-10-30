@@ -19,7 +19,10 @@
 }
 
 .slider {
-  height: 504px;
+  aspect-ratio: 492 / 504;
+  width: 100%;
+  max-width: 492px;
+  max-height: 504px;
 }
 
 .selectedImage {

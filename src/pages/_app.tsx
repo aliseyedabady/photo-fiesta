@@ -30,7 +30,6 @@ function MyApp({ Component, ...rest }: AppProps) {
         />
         <link href={'/favicon.jpg'} rel={'icon'} sizes={'32x32'} type={'image/png'} />
       </Head>
-
       <Layout>
         <Component {...props.pageProps} />
         <ToastContainer />
