@@ -5,6 +5,7 @@ export const ru: LocaleType = {
     backToSignIn: 'Вернуться к входу',
     backToSignUp: 'Вернуться к регистрации',
     confirm: 'Повторите пароль',
+    confirmLogout: 'Вы действительно хотите выйти из вашего аккаунта?',
     confirmPassword: 'Подтверждение пароля',
     congratulations: 'Поздравляем!',
     createNewPassword: 'Создание нового пароля',
