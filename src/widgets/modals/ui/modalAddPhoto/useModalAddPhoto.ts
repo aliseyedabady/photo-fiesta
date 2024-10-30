@@ -113,5 +113,6 @@ export const useModalAddPhoto = ({
     handleSave,
     isSaved,
     selectedImage,
+    selectedImages,
   }
 }

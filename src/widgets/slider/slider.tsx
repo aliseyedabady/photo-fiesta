@@ -3,13 +3,13 @@ import Slider from 'react-slick'
 
 import { Step } from '@/features'
 import { ArrowIosBackOutline, ArrowIosForwardOutline, ImageOutline } from '@/shared/assets'
-import { useModalAddPhoto } from '@/widgets'
+import { ErrorMessage, useModalAddPhoto } from '@/widgets'
 import { Button } from '@photo-fiesta/ui-lib'
 import clsx from 'clsx'
 import Image from 'next/image'
 
-import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import 'slick-carousel/slick/slick.css'
 
 import styles from './slider.module.scss'
 
@@ -34,7 +34,7 @@ export const Carousel = ({
   const [activeIndex, setActiveIndex] = useState(0)
   const [indexArrow, setIndexArrow] = useState(0)
 
-  const { fileInputRef, handleClick, handleFileChange, selectedImage } = useModalAddPhoto({
+  const { error, fileInputRef, handleClick, handleFileChange, selectedImage } = useModalAddPhoto({
     handleCloseModal,
     postPhoto,
     setImage,
@@ -43,9 +43,11 @@ export const Carousel = ({
   const classNames = {
     dotsItem: styles.dotsItem,
     dotsItemActive: styles.dotsItemActive,
+    error: styles.error,
     icon: styles.icon,
     selectedImage: styles.selectedImage,
     slider: styles.slider,
+    visible: styles.visible,
   } as const
   const allPhotos = Array.isArray(photos) ? photos : [photos]
   /**
@@ -116,6 +118,7 @@ export const Carousel = ({
         src={photo}
         width={492}
       />
+      {error && <ErrorMessage error={error} />}
     </div>
   ))
 
