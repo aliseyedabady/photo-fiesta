@@ -26,6 +26,10 @@
   height: calc(100vh - var(--header-height));
 }
 
+.menu {
+  display: none;
+}
+
 @include mobile {
   .sidebar {
     display: none;

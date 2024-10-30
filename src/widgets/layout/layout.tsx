@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from 'react'
 
 import { useLazyAuthMeQuery } from '@/features'
 import { Storage } from '@/shared/utils'
-import { Header, Sidebar } from '@/widgets'
+import { Header, MobileMenu, Sidebar } from '@/widgets'
 
 import style from './layout.module.scss'
 
@@ -51,6 +51,8 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const isAuthenticated = isSuccess && !!token
   const classNames = {
     main: style.main,
+    menu: style.menu,
+    sidebar: style.sidebar,
     wrapper: style.wrapper,
   } as const
 
@@ -58,7 +60,12 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     <>
       <Header isAuth={isAuthenticated} />
       <div className={classNames.wrapper}>
-        {isAuthenticated && <Sidebar />}
+        {isAuthenticated && (
+          <>
+            <Sidebar className={classNames.sidebar} />
+            <MobileMenu className={classNames.menu} />
+          </>
+        )}
         <main className={classNames.main}>{children}</main>
       </div>
     </>
