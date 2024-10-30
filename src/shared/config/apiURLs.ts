@@ -17,6 +17,11 @@ export const API_URLS = {
     DELETE_SESSION_TEMPLATE_ALL: 'v1/sessions/terminate-all',
     GET_SESSIONS: 'v1/sessions',
   },
+  NOTIFICATIONS: {
+    DELETE_NOTIFICATIONS: (id: number) => `v1/notifications/${id}`,
+    GET_ALL_NOTIFICATIONS: (cursor: number | undefined) => `v1/notifications/${cursor}`,
+    MARK_NOTIFICATION_AS_READ: 'v1/notifications/mark-as-read',
+  },
   POSTS: {
     CREATE_POST: 'v1/posts',
     DELETE_POST: (postId: number) => `v1/posts/${postId}`,
@@ -27,6 +32,7 @@ export const API_URLS = {
     UPDATE_POST: (postId: number) => `v1/posts/${postId}`,
     UPLOAD_POST_IMAGE: 'v1/posts/image',
   },
+
   PROFILE: {
     DELETE_AVATAR: 'v1/users/profile/avatar',
     DELETE_PROFILE: 'v1/users/profile',
@@ -35,16 +41,15 @@ export const API_URLS = {
     POST_AVATAR: 'v1/users/profile/avatar',
     UPDATE_PROFILE: 'v1/users/profile',
   },
-
   PUBLIC_USERS: {
     GET_TOTAL_COUNT_USERS: 'v1/public-user',
   },
   SUBSCRIPTIONS: {
+    CANCEL_AUTO_RENEWAL: 'v1/subscriptions/canceled-auto-renewal',
+    CREATE_SUBSCRIPTIONS: 'v1/subscriptions',
     GET_MY_PAYMENTS: 'v1/subscriptions/my-payments',
     GET_SUBSCRIPTIONS_COST_PAYMENT: 'v1/subscriptions/cost-of-payment-subscriptions',
     GET_SUBSCRIPTIONS_CURRENT_PAYMENT: 'v1/subscriptions/current-payment-subscriptions',
-    POST_SUBSCRIPTIONS: 'v1/subscriptions',
-    POST_SUBSCRIPTIONS_CANCEL_AUTO_RENEWAL: 'v1/subscriptions/canceled-auto-renewal',
   },
 }
 

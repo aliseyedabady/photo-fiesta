@@ -5,6 +5,7 @@ export const ru: LocaleType = {
     backToSignIn: 'Вернуться к входу',
     backToSignUp: 'Вернуться к регистрации',
     confirm: 'Повторите пароль',
+    confirmLogout: 'Вы действительно хотите выйти из вашего аккаунта?',
     confirmPassword: 'Подтверждение пароля',
     congratulations: 'Поздравляем!',
     createNewPassword: 'Создание нового пароля',
@@ -53,6 +54,12 @@ export const ru: LocaleType = {
     termsOfService: 'Условия пользования',
     userName: 'Имя пользователя',
     userNameContains: 'Имя пользователя должно содержать 0-9; A-Z; a-z; _; -',
+  },
+  devices: {
+    active: 'Активные сессии',
+    current: 'Текущее устройство',
+    terminate: 'Завершить все другие сессии',
+    visit: 'Последний визит:',
   },
   input: {
     email: 'Введите свою почту',

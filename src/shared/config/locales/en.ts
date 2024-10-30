@@ -3,6 +3,7 @@ export const en = {
     backToSignIn: 'Back to Sign In',
     backToSignUp: 'Back to Sign Up',
     confirm: 'Confirm password',
+    confirmLogout: 'Are you really want to logout of your account?',
     confirmPassword: 'Password confirmation',
     congratulations: 'Congratulations!',
     createNewPassword: 'Create new password',
@@ -49,6 +50,12 @@ export const en = {
     termsOfService: 'Terms of Service',
     userName: 'Username',
     userNameContains: 'Username may contain 0-9; A-Z; a-z; _; -',
+  },
+  devices: {
+    active: 'Active sessions',
+    current: 'Current device',
+    terminate: 'Terminate all other session',
+    visit: 'Last visit:',
   },
   input: {
     email: 'Enter your email',

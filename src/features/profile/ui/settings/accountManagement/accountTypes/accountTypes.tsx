@@ -1,8 +1,8 @@
+import { AccountType } from '@/features'
 import { RadioGroup, Typography } from '@photo-fiesta/ui-lib'
 
 import styles from './accountTypes.module.scss'
 
-import { AccountType } from '../accountManagements'
 import { RadioBlock } from '../radioBlock'
 
 /** Array of available account types */

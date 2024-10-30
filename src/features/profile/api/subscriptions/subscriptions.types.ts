@@ -33,6 +33,9 @@ export type Payment = {
   typeDescription: string
 }
 
+export type AccountType = 'business' | 'personal'
+export type SubscriptionType = 'DAY' | 'MONTHLY' | 'WEEKLY'
+
 /**
  * @example
  * {
