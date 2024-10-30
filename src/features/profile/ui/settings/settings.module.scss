@@ -5,6 +5,10 @@
   align-self: flex-start;
   width: 100%;
   padding: 24px 0 0 24px;
+
+  & > div {
+    width: 94%;
+  }
 }
 
 .tabsList {
@@ -22,4 +26,5 @@
 .tabsContent {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
