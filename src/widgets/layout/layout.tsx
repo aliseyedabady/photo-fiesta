@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react'
 
 import { useLazyAuthMeQuery } from '@/features'
-import { Storage } from '@/shared/utils'
+import { Storage, useConnectSocket } from '@/shared/utils'
 import { Header, Sidebar } from '@/widgets'
 
 import style from './layout.module.scss'
@@ -24,6 +24,7 @@ import style from './layout.module.scss'
  */
 
 export const Layout = ({ children }: { children: ReactNode }) => {
+  useConnectSocket()
   const [authData, { isSuccess }] = useLazyAuthMeQuery()
   const [token, setToken] = useState<null | string>(null)
 

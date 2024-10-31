@@ -1,4 +1,4 @@
-import { DeviceComp, useDeleteAllMutation, useGetSessionsQuery } from '@/features/device'
+import { DeviceComp, useDeleteAllMutation, useGetSessionsQuery } from '@/features'
 import { Loader } from '@/shared/ui'
 import { useTranslation } from '@/shared/utils'
 import { Button, Typography } from '@photo-fiesta/ui-lib'
