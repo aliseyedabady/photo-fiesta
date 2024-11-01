@@ -1,0 +1,19 @@
+@use '@/app/styles/mixins' as *;
+
+.timeAgo {
+  color: var(--light-900);
+}
+
+.new {
+  color: var(--accent-500);
+
+  @include font(var(--font-size-xs), var(--line-height-m), var(--font-weight-regular));
+}
+
+.notify {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  justify-content: start;
+}

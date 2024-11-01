@@ -1,10 +1,41 @@
 @use '@/app/styles/mixins' as *;
 
-.bell {
+.icons {
+  cursor: pointer;
+  position: relative;
+}
+
+.defaultBell,
+.activeBell {
   width: 24px;
   height: 24px;
 
   @include mobile {
     display: none;
   }
+}
+
+.activeBell {
+  color: var(--accent-500);
+}
+
+.count {
+  position: absolute;
+  top: -1px;
+  right: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 13px;
+  height: 13px;
+
+  font-size: 10px;
+  font-weight: var(--font-weight-medium);
+  line-height: 8px;
+  color: white;
+
+  background-color: var(--danger-500);
+  border-radius: 50%;
 }

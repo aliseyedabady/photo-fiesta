@@ -29,6 +29,13 @@ export const notificationsApi = baseApi.injectEndpoints({
     getAllNotifications: builder.query<GetNotificationsResponse, GetNotificationsArgs>({
       providesTags: ['Notifications'],
       query: ({ cursor }) => GET_ALL_NOTIFICATIONS(cursor),
+      transformResponse: (response: GetNotificationsResponse) => {
+        response.items.sort(
+          (a, b) => new Date(a.notifyAt).getTime() - new Date(b.notifyAt).getTime()
+        )
+
+        return response
+      },
     }),
     /** Marks a list of notifications as read.
      * @param {number[]} params.ids - Array of notification IDs to mark as read.

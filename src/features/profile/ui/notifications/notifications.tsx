@@ -13,6 +13,7 @@ import styles from './notifications.module.scss'
 export const Notifications = () => {
   const { data } = useGetAllNotificationsQuery({ cursor: 0 })
   const [amountOfNewNotifications, setAmountOfNewNotifications] = useState(0)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const notifications = useMemo(() => data?.items ?? [], [data])
 
@@ -30,11 +31,13 @@ export const Notifications = () => {
 
   return (
     <div className={styles.wrapper}>
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <NotificationsIcon newNotifications={amountOfNewNotifications} />
+      <DropdownMenu onOpenChange={setIsDropdownOpen}>
+        <DropdownMenuTrigger asChild>
+          <NotificationsIcon isOpen={isDropdownOpen} newNotifications={amountOfNewNotifications} />
         </DropdownMenuTrigger>
-        <DropdownMenuContent label={'Уведомления'}>{notificationItems}</DropdownMenuContent>
+        <DropdownMenuContent align={'end'} alignOffset={-10} label={'Уведомления'} sideOffset={2}>
+          {notificationItems}
+        </DropdownMenuContent>
       </DropdownMenu>
     </div>
   )
