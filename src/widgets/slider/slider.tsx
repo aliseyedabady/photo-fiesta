@@ -1,15 +1,16 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 import Slider from 'react-slick'
 
 import { Step } from '@/features'
 import { ArrowIosBackOutline, ArrowIosForwardOutline, ImageOutline } from '@/shared/assets'
-import { ErrorMessage, useModalAddPhoto } from '@/widgets'
+import { ALLOWED_FORMATS, MAX_FILE_SIZE } from '@/shared/config'
+import { ErrorMessage } from '@/widgets'
 import { Button } from '@photo-fiesta/ui-lib'
 import clsx from 'clsx'
 import Image from 'next/image'
 
-import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 import styles from './slider.module.scss'
 
@@ -17,7 +18,7 @@ type CarouselProps = {
   handleCloseModal: () => void
   photos: string | string[]
   postPhoto?: boolean
-  setImage: (image: null | string | string[]) => void
+  setImage: (image: string[]) => void
   step?: Step
 }
 /**
@@ -33,13 +34,57 @@ export const Carousel = ({
 }: CarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [indexArrow, setIndexArrow] = useState(0)
+  const [allPhotos, setAllPhotos] = useState<string[]>(Array.isArray(photos) ? photos : [photos])
+  const [error, setError] = useState<null | string>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const { error, fileInputRef, handleClick, handleFileChange, selectedImage } = useModalAddPhoto({
-    handleCloseModal,
-    postPhoto,
-    setImage,
-  })
+  const handleClick = () => {
+    fileInputRef.current?.click()
+  }
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files
 
+    if (!files) {
+      return
+    }
+
+    const newImages: string[] = []
+    let hasError = false
+
+    Array.from(files).forEach(file => {
+      if (!ALLOWED_FORMATS.includes(file.type)) {
+        setError('The format of the uploaded photo must be PNG and JPEG')
+        hasError = true
+
+        return
+      }
+
+      if (file.size > MAX_FILE_SIZE) {
+        setError('Photo size must be less than 10 MB!')
+        hasError = true
+
+        return
+      }
+
+      newImages.push(URL.createObjectURL(file))
+    })
+
+    if (!hasError) {
+      setError(null)
+      const updatedPhotos = [...allPhotos, ...newImages]
+
+      setAllPhotos(updatedPhotos)
+      setImage(updatedPhotos)
+      setActiveIndex(updatedPhotos.length - 1)
+      setIndexArrow(updatedPhotos.length - 1)
+
+      if (postPhoto) {
+        handleCloseModal()
+      }
+    }
+
+    event.target.value = ''
+  }
   const classNames = {
     dotsItem: styles.dotsItem,
     dotsItemActive: styles.dotsItemActive,
@@ -49,7 +94,7 @@ export const Carousel = ({
     slider: styles.slider,
     visible: styles.visible,
   } as const
-  const allPhotos = Array.isArray(photos) ? photos : [photos]
+  // const allPhotos = Array.isArray(photos) ? photos : [photos]
   /**
    * Settings for the react-slick slider.
    * These settings configure how the carousel behaves, including arrows, dots, and transition speed.
@@ -57,7 +102,10 @@ export const Carousel = ({
   const settings = {
     adaptiveHeight: true,
     arrows: allPhotos.length > 1,
-    beforeChange: (current: number, next: number) => setActiveIndex(next),
+    beforeChange: (current: number, next: number) => {
+      setActiveIndex(next)
+      setIndexArrow(next)
+    },
     customPaging: (index: number) => (
       <div
         className={clsx(classNames.dotsItem, {
@@ -67,6 +115,7 @@ export const Carousel = ({
     ),
     dots: allPhotos.length > 1,
     infinite: allPhotos.length > 1,
+    initialSlide: activeIndex,
     nextArrow: (
       <NextArrowComponent
         indexArrow={indexArrow}
@@ -85,30 +134,7 @@ export const Carousel = ({
     slidesToShow: 1,
     speed: 500,
   }
-  /**
-   * Handles the addition of a new image to the carousel.
-   * Updates the images array with the newly added image(s).
-   */
-  const handleImageAddition = (newImage: string | string[]) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    setImage(prevImages => {
-      const updatedImages = Array.isArray(prevImages) ? prevImages : [prevImages]
 
-      return [...updatedImages, newImage]
-    })
-  }
-
-  /**
-   * Handles file input change and adds the selected image to the carousel.
-   * This function is triggered when a new image file is selected.
-   */
-  const handleFileChangeWithAddition = async (event: ChangeEvent<HTMLInputElement>) => {
-    await handleFileChange(event)
-    if (selectedImage) {
-      handleImageAddition(selectedImage)
-    }
-  }
   const carousel = allPhotos.map((photo, index) => (
     <div key={index}>
       <Image
@@ -118,14 +144,16 @@ export const Carousel = ({
         src={photo}
         width={492}
       />
-      {error && <ErrorMessage error={error} />}
     </div>
   ))
 
   // TODO: logic for cropping step
   return (
     <div className={classNames.slider}>
-      <Slider {...settings}>{carousel}</Slider>
+      <Slider key={allPhotos.length} {...settings}>
+        {carousel}
+      </Slider>
+      {error && <ErrorMessage error={error} />}
       {step === 'cropping' && (
         <div>
           <Button onClick={handleClick} variant={'icon-link'}>
@@ -135,7 +163,7 @@ export const Carousel = ({
             accept={'image/*'}
             hidden
             multiple
-            onChange={handleFileChangeWithAddition}
+            onChange={handleFileChange}
             ref={fileInputRef}
             type={'file'}
           />
