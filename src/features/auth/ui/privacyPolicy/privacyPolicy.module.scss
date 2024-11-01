@@ -1,23 +1,40 @@
 @use '@/app/styles/mixins' as *;
 
 // TODO: height repeats layout height
-
 .container {
   height: calc(100vh - var(--header-height));
   margin: 0 64px;
-}
 
-.link {
-  display: flex;
-  gap: 12px;
+  .title {
+    margin-bottom: 20px;
+    text-align: center;
 
-  /* stylelint-disable-next-line value-no-vendor-prefix */
-  width: -moz-fit-content;
-  width: fit-content;
-  margin: 24px 0;
+    @include mobile {
+      margin-bottom: 0;
+      font-size: 18px;
+      line-height: 24px;
+    }
+  }
 
-  color: inherit;
-  text-decoration: none;
+  .link {
+    display: flex;
+    gap: 12px;
+
+    width: fit-content;
+    margin: 24px 0;
+
+    color: var(--light-100);
+    text-decoration: none;
+
+    &:visited {
+      color: var(--light-100);
+    }
+    @include mobile {
+      position: absolute;
+      left: 0;
+      margin: 0;
+    }
+  }
 }
 
 .list {
@@ -32,11 +49,6 @@
     margin: 5px 0 0;
     padding-left: 20px;
   }
-}
-
-.title {
-  margin-bottom: 20px !important;
-  text-align: center;
 }
 
 .svg {
@@ -66,20 +78,10 @@
     margin: 15px;
   }
 
-  .link {
-    left: 0;
-    margin: 0;
-  }
-
-  .title {
-    margin-bottom: 0 !important;
-    font-size: 18px !important;
-    line-height: 24px !important;
-  }
-
   .wrapper {
+    position: relative;
     display: flex;
-    gap: 80px;
-    margin: 17px 0 14px;
+    justify-content: center;
+    margin: 15px 0 14px;
   }
 }

@@ -1,7 +1,7 @@
 import { ArrowBackOutline } from '@/shared/assets'
 import { ROUTES } from '@/shared/config'
 import { useTranslation } from '@/shared/utils'
-import { Typography } from '@photo-fiesta/ui-lib'
+import { Button, Typography } from '@photo-fiesta/ui-lib'
 import Link from 'next/link'
 
 import styles from './privacyPolicy.module.scss'
@@ -31,12 +31,14 @@ export const PrivacyPolicy = () => {
   return (
     <div className={classNames.container}>
       <div className={classNames.wrapper}>
-        <Link className={classNames.link} href={ROUTES.SIGN_UP}>
-          <ArrowBackOutline className={classNames.svg} />
-          <Typography className={classNames.signUp} variant={'text14'}>
-            {t.auth.backToSignUp}
-          </Typography>
-        </Link>
+        <Button asChild className={classNames.link} variant={'link'}>
+          <Link href={ROUTES.SIGN_UP}>
+            <ArrowBackOutline className={classNames.svg} />
+            <Typography className={classNames.signUp} variant={'text14'}>
+              {t.auth.backToSignUp}
+            </Typography>
+          </Link>
+        </Button>
         <Typography as={'h1'} className={classNames.title} variant={'h1'}>
           {t.auth.privacyPolicy}
         </Typography>
