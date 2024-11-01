@@ -4,10 +4,9 @@ import { ALLOWED_FORMATS, MAX_FILE_SIZE } from '@/shared/config'
 
 type UseModalAddPhotoProps = {
   handleCloseModal: () => void
-  isOpen?: boolean
+  isOpen: boolean
   postPhoto?: boolean
-  setImage?: (image: null | string) => void
-  setImages?: React.Dispatch<React.SetStateAction<string[]>>
+  setImage: (image: null | string) => void
 }
 
 export const useModalAddPhoto = ({
@@ -15,18 +14,15 @@ export const useModalAddPhoto = ({
   isOpen,
   postPhoto = false,
   setImage,
-  setImages,
 }: UseModalAddPhotoProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [error, setError] = useState<null | string>(null)
   const [selectedImage, setSelectedImage] = useState<null | string>(null)
-  const [selectedImages, setSelectedImages] = useState<null | string[]>(null)
   const [isSaved, setIsSaved] = useState(false)
 
   useEffect(() => {
     if (isOpen) {
       setSelectedImage(null)
-      setSelectedImages([])
       setError(null)
       setIsSaved(false)
     }
@@ -37,26 +33,19 @@ export const useModalAddPhoto = ({
   }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files
+    const file = event.target.files?.[0]
 
-    if (!files) {
-      return
-    }
-
-    const newImages: string[] = []
-    let hasError = false
-
-    Array.from(files).forEach(file => {
+    if (file) {
       if (!ALLOWED_FORMATS.includes(file.type)) {
         setError('The format of the uploaded photo must be PNG and JPEG')
-        hasError = true
+        setSelectedImage(null)
 
         return
       }
 
       if (file.size > MAX_FILE_SIZE) {
         setError('Photo size must be less than 10 MB!')
-        hasError = true
+        setSelectedImage(null)
 
         return
       }
@@ -66,43 +55,28 @@ export const useModalAddPhoto = ({
       reader.onload = e => {
         const image = e.target?.result as string
 
-        newImages.push(image)
-
-        if (setImage) {
-          setSelectedImage(image)
-
-          postPhoto && setImage(image)
-        } else if (setImages) {
-          setSelectedImages(prev => [...(prev || []), image])
-          setImages(prev => [...prev, image])
-        }
+        setSelectedImage(image)
+        setError(null)
 
         if (postPhoto) {
+          setImage(image)
           setIsSaved(true)
           handleCloseModal()
         }
       }
+
       reader.readAsDataURL(file)
-    })
-
-    if (!hasError) {
-      setError(null)
     }
-
     event.target.value = ''
   }
 
   const handleSave = () => {
-    if (setImage && selectedImage) {
+    if (selectedImage) {
       setImage(selectedImage)
-      setIsSaved(true)
-      handleCloseModal()
-    } else if (setImages && selectedImages && selectedImages?.length > 0) {
-      setImages(selectedImages)
+      setError(null)
       setIsSaved(true)
       handleCloseModal()
     }
-    setError(null)
   }
 
   return {
@@ -113,6 +87,5 @@ export const useModalAddPhoto = ({
     handleSave,
     isSaved,
     selectedImage,
-    selectedImages,
   }
 }
