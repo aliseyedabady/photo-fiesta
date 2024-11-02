@@ -7,8 +7,9 @@
 
   width: 100%;
   padding: 36px 64px 0 24px;
+
   @include mobile {
-    padding: 24px 15px 0
+    padding: 24px 15px 0;
   }
 }
 
@@ -16,21 +17,22 @@
   display: flex;
   gap: 38px;
   margin-bottom: 50px;
+
   @include mobile {
     gap: 0;
-    margin-bottom: 6px;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 6px;
   }
 }
 
-
 .avatar {
-  height: 204px;
   width: 204px;
+  height: 204px;
+
   @include mobile {
-    height: 72px;
     width: 72px;
+    height: 72px;
   }
 }
 
@@ -39,8 +41,9 @@
   flex-direction: column;
   flex-grow: 1;
   gap: 20px;
+
   @include mobile {
-    padding-left: max(0px, calc(34% - 84px))
+    padding-left: max(0px, calc(34% - 84px));
   }
 }
 
@@ -72,6 +75,7 @@
 .bioMobile {
   display: none;
   margin-bottom: 29px;
+
   @include mobile {
     display: block;
   }
@@ -80,6 +84,7 @@
 .counts {
   display: flex;
   align-items: center;
+
   @include mobile {
     justify-content: space-between;
   }
@@ -87,6 +92,7 @@
 
 .firstStat {
   margin-right: 100px;
+
   @include mobile {
     margin-inline: 0;
   }
@@ -94,6 +100,7 @@
 
 .secondStat {
   margin-right: 88px;
+
   @include mobile {
     margin-inline: 0;
   }

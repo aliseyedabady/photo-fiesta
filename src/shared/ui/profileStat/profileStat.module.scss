@@ -9,7 +9,7 @@
   @include font(var(--font-size-s), var(--line-height-m), var(--font-weight-bold));
 
   @include mobile {
-    @include font(var(--font-size-xs), var(--line-height-s), var(--font-weight-semibold))
+    @include font(var(--font-size-xs), var(--line-height-s), var(--font-weight-semibold));
   }
 }
 
