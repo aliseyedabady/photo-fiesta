@@ -2,7 +2,7 @@
 
 .content {
   width: 100%;
-  max-width: 492px;
+  max-width: var(--max-width-image);
 }
 
 .header {

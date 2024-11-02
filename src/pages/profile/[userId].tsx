@@ -3,11 +3,12 @@ import { toast } from 'react-toastify'
 
 import { Profile, useAuthMeQuery } from '@/features'
 import { Loader } from '@/shared/ui'
+import Head from 'next/head'
 /**
  * it is  responsible for rendering the user's profile page.
  */
 const ProfilePage = () => {
-  const { isError, isLoading, refetch } = useAuthMeQuery()
+  const { data: user, isError, isLoading, refetch } = useAuthMeQuery()
 
   useEffect(() => {
     if (isError) {
@@ -25,7 +26,20 @@ const ProfilePage = () => {
     return <div>Error loading profile. Please try again later.</div>
   }
 
-  return <Profile />
+  return (
+    <>
+      <Head>
+        <title>Profile: {user?.userName}</title>
+        <meta
+          content={`Profile of ${user?.userName}. Check out the project on GitHub: https://github.com/NoName-ForTeam`}
+          name={'description'}
+        />
+        <meta content={`profile, ${user?.userName}, GitHub`} name={'keywords'} />
+        <meta content={'index, follow'} name={'robots'} />
+      </Head>
+      <Profile />
+    </>
+  )
 }
 
 export default ProfilePage

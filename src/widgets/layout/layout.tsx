@@ -28,12 +28,12 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<null | string>(null)
 
   useEffect(() => {
-    // initialize token in client side
-    setToken(Storage.getToken())
-
     const handleStorageChange = () => {
       setToken(Storage.getToken())
     }
+
+    // initialize token in client side
+    handleStorageChange()
 
     window.addEventListener('storage', handleStorageChange)
 

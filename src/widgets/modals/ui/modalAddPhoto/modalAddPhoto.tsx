@@ -1,4 +1,5 @@
 import { CloseOutline, ImageOutline } from '@/shared/assets'
+import { ErrorMessage } from '@/widgets/errorMessage'
 import {
   Button,
   Modal,
@@ -7,7 +8,6 @@ import {
   ModalHeader,
   Typography,
 } from '@photo-fiesta/ui-lib'
-import clsx from 'clsx'
 import Image from 'next/image'
 
 import styles from './modalAddPhoto.module.scss'
@@ -18,7 +18,6 @@ type ModalAddPhotoProps = {
   handleCloseModal: () => void
   isOpen: boolean
   postPhoto?: boolean
-  // setImage: (image: null | string | string[]) => void
   setImage: (image: null | string) => void
 }
 
@@ -42,8 +41,6 @@ export const ModalAddPhoto = ({
   setImage,
 }: ModalAddPhotoProps) => {
   const { error, fileInputRef, handleClick, handleFileChange, handleSave, isSaved, selectedImage } =
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     useModalAddPhoto({ handleCloseModal, isOpen, postPhoto, setImage })
 
   const classNames = {
@@ -68,17 +65,8 @@ export const ModalAddPhoto = ({
           </ModalClose>
         </ModalHeader>
         <div className={classNames.main}>
-          <div className={clsx(classNames.error, error && classNames.visible)}>
-            <Typography as={'span'} variant={'textBold16'}>
-              Error!{' '}
-            </Typography>
-            <Typography as={'span'} variant={'text14'}>
-              {error}
-            </Typography>
-          </div>
+          {error && <ErrorMessage error={error} />}
           <div className={classNames.block}>
-            {/*eslint-disable-next-line @typescript-eslint/ban-ts-comment*/}
-            {/*   @ts-expect-error*/}
             <PhotoPreview image={selectedImage} preview={classNames.photoPreview} size={228} />
             <input
               accept={'image/*'}

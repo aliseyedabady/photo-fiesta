@@ -1,4 +1,5 @@
 import {Public} from "@/features";
+import Head from "next/head";
 
 
 /**
@@ -8,7 +9,19 @@ import {Public} from "@/features";
 const PublicPage = () => {
 
     return (
-       <Public/>
+        <>
+         <Head>
+          <title>Public Page</title>
+          <meta
+            content={`Public page of Photo Fiesta. Check out the project on GitHub: https://github.com/NoName-ForTeam`}
+            name={'description'}
+          />
+          <meta content={`public, photo, fiesta, github`} name={'keywords'} />
+          <meta content={'index, follow'} name={'robots'} />
+          </Head>
+         <Public/>
+        </>
+
     )
 }
 
