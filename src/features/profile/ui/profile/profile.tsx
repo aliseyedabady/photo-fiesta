@@ -28,7 +28,9 @@ export const Profile = ({ className }: ProfileProps) => {
     useProfile()
   const userAvatar = profileInfo?.avatars.length ? [profileInfo.avatars[0]] : []
   const classNames = {
+    avatar: styles.avatar,
     bio: styles.bio,
+    bioMobile: styles.bioMobile,
     btnContainer: styles.btnContainer,
     counts: styles.counts,
     firstStat: styles.firstStat,
@@ -36,6 +38,7 @@ export const Profile = ({ className }: ProfileProps) => {
     root: styles.root,
     secondStat: styles.secondStat,
     title: styles.title,
+    titleMobile: styles.titleMobile,
     wrapper: styles.wrapper,
   } as const
 
@@ -63,7 +66,7 @@ export const Profile = ({ className }: ProfileProps) => {
   return (
     <div className={classNames.wrapper}>
       <div className={clsx(classNames.root, className)}>
-        <ProfileAvatar avatarOwner={profileInfo?.avatars[0]?.url} height={204} width={204} />
+        <ProfileAvatar avatarOwner={profileInfo?.avatars[0]?.url} className={classNames.avatar} />
         <div className={classNames.info}>
           <div className={classNames.title}>
             <Typography variant={'h1'}>{authData?.userId}</Typography>
@@ -82,12 +85,18 @@ export const Profile = ({ className }: ProfileProps) => {
             />
             <ProfileStat counts={2764} title={t.myProfile.publications} />
           </div>
-          <Typography className={classNames.bio} variant={'text16'}>
-            {profileInfo?.aboutMe}
-          </Typography>
+          <div className={classNames.bio}>
+            <Typography variant={'text16'}>{profileInfo?.aboutMe}</Typography>
+          </div>
         </div>
       </div>
       {/*TODO: fix type of userId*/}
+      <div className={classNames.titleMobile}>
+        <Typography variant={'textBold16'}>{authData?.userId}</Typography>
+      </div>
+      <div className={classNames.bioMobile}>
+        <Typography variant={'text14'}>{profileInfo?.aboutMe}</Typography>
+      </div>
       <PostList avatar={userAvatar} userId={authData?.userId ?? 0} />
     </div>
   )

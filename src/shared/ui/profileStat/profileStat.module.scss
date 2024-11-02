@@ -1,9 +1,18 @@
+@use '@/app/styles/mixins' as *;
+
 .root {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  align-items: center;
+
+  @include font(var(--font-size-s), var(--line-height-m), var(--font-weight-bold));
+
+  @include mobile {
+    @include font(var(--font-size-xs), var(--line-height-s), var(--font-weight-semibold))
+  }
 }
 
-.firstDigit {
-  margin-right: 6px; // отступ между первой цифрой и остальными
+.title {
+  font-weight: var(--font-weight-regular);
 }

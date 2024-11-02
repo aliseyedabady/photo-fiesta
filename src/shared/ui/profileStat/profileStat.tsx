@@ -2,6 +2,7 @@ import { Typography } from '@photo-fiesta/ui-lib'
 import clsx from 'clsx'
 
 import styles from './profileStat.module.scss'
+
 type ProfileStatProps = {
   className?: string
   counts: number
@@ -21,25 +22,17 @@ type ProfileStatProps = {
 
 export const ProfileStat = ({ className, counts, title }: ProfileStatProps) => {
   const classNames = {
-    firstDigit: styles.firstDigit,
     root: clsx(styles.root, className),
+    title: styles.title,
   }
-  let firstDigit
-  let restDigits
 
-  //transform number to string and divide the first digit
-  if (counts >= 1000) {
-    firstDigit = counts.toString().charAt(0)
-    restDigits = counts.toString().slice(1)
-  }
+  // transform number to string and divide the first digit
+  const formattedCounts = counts.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
   return (
     <div className={classNames.root}>
-      <Typography variant={'textBold14'}>
-        {firstDigit && <span className={styles.firstDigit}>{firstDigit}</span>}
-        <span>{restDigits ? restDigits : counts}</span>
-      </Typography>
-      <Typography variant={'textBold14'}>{title}</Typography>
+      <span> {formattedCounts}</span>
+      <span className={classNames.title}>{title}</span>
     </div>
   )
 }
