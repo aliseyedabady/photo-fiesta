@@ -1,4 +1,4 @@
-import { Typography } from '@photo-fiesta/ui-lib'
+import { NUMBER_WITH_SEPARATOR_REGEX } from '@/shared/config'
 import clsx from 'clsx'
 
 import styles from './profileStat.module.scss'
@@ -27,7 +27,7 @@ export const ProfileStat = ({ className, counts, title }: ProfileStatProps) => {
   }
 
   // transform number to string and divide the first digit
-  const formattedCounts = counts.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+  const formattedCounts = counts.toString().replace(NUMBER_WITH_SEPARATOR_REGEX, ' ')
 
   return (
     <div className={classNames.root}>

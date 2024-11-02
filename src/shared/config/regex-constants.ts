@@ -12,3 +12,6 @@ export const LAST_NAME_REGEX = /^[a-zA-Zа-яА-Я-]*$/
 //for internalization
 export const TAGS_REGEX = /(<\d+>[^<>]*<\/\d+>)/
 export const OPEN_CLOSE_TAG_REGEX = /<(\d+)>([^<>]*)<\/(\d+)>/
+
+//for number formating
+export const NUMBER_WITH_SEPARATOR_REGEX = /\B(?=(\d{3})+(?!\d))/g
