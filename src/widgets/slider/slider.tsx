@@ -3,14 +3,14 @@ import Slider from 'react-slick'
 
 import { Step } from '@/features'
 import { ArrowIosBackOutline, ArrowIosForwardOutline, ImageOutline } from '@/shared/assets'
-import { ALLOWED_FORMATS, MAX_FILE_SIZE } from '@/shared/config'
+import { ALLOWED_FORMATS, MAX_FILE_SIZE_FOR_POST, MAX_PHOTOS } from '@/shared/config'
 import { ErrorMessage } from '@/widgets'
 import { Button } from '@photo-fiesta/ui-lib'
 import clsx from 'clsx'
 import Image from 'next/image'
 
-import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import 'slick-carousel/slick/slick.css'
 
 import styles from './slider.module.scss'
 
@@ -51,6 +51,12 @@ export const Carousel = ({
     const newImages: string[] = []
     let hasError = false
 
+    if (allPhotos.length > MAX_PHOTOS) {
+      setError('You can only upload 10 photos')
+
+      return
+    }
+
     Array.from(files).forEach(file => {
       if (!ALLOWED_FORMATS.includes(file.type)) {
         setError('The format of the uploaded photo must be PNG and JPEG')
@@ -59,8 +65,8 @@ export const Carousel = ({
         return
       }
 
-      if (file.size > MAX_FILE_SIZE) {
-        setError('Photo size must be less than 10 MB!')
+      if (file.size > MAX_FILE_SIZE_FOR_POST) {
+        setError('Photo size must be less than 20 MB!')
         hasError = true
 
         return
@@ -94,7 +100,6 @@ export const Carousel = ({
     slider: styles.slider,
     visible: styles.visible,
   } as const
-  // const allPhotos = Array.isArray(photos) ? photos : [photos]
   /**
    * Settings for the react-slick slider.
    * These settings configure how the carousel behaves, including arrows, dots, and transition speed.
