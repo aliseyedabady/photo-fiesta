@@ -19,16 +19,16 @@
 }
 
 .slider {
-  aspect-ratio: 492 / 504;
+  aspect-ratio: var(--max-width-image) / var(--max-height-image);
   width: 100%;
-  max-width: 492px;
+  max-width: var(--max-width-image);
   max-height: var(--max-height-image);
 }
 
 .selectedImage {
   width: 100%;
-  max-width: 492px;
-  height: 504px;
+  max-width: var(--max-width-image);
+  height: var(--max-height-image);
   object-fit: cover;
 }
 

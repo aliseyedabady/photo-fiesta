@@ -51,7 +51,7 @@
 
 .autoSize {
   width: 100%;
-  max-width: 492px;
+  max-width: var(--max-width-image);
 
   .imageSection {
     width: 100%;
