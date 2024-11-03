@@ -11,23 +11,43 @@ import { useSettingsTabs } from './useSettingsTabs'
  */
 export const Settings = () => {
   const { TABS_CONFIG, currentTab, setCurrentTab } = useSettingsTabs()
+  // const { t } = useTranslation()
+  // const { handleCloseAddPhotoModal, isActive, modalState, setSelectedImage, sidebarItems } =
+  //   useSidebar()
+  //
+  // const goToProfile = sidebarItems.find(item => item.href.startsWith(ROUTES.PROFILE))?.href
+
+  const classNames = {
+    profileSettings: styles.profileSettings,
+    settingsContainer: styles.settingsContainer,
+    tabsContent: styles.tabsContent,
+    tabsList: styles.tabsList,
+    tabsTrigger: styles.tabsTrigger,
+  } as const
 
   const tabTriggers = TABS_CONFIG.map(tab => (
-    <TabsTrigger className={styles.tabsTrigger} key={tab.value} value={tab.value}>
+    <TabsTrigger className={classNames.tabsTrigger} key={tab.value} value={tab.value}>
       {tab.label}
     </TabsTrigger>
   ))
 
   const tabContents = TABS_CONFIG.map(tab => (
-    <TabsContent className={styles.tabsContent} key={tab.value} value={tab.value}>
+    <TabsContent className={classNames.tabsContent} key={tab.value} value={tab.value}>
       {tab.content}
     </TabsContent>
   ))
 
   return (
-    <div className={styles.settingsContainer}>
+    <div className={classNames.settingsContainer}>
+      {/*<Link href={goToProfile || ''}>*/}
+      {/*  <ArrowIosBackOutline width={16} height={16} onClick={goToProfile} />*/}
+      {/*</Link>*/}
+
+      {/*<Typography className={classNames.profileSettings} variant={'h2'}>*/}
+      {/*  {t.myProfile.settings}*/}
+      {/*</Typography>*/}
       <Tabs onValueChange={setCurrentTab} value={currentTab}>
-        <TabsList className={styles.tabsList}>{tabTriggers}</TabsList>
+        <TabsList className={classNames.tabsList}>{tabTriggers}</TabsList>
         {tabContents}
       </Tabs>
     </div>

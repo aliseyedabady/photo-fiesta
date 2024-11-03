@@ -1,3 +1,5 @@
+@use '@/app/styles/mixins' as *;
+
 // TODO: add styles for mobile
 
 .settingsContainer {
@@ -9,11 +11,42 @@
   & > div {
     width: 94%;
   }
+
+  @include mobile {
+    padding-inline: 15px;
+
+    // flex-direction: column;
+
+    & > div {
+      width: 100%;
+    }
+  }
 }
+
+// .profileSettings {
+//  text-align: center;
+// }
 
 .tabsList {
   display: flex;
   max-width: 972px;
+
+  @include mobile {
+    // overflow: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  @include mobile {
+    overflow-x: auto;
+    margin-inline: -15px;
+    padding-inline: 15px;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 .tabsTrigger {

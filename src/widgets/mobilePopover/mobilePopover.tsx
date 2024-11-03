@@ -7,6 +7,8 @@ import { PopoverContent, PopoverRoot, PopoverTrigger } from '@/shared/ui'
 import { useTranslation } from '@/shared/utils'
 import { ConfirmationModal, SidebarElement } from '@/widgets'
 import { useSidebar } from '@/widgets/sidebar/useSidebar'
+import clsx from 'clsx'
+import { useRouter } from 'next/router'
 
 import styles from './mobilePopover.module.scss'
 
@@ -25,6 +27,10 @@ export const MobilePopover = () => {
   const { t } = useTranslation()
 
   const { handleProfileSettings } = useProfile()
+
+  const router = useRouter()
+
+  const isProfileSettingsPage = router.pathname === ROUTES.SETTINGS
 
   const profileSettingsOnClickHandler = () => {
     handleProfileSettings()
@@ -68,6 +74,10 @@ export const MobilePopover = () => {
   const classNames = {
     more: styles.more,
     popoverContent: styles.popoverContent,
+    profileSettingsContainer: clsx(
+      styles.profileSettingsContainer,
+      isProfileSettingsPage && styles.hideOnMobile
+    ),
   } as const
 
   return (
@@ -80,7 +90,7 @@ export const MobilePopover = () => {
           />
         </PopoverTrigger>
         <PopoverContent className={classNames.popoverContent}>
-          {renderProfileSettings}
+          <div className={classNames.profileSettingsContainer}>{renderProfileSettings}</div>
           {renderRestItems}
           {renderLogOut}
         </PopoverContent>
