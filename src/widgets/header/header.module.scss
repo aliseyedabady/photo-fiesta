@@ -23,6 +23,11 @@
     bottom: 0;
     left: 20px;
 
+    @include mobile {
+      right: 0;
+      left: 0;
+    }
+
     height: 1px;
 
     background-color: var(--dark-300);
@@ -66,13 +71,5 @@
 
   @include mobile {
     display: none;
-  }
-}
-
-.more {
-  display: none;
-
-  @include mobile {
-    display: block;
   }
 }

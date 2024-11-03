@@ -24,6 +24,14 @@
   justify-content: center;
 
   height: calc(100vh - var(--header-height));
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.menu {
+  display: none;
 }
 
 @include mobile {

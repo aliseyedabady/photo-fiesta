@@ -1,0 +1,17 @@
+.error {
+  width: 100%;
+  max-width: 444px;
+  max-height: fit-content;
+  padding: 5px 41px;
+
+  text-align: center;
+
+  visibility: hidden;
+  opacity: 0;
+  background-color: var(--danger-500);
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+}

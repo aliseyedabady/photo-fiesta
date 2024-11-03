@@ -1,9 +1,9 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import { Notifications } from '@/features'
-import { MoreHorizontal } from '@/shared/assets'
 import { ROUTES } from '@/shared/config'
 import { LanguageSelect } from '@/shared/ui'
+import { MobilePopover } from '@/widgets'
 import { Button, Typography } from '@photo-fiesta/ui-lib'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -46,7 +46,7 @@ export const Header = forwardRef<ElementRef<'div'>, HeaderProps>(
           {isAuth && <Notifications />}
           <LanguageSelect className={classNames.select} />
           {/**TODO: add dropdown menu using icon for mobile*/}
-          {isAuth && <MoreHorizontal className={classNames.more} />}
+          {isAuth && <MobilePopover />}
           {!isAuth && (
             <div className={classNames.loginButtons}>
               <Button asChild variant={'link'}>

@@ -3,6 +3,7 @@ export const en = {
     backToSignIn: 'Back to Sign In',
     backToSignUp: 'Back to Sign Up',
     confirm: 'Confirm password',
+    confirmLogout: 'Are you really want to logout of your account?',
     confirmPassword: 'Password confirmation',
     congratulations: 'Congratulations!',
     createNewPassword: 'Create new password',

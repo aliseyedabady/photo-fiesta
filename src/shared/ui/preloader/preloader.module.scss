@@ -1,8 +1,7 @@
+@use '@/app/styles/mixins' as *;
+
 .overlay {
-  position: fixed;
-  z-index: 999;
-  inset: 0;
-  background: var(--overlay-color);
+  @include overlay;
 }
 
 .content {
