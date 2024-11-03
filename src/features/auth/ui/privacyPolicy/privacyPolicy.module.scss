@@ -29,6 +29,7 @@
     &:visited {
       color: var(--light-100);
     }
+
     @include mobile {
       position: absolute;
       left: 0;
