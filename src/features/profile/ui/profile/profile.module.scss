@@ -1,3 +1,5 @@
+@use '@/app/styles/mixins' as *;
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -5,12 +7,33 @@
 
   width: 100%;
   padding: 36px 64px 0 24px;
+
+  @include mobile {
+    padding: 24px 15px 0;
+  }
 }
 
 .root {
   display: flex;
   gap: 38px;
   margin-bottom: 50px;
+
+  @include mobile {
+    gap: 0;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+}
+
+.avatar {
+  width: 204px;
+  height: 204px;
+
+  @include mobile {
+    width: 72px;
+    height: 72px;
+  }
 }
 
 .info {
@@ -18,25 +41,69 @@
   flex-direction: column;
   flex-grow: 1;
   gap: 20px;
+
+  @include mobile {
+    padding-left: max(0px, calc(34% - 84px));
+  }
 }
 
 .title {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @include mobile {
+    display: none;
+  }
+}
+
+.titleMobile {
+  display: none;
+  margin-bottom: 13px;
+
+  @include mobile {
+    display: block;
+  }
+}
+
+.bio {
+  @include mobile {
+    display: none;
+  }
+}
+
+.bioMobile {
+  display: none;
+  margin-bottom: 29px;
+
+  @include mobile {
+    display: block;
+  }
 }
 
 .counts {
   display: flex;
   align-items: center;
+
+  @include mobile {
+    justify-content: space-between;
+  }
 }
 
 .firstStat {
   margin-right: 100px;
+
+  @include mobile {
+    margin-inline: 0;
+  }
 }
 
 .secondStat {
   margin-right: 88px;
+
+  @include mobile {
+    margin-inline: 0;
+  }
 }
 
 .btnContainer {

@@ -32,14 +32,20 @@ export const PostList = ({ avatar, userId }: Props) => {
     setOpenModal(true)
   }
 
+  const classNames = {
+    image: styles.image,
+    postGrid: styles.postGrid,
+  } as const
+
   // TODO: scroll for posts
 
   return (
     <>
-      <div className={styles.postGrid}>
+      <div className={classNames.postGrid}>
         {userPosts.items.map(post => (
           <Image
             alt={'post image'}
+            className={classNames.image}
             height={228}
             key={post.id}
             onClick={() => handleOpenImageModal(post.id, post.images[0]?.url)}
