@@ -25,7 +25,6 @@ export type HeaderProps = {
 export const Header = forwardRef<ElementRef<'div'>, HeaderProps>(
   ({ className, isAuth = true, ...rest }, ref) => {
     const classNames = {
-      // bell: styles.bell,
       buttonsContainer: styles.buttonsContainer,
       flag: styles.flag,
       header: clsx(styles.header, className),

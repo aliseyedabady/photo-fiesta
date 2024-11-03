@@ -32,7 +32,6 @@ export const API_URLS = {
     UPDATE_POST: (postId: number) => `v1/posts/${postId}`,
     UPLOAD_POST_IMAGE: 'v1/posts/image',
   },
-
   PROFILE: {
     DELETE_AVATAR: 'v1/users/profile/avatar',
     DELETE_PROFILE: 'v1/users/profile',
@@ -41,9 +40,11 @@ export const API_URLS = {
     POST_AVATAR: 'v1/users/profile/avatar',
     UPDATE_PROFILE: 'v1/users/profile',
   },
+
   PUBLIC_USERS: {
     GET_TOTAL_COUNT_USERS: 'v1/public-user',
   },
+  SOCKET_URL: 'https://inctagram.work',
   SUBSCRIPTIONS: {
     CANCEL_AUTO_RENEWAL: 'v1/subscriptions/canceled-auto-renewal',
     CREATE_SUBSCRIPTIONS: 'v1/subscriptions',
@@ -58,4 +59,13 @@ export const METHOD = {
   GET: 'GET',
   POST: 'POST',
   PUT: 'PUT',
+} as const
+
+export const WS_EVENT_PATH = {
+  ERROR: 'error',
+  MESSAGE_DELETED: 'message-deleted',
+  MESSAGE_SENT: 'message-sent',
+  NOTIFICATIONS: 'notifications',
+  RECEIVE_MESSAGE: 'receive-message',
+  UPDATE_MESSAGE: 'update-message',
 } as const

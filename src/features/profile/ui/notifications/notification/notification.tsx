@@ -7,7 +7,24 @@ import styles from './notification.module.scss'
 type NotificationProps = {
   notification: Notification
 }
-
+/**
+ * NotificationItem component displays a single notification with its details.
+ *
+ * It shows whether the notification has been read, the notification message,
+ * and the time elapsed since the notification was created. The component
+ * also supports internationalization, displaying text based on the selected
+ * language.
+ *
+ * @example
+ * const notification = {
+ *   id: 1,
+ *   isRead: false,
+ *   message: 'You have a new message!',
+ *   notifyAt: '2024-10-31T10:00:00Z'
+ * };
+ *
+ * <NotificationItem notification={notification} />
+ */
 export const NotificationItem = ({ notification }: NotificationProps) => {
   const timeAgo = useTimeAgo(notification.notifyAt)
   const { t } = useTranslation()

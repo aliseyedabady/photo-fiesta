@@ -29,6 +29,12 @@ export const notificationsApi = baseApi.injectEndpoints({
     getAllNotifications: builder.query<GetNotificationsResponse, GetNotificationsArgs>({
       providesTags: ['Notifications'],
       query: ({ cursor }) => GET_ALL_NOTIFICATIONS(cursor),
+      /**
+       * Transforms the response from the API by sorting the notifications
+       * based on the notification date in ascending order.
+       * @param {GetNotificationsResponse} response - The response object from the API containing
+       * the notifications data and metadata.
+       */
       transformResponse: (response: GetNotificationsResponse) => {
         response.items.sort(
           (a, b) => new Date(a.notifyAt).getTime() - new Date(b.notifyAt).getTime()
