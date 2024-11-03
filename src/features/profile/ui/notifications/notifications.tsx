@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 
 import { NotificationItem, NotificationsIcon, useGetAllNotificationsQuery } from '@/features'
-import { useConnectSocket } from '@/shared/utils'
+import { useConnectSocket, useTranslation } from '@/shared/utils'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +19,7 @@ import {
  * an icon that indicates the number of new notifications
  */
 export const Notifications = () => {
+  const { t } = useTranslation()
   const { notifications: newNotification } = useConnectSocket()
   const { data } = useGetAllNotificationsQuery({ cursor: 0 })
   const [amountOfNewNotifications, setAmountOfNewNotifications] = useState(0)
@@ -45,7 +46,12 @@ export const Notifications = () => {
       <DropdownMenuTrigger asChild>
         <NotificationsIcon isOpen={isDropdownOpen} newNotifications={amountOfNewNotifications} />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align={'end'} alignOffset={-10} label={'Уведомления'} sideOffset={2}>
+      <DropdownMenuContent
+        align={'end'}
+        alignOffset={-10}
+        label={t.notifications.notifications}
+        sideOffset={2}
+      >
         {notificationItems}
       </DropdownMenuContent>
     </DropdownMenu>

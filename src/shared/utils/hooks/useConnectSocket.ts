@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { SocketApi } from '@/app/api/socketApi'
+import { SocketApi } from '@/app/api'
 import { Notification } from '@/features'
 import { WS_EVENT_PATH } from '@/shared/config'
 
