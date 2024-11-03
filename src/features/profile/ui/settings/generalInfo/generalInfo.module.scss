@@ -33,7 +33,7 @@
 
     @include mobile {
       width: 100%;
-      height: 48px;
+      height: var(--general-info-button-height);
       margin-top: 0;
     }
   }
@@ -64,9 +64,6 @@
 
     @include mobile {
       resize: none;
-    }
-
-    @include mobile {
       gap: 12px;
     }
   }
@@ -76,7 +73,7 @@
 
     @include mobile {
       width: 100%;
-      height: 48px;
+      height: var(--general-info-button-height);
       margin-top: 12px;
     }
   }

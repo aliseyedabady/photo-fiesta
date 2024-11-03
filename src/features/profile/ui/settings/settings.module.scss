@@ -39,11 +39,6 @@
 
   @include mobile {
     overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  @include mobile {
-    overflow-x: auto;
     margin-inline: -15px;
     padding-inline: 15px;
     white-space: nowrap;
