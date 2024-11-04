@@ -23,3 +23,13 @@
     text-decoration: none;
   }
 }
+
+.profileSettingsContainer {
+  height: 24px;
+
+  @include mobile {
+    &.hideOnMobile {
+      display: none;
+    }
+  }
+}

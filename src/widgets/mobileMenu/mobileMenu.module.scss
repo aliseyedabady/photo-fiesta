@@ -1,3 +1,11 @@
+@use '@/app/styles/mixins' as *;
+
+.root {
+  &.hideOnMobile {
+    display: none;
+  }
+}
+
 .container {
   & a[class*='active'] {
     font-weight: bold;

@@ -2,6 +2,7 @@ import { ROUTES } from '@/shared/config'
 import { ModalAddPhoto, SidebarElement, useSidebar } from '@/widgets'
 import { MenuMobile } from '@photo-fiesta/ui-lib'
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 
 import styles from './mobileMenu.module.scss'
 
@@ -14,6 +15,9 @@ export const MobileMenu = ({ className }: MobileMenuProps) => {
   const { handleCloseAddPhotoModal, isActive, modalState, setSelectedImage, sidebarItems } =
     useSidebar()
   const { isCreateModalOpen } = modalState
+
+  const router = useRouter()
+  const isProfileSettingsPage = router.pathname === ROUTES.SETTINGS
 
   const renderSidebarItems = [
     /** to exclude Statics and Favorites, and to move Profile to the end */
@@ -37,7 +41,7 @@ export const MobileMenu = ({ className }: MobileMenuProps) => {
 
   const classNames = {
     container: styles.container,
-    root: clsx(styles.root, className),
+    root: clsx(styles.root, isProfileSettingsPage && styles.hideOnMobile, className),
   } as const
 
   return (

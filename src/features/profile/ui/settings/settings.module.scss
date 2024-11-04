@@ -1,4 +1,4 @@
-// TODO: add styles for mobile
+@use '@/app/styles/mixins' as *;
 
 .settingsContainer {
   display: flex;
@@ -9,11 +9,44 @@
   & > div {
     width: 94%;
   }
+
+  @include mobile {
+    flex-direction: column;
+    padding: 17px 15px 0;
+
+    & > div {
+      width: 100%;
+    }
+  }
+}
+
+.profileSettings {
+  text-align: center;
+}
+
+.linkMyProfileRoute {
+  position: absolute;
+  height: 24px;
+}
+
+.tabsContainer {
+  padding-top: 19px;
 }
 
 .tabsList {
   display: flex;
   max-width: 972px;
+
+  @include mobile {
+    overflow-x: auto;
+    margin-inline: -15px;
+    padding-inline: 15px;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 .tabsTrigger {
