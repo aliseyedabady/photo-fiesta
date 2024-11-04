@@ -27,6 +27,7 @@ export const SignIn = () => {
   const classNames = {
     container: styles.container,
     form: styles.form,
+    input: styles.input,
   } as const
 
   if (isShowLoading) {
@@ -37,7 +38,7 @@ export const SignIn = () => {
     <AuthCard
       footerLinkHref={ROUTES.SIGN_UP}
       footerLinkText={t.auth.signUp}
-      footerText={t.auth.haveAccount}
+      footerText={t.auth.noAccount}
       title={t.auth.signIn}
     >
       <form className={classNames.form} onSubmit={onSubmit}>
@@ -46,7 +47,12 @@ export const SignIn = () => {
             control={control}
             name={'email'}
             render={({ field }) => (
-              <Input label={t.auth.email} placeholder={t.input.email} {...field} />
+              <Input
+                className={classNames.input}
+                label={t.auth.email}
+                placeholder={t.input.email}
+                {...field}
+              />
             )}
           />
           <Controller
@@ -54,6 +60,7 @@ export const SignIn = () => {
             name={'password'}
             render={({ field }) => (
               <Input
+                className={classNames.input}
                 label={t.auth.password}
                 placeholder={t.input.password}
                 variant={'password'}
@@ -93,6 +100,7 @@ const FormButtons = () => {
   const classNames = {
     button: styles.button,
     password: styles.password,
+    submitBtn: styles.submitBtn,
   } as const
 
   return (
@@ -102,7 +110,7 @@ const FormButtons = () => {
           <Typography variant={'text14'}>{t.auth.forgotPassword}</Typography>
         </Link>
       </Button>
-      <Button type={'submit'} variant={'primary'}>
+      <Button className={classNames.submitBtn} type={'submit'} variant={'primary'}>
         {t.auth.signIn}
       </Button>
     </div>

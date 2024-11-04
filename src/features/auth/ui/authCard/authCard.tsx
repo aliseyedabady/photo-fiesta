@@ -41,6 +41,7 @@ export const AuthCard = ({
     footer: styles.footer,
     header: styles.header,
     icons: styles.icons,
+    link: styles.link,
     links: styles.links,
   } as const
 
@@ -67,7 +68,9 @@ export const AuthCard = ({
       <div className={classNames.footer}>
         <Typography variant={'text16'}>{footerText}</Typography>
         <Button asChild variant={'link'}>
-          <Link href={footerLinkHref}>{footerLinkText}</Link>
+          <Link className={classNames.link} href={footerLinkHref}>
+            {footerLinkText}
+          </Link>
         </Button>
       </div>
     </Card>

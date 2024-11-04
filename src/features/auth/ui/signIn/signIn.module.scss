@@ -8,6 +8,8 @@
 
   @include mobile {
     gap: 5px;
+    font-size: var(--font-size-l);
+    line-height: var(--line-height-m);
   }
 
   & .container {
@@ -18,6 +20,10 @@
 
     & .errorMessage {
       color: var(--danger-500);
+    }
+
+    @include mobile {
+      gap: 24px;
     }
   }
 
@@ -34,6 +40,20 @@
       cursor: pointer;
       align-self: flex-end;
       color: var(--light-900);
+    }
+
+    & .submitBtn {
+      @include mobile {
+        padding: 12px 24px;
+      }
+    }
+  }
+
+  .input {
+    background-color: var(--dark-500);
+
+    @include mobile {
+      background-color: var(--dark-700);
     }
   }
 }

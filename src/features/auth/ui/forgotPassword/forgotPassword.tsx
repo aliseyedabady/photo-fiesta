@@ -46,15 +46,18 @@ export const ForgotPassword = () => {
     form: styles.form,
     link: styles.link,
     recaptcha: styles.recaptcha,
+    sendButton: styles.sendButton,
     title: styles.title,
   } as const
 
   const button = isLinkSent ? (
-    <Button fullWidth onClick={() => setIsLinkSent(false)}>
+    <Button className={classNames.sendButton} fullWidth onClick={() => setIsLinkSent(false)}>
       {t.auth.sendLinkAgain}
     </Button>
   ) : (
-    <Button fullWidth>{t.auth.sendLink}</Button>
+    <Button className={classNames.sendButton} fullWidth>
+      {t.auth.sendLink}
+    </Button>
   )
 
   return (

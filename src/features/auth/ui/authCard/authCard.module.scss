@@ -8,6 +8,7 @@
   @include mobile {
     height: 100%;
     padding: 17px 15px 76px;
+    background-color: var(--dark-700) !important;
   }
 }
 
@@ -24,6 +25,14 @@
     > * {
       @include font(var(--font-size-l), var(--line-height-m), var(--font-weight-bold));
     }
+  }
+}
+
+.link {
+  font-weight: var(--font-weight-semibold);
+
+  @include mobile {
+    font-size: var(--font-size-s);
   }
 }
 
