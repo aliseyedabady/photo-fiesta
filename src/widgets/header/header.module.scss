@@ -64,15 +64,6 @@
   }
 }
 
-.bell {
-  width: 24px;
-  height: 24px;
-
-  @include mobile {
-    display: none;
-  }
-}
-
 .loginButtons {
   display: flex;
   gap: 24px;

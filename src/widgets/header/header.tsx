@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { OutlineBell } from '@/shared/assets'
+import { Notifications } from '@/features/notifications'
 import { ROUTES } from '@/shared/config'
 import { LanguageSelect } from '@/shared/ui'
 import { MobilePopover } from '@/widgets'
@@ -25,7 +25,6 @@ export type HeaderProps = {
 export const Header = forwardRef<ElementRef<'div'>, HeaderProps>(
   ({ className, isAuth = true, ...rest }, ref) => {
     const classNames = {
-      bell: styles.bell,
       buttonsContainer: styles.buttonsContainer,
       flag: styles.flag,
       header: clsx(styles.header, className),
@@ -44,7 +43,7 @@ export const Header = forwardRef<ElementRef<'div'>, HeaderProps>(
         </Link>
         <div className={classNames.buttonsContainer}>
           {/**TODO: add dropdown menu using icon for desktop*/}
-          {isAuth && <OutlineBell className={classNames.bell} />}
+          {isAuth && <Notifications />}
           <LanguageSelect className={classNames.select} />
           {/**TODO: add dropdown menu using icon for mobile*/}
           {isAuth && <MobilePopover />}

@@ -1,5 +1,4 @@
-import { useDeleteByIdMutation } from '@/features/device/api/device.api'
-import { Device } from '@/features/device/api/device.types'
+import { Device, useDeleteByIdMutation } from '@/features'
 import { Chrome, LogOut, PC, Phone } from '@/shared/assets'
 import { formatDateTo, useTranslation } from '@/shared/utils'
 import { Button, Typography } from '@photo-fiesta/ui-lib'

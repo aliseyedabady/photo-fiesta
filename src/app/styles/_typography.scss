@@ -2,6 +2,7 @@
   --font-family-primary: 'Inter', sans-serif;
 
   // line heights
+  --line-height-xs: 8px;
   --line-height-s: 16px;
   --line-height-m: 24px;
   --line-height-l: 36px;
@@ -9,6 +10,7 @@
   /**
  * Font size variables
  * @type {Object}
+ * @property {number} --font-size-xxs - Extra small font size (10px)
  * @property {number} --font-size-xs - Extra small font size (12px)
  * @property {number} --font-size-s - Small font size (14px)
  * @property {number} --font-size-m - Medium font size (16px)
@@ -17,6 +19,7 @@
  * @property {number} --font-size-xxl - Extra extra large font size (26px)
  */
   // font sizes
+  --font-size-xxs: 0.625rem;
   --font-size-xs: 0.75rem;
   --font-size-s: 0.875rem;
   --font-size-m: 1rem;

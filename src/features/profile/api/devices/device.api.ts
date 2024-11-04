@@ -1,5 +1,5 @@
 import { baseApi } from '@/app/api'
-import { GetSessions } from '@/features/device/api/device.types'
+import { GetSessions } from '@/features'
 import { API_URLS, METHOD } from '@/shared/config'
 
 const { DELETE_SESSION_BY_DEVICE_ID, DELETE_SESSION_TEMPLATE_ALL, GET_SESSIONS } = API_URLS.DEVICES

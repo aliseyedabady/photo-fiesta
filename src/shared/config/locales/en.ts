@@ -80,6 +80,11 @@ export const en = {
     settings: 'Profile Settings',
     unfollow: 'Unfollow',
   },
+  notifications: {
+    new: 'New',
+    newNotification: 'New notification!',
+    notifications: 'Notifications',
+  },
   privacyPolicy: {
     introduction: `Welcome to Inctagram! Your privacy is important to us, and this policy explains how we collect, use, and protect your personal data. Please read it carefully.`,
     sections: {

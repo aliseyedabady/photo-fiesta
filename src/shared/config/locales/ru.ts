@@ -84,6 +84,11 @@ export const ru: LocaleType = {
     settings: 'Настройки профиля',
     unfollow: 'Отписаться',
   },
+  notifications: {
+    new: 'Новое',
+    newNotification: 'Новое уведомление!',
+    notifications: 'Уведомления',
+  },
   privacyPolicy: {
     introduction: `Добро пожаловать в Inctagram! Ваша конфиденциальность важна для нас. В этой политике объясняется, как мы собираем, используем и защищаем ваши персональные данные. Пожалуйста, ознакомьтесь с ней внимательно.`,
     sections: {
