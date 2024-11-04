@@ -1,5 +1,5 @@
 import { baseApi } from '@/app/api'
-import { GetNotificationsArgs, GetNotificationsResponse } from '@/features'
+import { GetNotificationsArgs, GetNotificationsResponse } from '@/features/notifications'
 import { API_URLS, METHOD } from '@/shared/config'
 
 const { DELETE, PUT } = METHOD

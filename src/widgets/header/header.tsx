@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { Notifications } from '@/features'
+import { Notifications } from '@/features/notifications'
 import { ROUTES } from '@/shared/config'
 import { LanguageSelect } from '@/shared/ui'
 import { MobilePopover } from '@/widgets'

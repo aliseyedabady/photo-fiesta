@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { NotificationItem, NotificationsIcon, useGetAllNotificationsQuery } from '@/features'
+import {
+  NotificationItem,
+  NotificationsIcon,
+  useGetAllNotificationsQuery,
+} from '@/features/notifications'
 import { useConnectSocket, useTranslation } from '@/shared/utils'
 import {
   DropdownMenu,

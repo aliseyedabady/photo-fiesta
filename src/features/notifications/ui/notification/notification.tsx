@@ -1,4 +1,4 @@
-import { Notification } from '@/features'
+import { Notification } from '@/features/notifications'
 import { useTimeAgo, useTranslation } from '@/shared/utils'
 import { Typography } from '@photo-fiesta/ui-lib'
 

@@ -1,4 +1,4 @@
-@use '@/app/styles/mixins' as *;
+@use 'mixins' as *;
 
 .icons {
   cursor: pointer;
@@ -31,9 +31,8 @@
   width: 13px;
   height: 13px;
 
-  font-size: 10px;
-  font-weight: var(--font-weight-medium);
-  line-height: 8px;
+  @include font(var(--font-size-xxs), var(--line-height-xs), var(--font-weight-medium));
+
   color: white;
 
   background-color: var(--danger-500);
