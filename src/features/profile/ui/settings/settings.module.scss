@@ -21,12 +21,21 @@
 }
 
 .profileSettings {
+  display: none;
+  @include mobile {
+    display: block;
   text-align: center;
+  }
 }
 
 .linkMyProfileRoute {
-  position: absolute;
-  height: 24px;
+  display: none;
+  @include mobile {
+    display: block;
+    position: absolute;
+    height: 24px;
+  }
+
 }
 
 .tabsContainer {
