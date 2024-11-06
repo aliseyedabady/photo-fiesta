@@ -8,8 +8,6 @@
 
   @include mobile {
     gap: 5px;
-    font-size: var(--font-size-l);
-    line-height: var(--line-height-m);
   }
 
   & .container {
@@ -50,10 +48,6 @@
   }
 
   .input {
-    background-color: var(--dark-500);
-
-    @include mobile {
-      background-color: var(--dark-700);
-    }
+    @include input-background;
   }
 }

@@ -12,10 +12,7 @@
   padding: 25px;
 
   @include mobile {
-    height: 100%;
-    padding: 17px 15px 28px;
-    background-color: var(--dark-700) !important;
-    border: none;
+    @include auth-mobile;
   }
 
   .titleSignUp {
@@ -23,8 +20,7 @@
     text-align: center;
 
     @include mobile {
-      font-size: var(--font-size-l);
-      line-height: var(--line-height-m);
+      @include font(var(--font-size-l), var(--line-height-m), var(--font-weight-bold));
     }
   }
 
@@ -40,11 +36,7 @@
   }
 
   .input {
-    background-color: var(--dark-500);
-
-    @include mobile {
-      background-color: var(--dark-700);
-    }
+    @include input-background;
   }
 
   .checkbox {
@@ -81,8 +73,7 @@
 
     @include mobile {
       margin-bottom: 12px;
-      font-size: var(--font-size-s);
-      line-height: var(--line-height-s);
+      @include font(var(--font-size-s), var(--line-height-s), var(--font-weight-semibold));
     }
   }
 }

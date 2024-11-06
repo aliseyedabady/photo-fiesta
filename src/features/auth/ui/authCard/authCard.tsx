@@ -43,12 +43,15 @@ export const AuthCard = ({
     icons: styles.icons,
     link: styles.link,
     links: styles.links,
+    title: styles.title,
   } as const
 
   return (
     <Card className={classNames.card}>
       <div className={classNames.header}>
-        <Typography variant={'h1'}>{title}</Typography>
+        <Typography className={classNames.title} variant={'h1'}>
+          {title}
+        </Typography>
         <div className={classNames.links}>
           <Button asChild variant={'icon-link'}>
             {/**TODO: add link to google*/}
