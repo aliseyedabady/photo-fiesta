@@ -49,7 +49,7 @@ export const notificationsApi = baseApi.injectEndpoints({
     markNotificationAsRead: builder.mutation<void, { ids: number[] }>({
       invalidatesTags: ['Notifications'],
       query: params => ({
-        body: params,
+        body: params, //поменять на body
         method: PUT,
         url: MARK_NOTIFICATION_AS_READ,
       }),

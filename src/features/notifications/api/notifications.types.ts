@@ -17,3 +17,11 @@ export type Notification = {
   message: string
   notifyAt: string
 }
+
+export type SocketResponse = {
+  clientId: string
+  id: number
+  isRead: boolean
+  message: string
+  notifyAt: string
+}

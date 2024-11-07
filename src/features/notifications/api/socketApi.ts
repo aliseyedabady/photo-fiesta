@@ -7,9 +7,10 @@ const { SOCKET_URL } = API_URLS
 export class SocketApi {
   static socket: Socket | null = null
   static createConnection() {
+    const accessToken = Storage.getToken()
     const queryParams = {
       query: {
-        accessToken: Storage.getToken(),
+        accessToken,
       },
     }
 
