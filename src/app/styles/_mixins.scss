@@ -104,3 +104,17 @@
   inset: 0;
   background: var(--overlay-color);
 }
+
+@mixin auth-mobile {
+  height: 100%;
+  padding: 17px 15px 76px;
+  background-color: var(--dark-700) !important;
+}
+
+@mixin input-background {
+  background-color: var(--dark-500);
+
+  @include mobile {
+    background-color: var(--dark-700);
+  }
+}

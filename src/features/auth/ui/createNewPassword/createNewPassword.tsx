@@ -26,6 +26,7 @@ export const CreateNewPassword = () => {
     card: styles.card,
     description: styles.description,
     fieldContainer: styles.container,
+    input: styles.input,
     submitBtn: styles.btn,
     title: styles.title,
   } as const
@@ -38,12 +39,14 @@ export const CreateNewPassword = () => {
       <form onSubmit={onSubmit}>
         <div className={classNames.fieldContainer}>
           <FormInput
+            className={classNames.input}
             control={control}
             label={t.auth.newPassword}
             name={'newPassword'}
             variant={'password'}
           />
           <FormInput
+            className={classNames.input}
             control={control}
             errorMessage={errors.newPassword?.message}
             label={t.auth.confirmPassword}

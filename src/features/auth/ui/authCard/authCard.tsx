@@ -41,13 +41,17 @@ export const AuthCard = ({
     footer: styles.footer,
     header: styles.header,
     icons: styles.icons,
+    link: styles.link,
     links: styles.links,
+    title: styles.title,
   } as const
 
   return (
     <Card className={classNames.card}>
       <div className={classNames.header}>
-        <Typography variant={'h1'}>{title}</Typography>
+        <Typography className={classNames.title} variant={'h1'}>
+          {title}
+        </Typography>
         <div className={classNames.links}>
           <Button asChild variant={'icon-link'}>
             {/**TODO: add link to google*/}
@@ -67,7 +71,9 @@ export const AuthCard = ({
       <div className={classNames.footer}>
         <Typography variant={'text16'}>{footerText}</Typography>
         <Button asChild variant={'link'}>
-          <Link href={footerLinkHref}>{footerLinkText}</Link>
+          <Link className={classNames.link} href={footerLinkHref}>
+            {footerLinkText}
+          </Link>
         </Button>
       </div>
     </Card>

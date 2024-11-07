@@ -18,10 +18,12 @@ export const SignUp = () => {
     card: styles.card,
     checkbox: styles.checkbox,
     error: styles.error,
+    form: styles.form,
     haveAcc: styles.haveAcc,
     icon: styles.icon,
     iconsBox: styles.iconsBox,
     input: styles.input,
+    inputWrapper: styles.inputWrapper,
     signIn: styles.signIn,
     submitBtn: styles.submitBtn,
     titleSignUp: styles.titleSignUp,
@@ -47,9 +49,10 @@ export const SignUp = () => {
             </Link>
           </Button>
         </span>
-        <form onSubmit={onSubmit}>
-          <div className={classNames.input}>
+        <form className={classNames.form} onSubmit={onSubmit}>
+          <div className={classNames.inputWrapper}>
             <FormInput
+              className={classNames.input}
               control={control}
               errorMessage={errors.userName?.message}
               label={t.auth.userName}
@@ -58,8 +61,9 @@ export const SignUp = () => {
               type={'username'}
             />
           </div>
-          <div className={classNames.input}>
+          <div className={classNames.inputWrapper}>
             <FormInput
+              className={classNames.input}
               control={control}
               errorMessage={errors.email?.message}
               label={t.auth.email}
@@ -68,8 +72,9 @@ export const SignUp = () => {
               type={'email'}
             />
           </div>
-          <div className={classNames.input}>
+          <div className={classNames.inputWrapper}>
             <FormInput
+              className={classNames.input}
               control={control}
               errorMessage={errors.password?.message}
               label={t.auth.password}
@@ -78,8 +83,9 @@ export const SignUp = () => {
               variant={'password'}
             />
           </div>
-          <div className={classNames.input}>
+          <div className={classNames.inputWrapper}>
             <FormInput
+              className={classNames.input}
               control={control}
               errorMessage={errors.confirmPassword?.message}
               label={t.auth.confirmPassword}
@@ -94,12 +100,22 @@ export const SignUp = () => {
               <Trans
                 tags={{
                   1: () => (
-                    <Typography as={Link} href={ROUTES.TERMS_OF_SERVICE} variant={'link'}>
+                    <Typography
+                      as={Link}
+                      color={'var(--accent-500)'}
+                      href={ROUTES.TERMS_OF_SERVICE}
+                      variant={'linkSmall'}
+                    >
                       {t.auth.termsOfService}
                     </Typography>
                   ),
                   2: () => (
-                    <Typography as={Link} href={ROUTES.PRIVACY_POLICY} variant={'link'}>
+                    <Typography
+                      as={Link}
+                      color={'var(--accent-500)'}
+                      href={ROUTES.PRIVACY_POLICY}
+                      variant={'linkSmall'}
+                    >
                       {t.auth.privacyPolicy}
                     </Typography>
                   ),
@@ -108,20 +124,18 @@ export const SignUp = () => {
               />
             </Typography>
           </div>
-          <div className={classNames.submitBtn}>
-            <Button fullWidth type={'submit'}>
-              {t.auth.signUp}
-            </Button>
-          </div>
+          <Button className={classNames.submitBtn} fullWidth type={'submit'}>
+            {t.auth.signUp}
+          </Button>
         </form>
         <Typography className={classNames.haveAcc} variant={'text16'}>
           {t.auth.haveAccount}
         </Typography>
-        <div className={classNames.signIn}>
-          <Button asChild variant={'link'}>
-            <Link href={ROUTES.SIGN_IN}>{t.auth.signIn}</Link>
-          </Button>
-        </div>
+        <Button asChild variant={'link'}>
+          <Link className={classNames.signIn} href={ROUTES.SIGN_IN}>
+            {t.auth.signIn}
+          </Link>
+        </Button>
       </Card>
       {userEmail && <SentEmail closeModal={onCloseModalHandler} email={userEmail} open={isOpen} />}
     </>
