@@ -19,6 +19,10 @@
     & .errorMessage {
       color: var(--danger-500);
     }
+
+    @include mobile {
+      gap: 24px;
+    }
   }
 
   & .button {
@@ -35,5 +39,15 @@
       align-self: flex-end;
       color: var(--light-900);
     }
+
+    & .submitBtn {
+      @include mobile {
+        padding: 12px 24px;
+      }
+    }
+  }
+
+  .input {
+    @include input-background;
   }
 }

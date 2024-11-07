@@ -6,8 +6,13 @@
   padding: var(--auth-form-padding);
 
   @include mobile {
-    height: 100%;
-    padding: 17px 15px 76px;
+    @include auth-mobile;
+  }
+
+  .title {
+    @include mobile {
+      @include font(var(--font-size-l), var(--line-height-m), var(--font-weight-bold));
+    }
   }
 }
 
@@ -19,11 +24,13 @@
   justify-content: center;
 
   margin-bottom: 24px;
+}
+
+.link {
+  font-weight: var(--font-weight-semibold);
 
   @include mobile {
-    > * {
-      @include font(var(--font-size-l), var(--line-height-m), var(--font-weight-bold));
-    }
+    @include font(var(--font-size-s), var(--line-height-s), var(--font-weight-semibold));
   }
 }
 

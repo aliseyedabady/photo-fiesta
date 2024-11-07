@@ -15,8 +15,8 @@ importers:
         specifier: ^3.9.0
         version: 3.9.0(react-hook-form@7.53.1(react@18.3.1))
       '@photo-fiesta/ui-lib':
-        specifier: ^0.0.13
-        version: 0.0.13(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.0.14
+        version: 0.0.14(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@reduxjs/toolkit':
         specifier: ^2.2.7
         version: 2.3.0(react-redux@9.1.2(@types/react@18.3.12)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
@@ -404,8 +404,8 @@ packages:
     resolution: {integrity: sha512-HNjmfLQEVRZmHRET336f20H/8kOozUGwk7yajvsonjNxbj2wBTK1WsQuHkD5yYh9RxFGL2EyDHryOihOwUoKDA==}
     engines: {node: '>= 10.0.0'}
 
-  '@photo-fiesta/ui-lib@0.0.13':
-    resolution: {integrity: sha512-10Fh3a/o0lvcYdYeMpWDuG8AxfdV+SAaqrP17P7MhDD3yJC0LwGS6rG+AyXT3F0VwZwg30SVlkiMF9g1+C28ng==}
+  '@photo-fiesta/ui-lib@0.0.14':
+    resolution: {integrity: sha512-/x/91xtMF2zT/bwqvQoaGyyG7F1iwRj8cckhkTCdU6xrNMuz0+l0t/WRjdZrYqGCObH48sqBi4GyN5VVGSu9LQ==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -3036,7 +3036,7 @@ snapshots:
       '@parcel/watcher-win32-ia32': 2.4.1
       '@parcel/watcher-win32-x64': 2.4.1
 
-  '@photo-fiesta/ui-lib@0.0.13(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@photo-fiesta/ui-lib@0.0.14(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@fontsource/inter': 5.1.0
       '@radix-ui/react-checkbox': 1.1.2(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
