@@ -4,7 +4,7 @@ import { Notifications } from '@/features/notifications'
 import { ROUTES } from '@/shared/config'
 import { LanguageSelect } from '@/shared/ui'
 import { MobilePopover } from '@/widgets'
-import { Button, Typography } from '@photo-fiesta/ui-lib'
+import { Button } from '@photo-fiesta/ui-lib'
 import clsx from 'clsx'
 import Link from 'next/link'
 
