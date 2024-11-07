@@ -33,6 +33,12 @@ export const NotificationItem = ({ notification }: NotificationProps) => {
   const [deleteNotification] = useDeleteNotificationMutation()
   const timeAgo = useTimeAgo(notification.notifyAt)
 
+  /**
+   * Deletes a specific notification by its ID.
+   *
+   * This function triggers the `deleteNotification` mutation to remove the specified
+   * notification from the server. A toast message is displayed upon successful deletion.
+   */
   const handleDeleteNotification = () => {
     deleteNotification({ id: notification.id })
     toast('Notification is deleted successfully')

@@ -42,6 +42,13 @@ export const Notifications = () => {
     }
   }, [data, notifications])
 
+  /**
+   * Marks a notification as read.
+   *
+   * This function is triggered when the notifications dropdown is opened, and it marks
+   * all unread notifications as read by updating their `isRead` status. The `markAsRead`
+   * mutation is used to update the server with the read status.
+   */
   useEffect(() => {
     if (isDropdownOpen && amountOfNewNotifications > 0) {
       setTimeout(() => {
