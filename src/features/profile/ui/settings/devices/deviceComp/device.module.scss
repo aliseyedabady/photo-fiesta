@@ -5,6 +5,10 @@
 
   align-items: center;
   width: 100%;
+
+  @include mobile {
+    padding-right: 14px;
+  }
 }
 
 .info {
@@ -26,6 +30,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @include mobile {
+    align-items: flex-end;
+  }
 }
 
 .leftSide {
@@ -45,5 +53,11 @@
   svg {
     width: 24px;
     height: 24px;
+  }
+}
+
+button.btn {
+  @include mobile {
+    padding: 0;
   }
 }

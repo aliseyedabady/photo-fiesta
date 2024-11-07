@@ -39,7 +39,7 @@ export const Header = forwardRef<ElementRef<'div'>, HeaderProps>(
     return (
       <div className={classNames.header} ref={ref} {...rest}>
         <Link className={classNames.logo} href={ROUTES.HOME}>
-          <Typography variant={'textLarge'}>Photo Fiesta</Typography>
+          Photo Fiesta
         </Link>
         <div className={classNames.buttonsContainer}>
           {/**TODO: add dropdown menu using icon for desktop*/}
