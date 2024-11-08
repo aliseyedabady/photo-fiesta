@@ -9,10 +9,6 @@
 .activeBell {
   width: 24px;
   height: 24px;
-
-  @include mobile {
-    display: none;
-  }
 }
 
 .activeBell {

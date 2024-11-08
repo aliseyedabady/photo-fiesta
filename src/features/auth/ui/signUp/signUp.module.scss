@@ -73,6 +73,7 @@
 
     @include mobile {
       margin-bottom: 12px;
+
       @include font(var(--font-size-s), var(--line-height-s), var(--font-weight-semibold));
     }
   }

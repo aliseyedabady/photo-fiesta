@@ -35,8 +35,14 @@
 }
 
 .logo {
+  @include font(var(--font-size-xxl), var(--line-height-l), var(--font-weight-semibold));
+
   color: var(--light-100);
   text-decoration: none;
+
+  @include mobile {
+    @include font(var(--font-size-l), var(--line-height-m), var(--font-weight-bold));
+  }
 }
 
 .buttonsContainer {
