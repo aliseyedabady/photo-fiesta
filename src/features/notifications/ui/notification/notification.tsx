@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify'
 
-import { Notification, useDeleteNotificationMutation } from '@/features/notifications'
+import { Notification, useDeleteNotificationMutation } from '@/features'
 import { CloseOutline } from '@/shared/assets'
 import { useTimeAgo, useTranslation } from '@/shared/utils'
 import { Typography } from '@photo-fiesta/ui-lib'

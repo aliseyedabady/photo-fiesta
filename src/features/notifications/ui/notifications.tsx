@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 
 import {
@@ -7,7 +7,7 @@ import {
   useConnectSocket,
   useGetAllNotificationsQuery,
   useMarkNotificationAsReadMutation,
-} from '@/features/notifications'
+} from '@/features'
 import { useTranslation } from '@/shared/utils'
 import {
   DropdownMenu,
@@ -37,7 +37,7 @@ export const Notifications = () => {
   const [amountOfNewNotifications, setAmountOfNewNotifications] = useState(0)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
-  const notifications = useMemo(() => data?.items ?? [], [data])
+  const notifications = data?.items ?? []
 
   useEffect(() => {
     if (socketNotifications.length > 0) {
@@ -51,7 +51,7 @@ export const Notifications = () => {
     if (data?.totalCount) {
       setAmountOfNewNotifications(notifications.filter(({ isRead }) => !isRead).length)
     }
-  }, [data, notifications])
+  }, [data])
 
   /**
    * Marks a notification as read.
