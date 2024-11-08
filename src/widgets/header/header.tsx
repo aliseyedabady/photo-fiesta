@@ -42,10 +42,8 @@ export const Header = forwardRef<ElementRef<'div'>, HeaderProps>(
           Photo Fiesta
         </Link>
         <div className={classNames.buttonsContainer}>
-          {/**TODO: add dropdown menu using icon for desktop*/}
           {isAuth && <Notifications />}
           <LanguageSelect className={classNames.select} />
-          {/**TODO: add dropdown menu using icon for mobile*/}
           {isAuth && <MobilePopover />}
           {!isAuth && (
             <div className={classNames.loginButtons}>
