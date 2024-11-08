@@ -2,7 +2,7 @@ import { baseApi } from '@/app/api'
 import { GetSessions } from '@/features'
 import { API_URLS, METHOD } from '@/shared/config'
 
-const { DELETE_SESSION_BY_DEVICE_ID, DELETE_SESSION_TEMPLATE_ALL, GET_SESSIONS } = API_URLS.DEVICES
+const { DELETE_SESSION_TEMPLATE_ALL, DeleteSessionByDeviceId, GET_SESSIONS } = API_URLS.DEVICES
 
 const { DELETE } = METHOD
 
@@ -30,7 +30,7 @@ export const deviceApi = baseApi.injectEndpoints({
         invalidatesTags: ['Devices'],
         query: params => ({
           method: DELETE,
-          url: DELETE_SESSION_BY_DEVICE_ID(params.deviceId),
+          url: DeleteSessionByDeviceId(params.deviceId),
         }),
       }),
       /**

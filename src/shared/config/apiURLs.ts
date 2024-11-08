@@ -13,29 +13,29 @@ export const API_URLS = {
   },
   BASE_URL: 'https://inctagram.work/api/',
   DEVICES: {
-    DELETE_SESSION_BY_DEVICE_ID: (deviceId: number) => `v1/sessions/${deviceId}`,
     DELETE_SESSION_TEMPLATE_ALL: 'v1/sessions/terminate-all',
+    DeleteSessionByDeviceId: (deviceId: number) => `v1/sessions/${deviceId}`,
     GET_SESSIONS: 'v1/sessions',
   },
   NOTIFICATIONS: {
-    DELETE_NOTIFICATIONS: (id: number) => `v1/notifications/${id}`,
-    GET_ALL_NOTIFICATIONS: (cursor: number | undefined) => `v1/notifications/${cursor}`,
+    DeleteNotifications: (id: number) => `v1/notifications/${id}`,
+    GetAllNotifications: (cursor: number | undefined) => `v1/notifications/${cursor}`,
     MARK_NOTIFICATION_AS_READ: 'v1/notifications/mark-as-read',
   },
   POSTS: {
     CREATE_POST: 'v1/posts',
-    DELETE_POST: (postId: number) => `v1/posts/${postId}`,
-    DELETE_UPLOAD_IMAGE: (uploadId: string | string[]) => `v1/posts/image/${uploadId}`,
-    GET_POST_BY_ID: (postId: number | undefined) => `v1/public-posts/${postId}`,
-    GET_USER_PUBLIC_POSTS: (endCursorPostId: number | undefined, userId: number) =>
+    DeletePost: (postId: number) => `v1/posts/${postId}`,
+    DeleteUploadImage: (uploadId: string | string[]) => `v1/posts/image/${uploadId}`,
+    GetPostById: (postId: number | undefined) => `v1/public-posts/${postId}`,
+    GetUserPublicPosts: (endCursorPostId: number | undefined, userId: number) =>
       `v1/public-posts/user/${userId}/${endCursorPostId}`,
-    UPDATE_POST: (postId: number) => `v1/posts/${postId}`,
     UPLOAD_POST_IMAGE: 'v1/posts/image',
+    UpdatePost: (postId: number) => `v1/posts/${postId}`,
   },
   PROFILE: {
     DELETE_AVATAR: 'v1/users/profile/avatar',
     DELETE_PROFILE: 'v1/users/profile',
-    DELETE_PROFILE_BY_ID: (id: number) => `v1/users/profile/${id}`,
+    DeleteProfileById: (id: number) => `v1/users/profile/${id}`,
     GET_PROFILE: 'v1/users/profile',
     POST_AVATAR: 'v1/users/profile/avatar',
     UPDATE_PROFILE: 'v1/users/profile',

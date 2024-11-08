@@ -3,7 +3,7 @@ import { GetNotificationsArgs, GetNotificationsResponse } from '@/features/notif
 import { API_URLS, METHOD } from '@/shared/config'
 
 const { DELETE, PUT } = METHOD
-const { DELETE_NOTIFICATIONS, GET_ALL_NOTIFICATIONS, MARK_NOTIFICATION_AS_READ } =
+const { DeleteNotifications, GetAllNotifications, MARK_NOTIFICATION_AS_READ } =
   API_URLS.NOTIFICATIONS
 
 /**
@@ -20,7 +20,7 @@ export const notificationsApi = baseApi.injectEndpoints({
       invalidatesTags: ['Notifications'],
       query: ({ id }) => ({
         method: DELETE,
-        url: DELETE_NOTIFICATIONS(id),
+        url: DeleteNotifications(id),
       }),
     }),
     /** Retrieves all notifications, optionally using a cursor for pagination.
@@ -28,7 +28,7 @@ export const notificationsApi = baseApi.injectEndpoints({
      */
     getAllNotifications: builder.query<GetNotificationsResponse, GetNotificationsArgs>({
       providesTags: ['Notifications'],
-      query: ({ cursor }) => GET_ALL_NOTIFICATIONS(cursor),
+      query: ({ cursor }) => GetAllNotifications(cursor),
       /**
        * Transforms the response from the API by sorting the notifications
        * based on the notification date in ascending order.
