@@ -8,8 +8,8 @@ export const useConnectSocket = () => {
 
   const connectSocket = () => {
     SocketApi.createConnection()
-    SocketApi.socket?.on(WS_EVENT_PATH.NOTIFICATIONS, data => {
-      setNotifications(data)
+    SocketApi.socket?.on(WS_EVENT_PATH.NOTIFICATIONS, (data: SocketResponse) => {
+      setNotifications(prevNotifications => [...prevNotifications, data])
     })
   }
 
