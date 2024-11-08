@@ -1,3 +1,5 @@
+@use '@/app/styles/mixins' as *;
+
 .root {
   display: flex;
   flex-direction: column;
@@ -15,6 +17,12 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 24px;
+
+  @include mobile {
+    & button {
+      width: 100%;
+    }
+  }
 }
 
 .title {
@@ -23,6 +31,10 @@
 
 .others {
   margin-top: 18px;
+
+  @include mobile {
+    margin-top: 31px;
+  }
 }
 
 .othersList {

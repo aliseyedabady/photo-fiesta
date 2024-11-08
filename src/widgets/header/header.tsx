@@ -4,7 +4,7 @@ import { Notifications } from '@/features/notifications'
 import { ROUTES } from '@/shared/config'
 import { LanguageSelect } from '@/shared/ui'
 import { MobilePopover } from '@/widgets'
-import { Button, Typography } from '@photo-fiesta/ui-lib'
+import { Button } from '@photo-fiesta/ui-lib'
 import clsx from 'clsx'
 import Link from 'next/link'
 
@@ -39,13 +39,11 @@ export const Header = forwardRef<ElementRef<'div'>, HeaderProps>(
     return (
       <div className={classNames.header} ref={ref} {...rest}>
         <Link className={classNames.logo} href={ROUTES.HOME}>
-          <Typography variant={'textLarge'}>Photo Fiesta</Typography>
+          Photo Fiesta
         </Link>
         <div className={classNames.buttonsContainer}>
-          {/**TODO: add dropdown menu using icon for desktop*/}
           {isAuth && <Notifications />}
           <LanguageSelect className={classNames.select} />
-          {/**TODO: add dropdown menu using icon for mobile*/}
           {isAuth && <MobilePopover />}
           {!isAuth && (
             <div className={classNames.loginButtons}>
