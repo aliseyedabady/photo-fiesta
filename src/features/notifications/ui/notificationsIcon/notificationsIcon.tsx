@@ -8,12 +8,11 @@ type NotificationsIconProps = {
 }
 export const NotificationsIcon = ({ isOpen, newNotifications }: NotificationsIconProps) => (
   <div className={styles.icons}>
-    {newNotifications > 0 &&
-      (isOpen ? (
-        <FillBell className={styles.activeBell} />
-      ) : (
-        <OutlineBell className={styles.defaultBell} />
-      ))}
+    {isOpen ? (
+      <FillBell className={styles.activeBell} />
+    ) : (
+      <OutlineBell className={styles.defaultBell} />
+    )}
     {newNotifications > 0 && <span className={styles.count}>{newNotifications}</span>}
   </div>
 )
