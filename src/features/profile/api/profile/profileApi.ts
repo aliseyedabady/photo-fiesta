@@ -7,7 +7,7 @@ const { DELETE, POST, PUT } = METHOD
 const {
   DELETE_AVATAR,
   DELETE_PROFILE,
-  DELETE_PROFILE_BY_ID,
+  DeleteProfileById,
   GET_PROFILE,
   POST_AVATAR,
   UPDATE_PROFILE,
@@ -44,7 +44,7 @@ export const profileApi = baseApi.injectEndpoints({
 
       query: (userId: number) => ({
         method: DELETE,
-        url: DELETE_PROFILE_BY_ID(userId),
+        url: DeleteProfileById(userId),
       }),
     }),
     /**

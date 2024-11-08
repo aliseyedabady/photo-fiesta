@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react'
 
-import { SocketApi } from '@/app/api'
-import { Notification } from '@/features/notifications'
+import { SocketApi, SocketResponse } from '@/features/notifications'
 import { WS_EVENT_PATH } from '@/shared/config'
 
 export const useConnectSocket = () => {
-  const [notifications, setNotifications] = useState<Notification>()
+  const [notifications, setNotifications] = useState<SocketResponse[]>([])
 
   const connectSocket = () => {
     SocketApi.createConnection()
-    SocketApi.socket?.on(WS_EVENT_PATH.NOTIFICATIONS, data => {
-      setNotifications(data)
+    SocketApi.socket?.on(WS_EVENT_PATH.NOTIFICATIONS, (data: SocketResponse) => {
+      setNotifications(prevNotifications => [...prevNotifications, data])
     })
   }
 
@@ -20,7 +19,7 @@ export const useConnectSocket = () => {
     return () => {
       SocketApi.disconnect()
     }
-  }, [notifications])
+  }, [])
 
   return { notifications }
 }

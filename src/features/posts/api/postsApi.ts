@@ -12,12 +12,12 @@ import { API_URLS, METHOD } from '@/shared/config'
 const { DELETE, GET, POST, PUT } = METHOD
 const {
   CREATE_POST,
-  DELETE_POST,
-  DELETE_UPLOAD_IMAGE,
-  GET_POST_BY_ID,
-  GET_USER_PUBLIC_POSTS,
-  UPDATE_POST,
+  DeletePost,
+  DeleteUploadImage,
+  GetPostById,
+  GetUserPublicPosts,
   UPLOAD_POST_IMAGE,
+  UpdatePost,
 } = API_URLS.POSTS
 
 /**
@@ -48,7 +48,7 @@ export const postsApi = baseApi.injectEndpoints({
       invalidatesTags: ['Posts'],
       query: ({ postId }) => ({
         method: DELETE,
-        url: DELETE_POST(postId),
+        url: DeletePost(postId),
       }),
     }),
     /**
@@ -59,7 +59,7 @@ export const postsApi = baseApi.injectEndpoints({
       invalidatesTags: ['Posts'],
       query: ({ uploadId }) => ({
         method: DELETE,
-        url: DELETE_UPLOAD_IMAGE(uploadId),
+        url: DeleteUploadImage(uploadId),
       }),
     }),
     /**
@@ -70,7 +70,7 @@ export const postsApi = baseApi.injectEndpoints({
       providesTags: ['Posts'],
       query: ({ postId }) => ({
         method: GET,
-        url: GET_POST_BY_ID(postId),
+        url: GetPostById(postId),
       }),
     }),
     /**
@@ -81,7 +81,7 @@ export const postsApi = baseApi.injectEndpoints({
       providesTags: ['Posts'],
       query: ({ endCursorPostId, userId }) => ({
         method: GET,
-        url: GET_USER_PUBLIC_POSTS(endCursorPostId, userId),
+        url: GetUserPublicPosts(endCursorPostId, userId),
       }),
     }),
     /**
@@ -93,7 +93,7 @@ export const postsApi = baseApi.injectEndpoints({
       query: ({ description, postId }) => ({
         body: { description },
         method: PUT,
-        url: UPDATE_POST(postId),
+        url: UpdatePost(postId),
       }),
     }),
     /**

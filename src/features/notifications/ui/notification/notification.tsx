@@ -1,4 +1,7 @@
-import { Notification } from '@/features/notifications'
+import { toast } from 'react-toastify'
+
+import { Notification, useDeleteNotificationMutation } from '@/features'
+import { CloseOutline } from '@/shared/assets'
 import { useTimeAgo, useTranslation } from '@/shared/utils'
 import { Typography } from '@photo-fiesta/ui-lib'
 
@@ -26,20 +29,35 @@ type NotificationProps = {
  * <NotificationItem notification={notification} />
  */
 export const NotificationItem = ({ notification }: NotificationProps) => {
-  const timeAgo = useTimeAgo(notification.notifyAt)
   const { t } = useTranslation()
+  const [deleteNotification] = useDeleteNotificationMutation()
+  const timeAgo = useTimeAgo(notification.notifyAt)
+
+  /**
+   * Deletes a specific notification by its ID.
+   *
+   * This function triggers the `deleteNotification` mutation to remove the specified
+   * notification from the server. A toast message is displayed upon successful deletion.
+   */
+  const handleDeleteNotification = () => {
+    deleteNotification({ id: notification.id })
+    toast('Notification is deleted successfully')
+  }
 
   return (
     <>
-      <div>
+      <div className={styles.container}>
         {notification.isRead ? (
-          ''
+          <Typography variant={'textBold14'}>{t.notifications.newNotification}</Typography>
         ) : (
           <div className={styles.notify}>
             <Typography variant={'textBold14'}>{t.notifications.newNotification}</Typography>
             <span className={styles.new}>{t.notifications.new}</span>
           </div>
         )}
+        <div onClick={handleDeleteNotification}>
+          <CloseOutline />
+        </div>
       </div>
       <Typography variant={'text14'}>{notification.message}</Typography>
       <Typography className={styles.timeAgo} variant={'textSmall'}>
