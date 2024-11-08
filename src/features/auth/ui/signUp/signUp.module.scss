@@ -1,37 +1,12 @@
 @use '@/app/styles/mixins' as *;
 
-.card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  max-width: 378px;
-  height: auto;
-  padding: 25px;
-
-  @include mobile {
-    @include auth-mobile;
-  }
-
-  .titleSignUp {
-    display: flex;
-    text-align: center;
+.form {
+  & .inputWrapper {
+    width: 100%;
+    padding-bottom: 13px;
 
     @include mobile {
-      @include font(var(--font-size-l), var(--line-height-m), var(--font-weight-bold));
-    }
-  }
-
-  .form {
-    & .inputWrapper {
-      width: 100%;
-      padding-bottom: 13px;
-
-      @include mobile {
-        padding-bottom: 24px;
-      }
+      padding-bottom: 24px;
     }
   }
 
@@ -59,20 +34,12 @@
     }
   }
 
-  .haveAcc {
-    margin-bottom: 11px;
-    text-align: center;
-
-    @include mobile {
-      font-size: var(--font-size-s);
-    }
-  }
-
   .signIn {
     font-weight: var(--font-weight-semibold);
 
     @include mobile {
       margin-bottom: 12px;
+
       @include font(var(--font-size-s), var(--line-height-s), var(--font-weight-semibold));
     }
   }
@@ -93,22 +60,6 @@
   color: var(--light-100);
 }
 
-// .error {
-//   display: flex;
-//   justify-content: end;
-
-//   span {
-//     max-width: 100%;
-
-//     @include font(var(--font-weight-regular), var(--font-size-s), var(--line-height-m));
-
-//     color: var(--danger-500);
-//     word-break: break-word;
-//     word-wrap: break-word;
-//     white-space: normal;
-//   }
-// }
-
 @include mobile {
   .formBox {
     max-width: 360px;
@@ -118,9 +69,5 @@
   .iconsBox {
     gap: 60px;
     margin: 20px 0 10px;
-  }
-
-  .error span {
-    @include font(var(--font-weight-regular), var(--font-size-xs), var(--line-height-s));
   }
 }
