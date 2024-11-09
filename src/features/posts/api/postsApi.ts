@@ -1,8 +1,16 @@
 import { baseApi } from '@/app/api'
 import {
-  GetPostResponse,
-  GetPublicPostsResponse,
-  GetUserPublicPostsArgs,
+  GetCommentAnswersArgs,
+  GetCommentAnswersLikesArgs,
+  GetCommentAnswersLikesResponse,
+  GetCommentAnswersResponse,
+  GetCommentLikesArgs,
+  GetPostByUsernameArgs,
+  GetPostByUsernameResponse,
+  GetPostCommentsArgs,
+  GetPostCommentsResponse,
+  GetPostLikesArgs,
+  LikeStatus,
   PostArgsType,
   PostsImages,
   PostsType,
@@ -14,10 +22,15 @@ const {
   CREATE_POST,
   DeletePost,
   DeleteUploadImage,
-  GetPostById,
-  GetUserPublicPosts,
+  GetCommentAnswers,
+  GetCommentAnswersLikes,
+  GetCommentLikes,
+  GetPostComments,
+  GetPostLikes,
+  GetPostsByUsername,
   UPLOAD_POST_IMAGE,
   UpdatePost,
+  UpdatePostLikeStatus,
 } = API_URLS.POSTS
 
 /**
@@ -34,8 +47,8 @@ export const postsApi = baseApi.injectEndpoints({
      */
     createPost: builder.mutation<PostsType, PostArgsType>({
       invalidatesTags: ['Posts'],
-      query: params => ({
-        body: params,
+      query: body => ({
+        body,
         method: POST,
         url: CREATE_POST,
       }),
@@ -62,26 +75,49 @@ export const postsApi = baseApi.injectEndpoints({
         url: DeleteUploadImage(uploadId),
       }),
     }),
-    /**
-     * Fetches a post by its ID.
-     * @param {{ postId: number }} params - The ID of the post to fetch.
-     */
-    getPostById: builder.query<GetPostResponse, { postId: number | undefined }>({
+    getCommentAnswers: builder.query<GetCommentAnswersResponse, GetCommentAnswersArgs>({
+      providesTags: ['Posts'],
+      query: ({ commentId, postId }) => ({
+        method: GET,
+        url: GetCommentAnswers(commentId, postId),
+      }),
+    }),
+    getCommentAnswersLikes: builder.query<
+      GetCommentAnswersLikesResponse,
+      GetCommentAnswersLikesArgs
+    >({
+      providesTags: ['Posts'],
+      query: ({ answerId, commentId, postId }) => ({
+        method: GET,
+        url: GetCommentAnswersLikes(commentId, postId, answerId),
+      }),
+    }),
+    getCommentLikes: builder.query<GetCommentAnswersLikesResponse, GetCommentLikesArgs>({
+      providesTags: ['Posts'],
+      query: ({ commentId, postId }) => ({
+        method: GET,
+        url: GetCommentLikes(commentId, postId),
+      }),
+    }),
+    getPostComments: builder.query<GetPostCommentsResponse, GetPostCommentsArgs>({
       providesTags: ['Posts'],
       query: ({ postId }) => ({
         method: GET,
-        url: GetPostById(postId),
+        url: GetPostComments(postId),
       }),
     }),
-    /**
-     * Fetches public posts for a specific user.
-     * @param {GetUserPublicPostsArgs} params - The user ID and optional end cursor post ID.
-     */
-    getUserPosts: builder.query<GetPublicPostsResponse, GetUserPublicPostsArgs>({
+    getPostLikes: builder.query<GetCommentAnswersResponse, GetPostLikesArgs>({
       providesTags: ['Posts'],
-      query: ({ endCursorPostId, userId }) => ({
+      query: ({ postId }) => ({
         method: GET,
-        url: GetUserPublicPosts(endCursorPostId, userId),
+        url: GetPostLikes(postId),
+      }),
+    }),
+    getPostsByUsername: builder.query<GetPostByUsernameResponse, GetPostByUsernameArgs>({
+      providesTags: ['Posts'],
+      query: ({ userName }) => ({
+        method: GET,
+        url: GetPostsByUsername(userName),
       }),
     }),
     /**
@@ -101,6 +137,14 @@ export const postsApi = baseApi.injectEndpoints({
      * @param {FormData} formData - The image file to upload.
      */
 
+    updatePostLikeStatus: builder.mutation<void, { likeStatus: LikeStatus; postId: number }>({
+      invalidatesTags: ['Posts'],
+      query: ({ likeStatus, postId }) => ({
+        body: { likeStatus },
+        method: PUT,
+        url: UpdatePostLikeStatus(postId),
+      }),
+    }),
     uploadPostImage: builder.mutation<PostsImages, FormData>({
       invalidatesTags: ['Posts'],
       query: (formData: FormData) => ({
@@ -116,8 +160,13 @@ export const {
   useCreatePostMutation,
   useDeletePostMutation,
   useDeleteUploadImageMutation,
-  useGetPostByIdQuery,
-  useGetUserPostsQuery,
+  useGetCommentAnswersLikesQuery,
+  useGetCommentAnswersQuery,
+  useGetCommentLikesQuery,
+  useGetPostCommentsQuery,
+  useGetPostLikesQuery,
+  useGetPostsByUsernameQuery,
+  useUpdatePostLikeStatusMutation,
   useUpdatePostMutation,
   useUploadPostImageMutation,
 } = postsApi

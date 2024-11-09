@@ -26,11 +26,18 @@ export const API_URLS = {
     CREATE_POST: 'v1/posts',
     DeletePost: (postId: number) => `v1/posts/${postId}`,
     DeleteUploadImage: (uploadId: string | string[]) => `v1/posts/image/${uploadId}`,
-    GetPostById: (postId: number | undefined) => `v1/public-posts/${postId}`,
-    GetUserPublicPosts: (endCursorPostId: number | undefined, userId: number) =>
-      `v1/public-posts/user/${userId}/${endCursorPostId}`,
+    GetCommentAnswers: (commentId: number, postId: number) =>
+      `v1/posts/${postId}/comments/${commentId}/answers`,
+    GetCommentAnswersLikes: (commentId: number, postId: number, answerId: number) =>
+      `/api/v1/posts/${postId}/comments/${commentId}/answers/${answerId}/likes`,
+    GetCommentLikes: (commentId: number, postId: number) =>
+      `/api/v1/posts/${postId}/comments/${commentId}/likes`,
+    GetPostComments: (postId: number) => `/api/v1/posts/${postId}/comments`,
+    GetPostLikes: (postId: number) => `/api/v1/posts/${postId}/likes`,
+    GetPostsByUsername: (userName: string) => `/api/v1/posts/${userName}`,
     UPLOAD_POST_IMAGE: 'v1/posts/image',
     UpdatePost: (postId: number) => `v1/posts/${postId}`,
+    UpdatePostLikeStatus: (postId: number) => `v1/posts/${postId}/like-status`,
   },
   PROFILE: {
     DELETE_AVATAR: 'v1/users/profile/avatar',
@@ -41,8 +48,15 @@ export const API_URLS = {
     UPDATE_PROFILE: 'v1/users/profile',
   },
 
-  PUBLIC_USERS: {
+  PUBLIC: {
     GET_TOTAL_COUNT_USERS: 'v1/public-user',
+    GetAllPublicPosts: (endCursorPostId: number | undefined) =>
+      `v1/public-posts/all/${endCursorPostId}`,
+    GetPostById: (postId: number | undefined) => `v1/public-posts/${postId}`,
+    GetPublicPostComments: (postId: number) => `/api/v1/public-posts/${postId}/comments`,
+    GetPublicProfileById: (profileId: number) => `v1/public-user/profile/${profileId}`,
+    GetUserPublicPosts: (endCursorPostId: number | undefined, userId: number) =>
+      `v1/public-posts/user/${userId}/${endCursorPostId}`,
   },
   SOCKET_URL: 'https://inctagram.work',
   SUBSCRIPTIONS: {
