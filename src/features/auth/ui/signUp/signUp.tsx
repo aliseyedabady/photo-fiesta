@@ -1,9 +1,8 @@
-import { SentEmail } from '@/features'
-import { GithubSvgrepoCom31, GoogleSvgrepoCom1 } from '@/shared/assets'
+import { AuthCard, SentEmail } from '@/features'
 import { ROUTES } from '@/shared/config'
 import { Trans } from '@/shared/ui'
 import { useTranslation } from '@/shared/utils'
-import { Button, Card, FormCheckbox, FormInput, Typography } from '@photo-fiesta/ui-lib'
+import { Button, FormCheckbox, FormInput, Typography } from '@photo-fiesta/ui-lib'
 import Link from 'next/link'
 
 import styles from './signUp.module.scss'
@@ -15,40 +14,24 @@ export const SignUp = () => {
   const { control, errors, isOpen, onCloseModalHandler, onSubmit, userEmail } = useSignUpForm()
 
   const classNames = {
-    card: styles.card,
     checkbox: styles.checkbox,
-    error: styles.error,
     form: styles.form,
-    haveAcc: styles.haveAcc,
     icon: styles.icon,
     iconsBox: styles.iconsBox,
     input: styles.input,
     inputWrapper: styles.inputWrapper,
     signIn: styles.signIn,
     submitBtn: styles.submitBtn,
-    titleSignUp: styles.titleSignUp,
   }
 
   return (
     <>
-      <Card className={classNames.card}>
-        <Typography className={classNames.titleSignUp} variant={'h1'}>
-          {t.auth.signUp}
-        </Typography>
-        <span className={classNames.iconsBox}>
-          <Button asChild type={'button'} variant={'icon-link'}>
-            {/*TODO: check path for links*/}
-            <Link href={'#'}>
-              <GoogleSvgrepoCom1 className={classNames.icon} />
-            </Link>
-          </Button>
-          <Button asChild type={'button'} variant={'icon-link'}>
-            {/*TODO: check path for links*/}
-            <Link href={'#'}>
-              <GithubSvgrepoCom31 className={classNames.icon} />
-            </Link>
-          </Button>
-        </span>
+      <AuthCard
+        footerLinkHref={ROUTES.SIGN_IN}
+        footerLinkText={t.auth.signIn}
+        footerText={t.auth.haveAccount}
+        title={t.auth.signUp}
+      >
         <form className={classNames.form} onSubmit={onSubmit}>
           <div className={classNames.inputWrapper}>
             <FormInput
@@ -128,15 +111,7 @@ export const SignUp = () => {
             {t.auth.signUp}
           </Button>
         </form>
-        <Typography className={classNames.haveAcc} variant={'text16'}>
-          {t.auth.haveAccount}
-        </Typography>
-        <Button asChild variant={'link'}>
-          <Link className={classNames.signIn} href={ROUTES.SIGN_IN}>
-            {t.auth.signIn}
-          </Link>
-        </Button>
-      </Card>
+      </AuthCard>
       {userEmail && <SentEmail closeModal={onCloseModalHandler} email={userEmail} open={isOpen} />}
     </>
   )

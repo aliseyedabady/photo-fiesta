@@ -50,4 +50,13 @@
   flex-direction: column;
   gap: 6px;
   align-items: center;
+
+  .footerTitle {
+    margin-bottom: 11px;
+    text-align: center;
+
+    @include mobile {
+      font-size: var(--font-size-s);
+    }
+  }
 }
