@@ -34,8 +34,7 @@ const {
 } = API_URLS.POSTS
 
 /**
- * @module postsApi
- * @description API endpoints for handling posts.
+ * API service for posts endpoints.
  */
 
 export const postsApi = baseApi.injectEndpoints({
@@ -75,6 +74,10 @@ export const postsApi = baseApi.injectEndpoints({
         url: DeleteUploadImage(uploadId),
       }),
     }),
+    /**
+     * Fetches replies to a specific comment on a post.
+     * @param GetCommentAnswersArgs - Contains the comment and post IDs
+     */
     getCommentAnswers: builder.query<GetCommentAnswersResponse, GetCommentAnswersArgs>({
       providesTags: ['Posts'],
       query: ({ commentId, postId }) => ({
@@ -82,6 +85,10 @@ export const postsApi = baseApi.injectEndpoints({
         url: GetCommentAnswers(commentId, postId),
       }),
     }),
+    /**
+     * Fetches likes for a specific reply to a comment on a post.
+     * @param GetCommentAnswersLikesArgs - Contains IDs for the answer, comment, and post.
+     */
     getCommentAnswersLikes: builder.query<
       GetCommentAnswersLikesResponse,
       GetCommentAnswersLikesArgs
@@ -92,6 +99,10 @@ export const postsApi = baseApi.injectEndpoints({
         url: GetCommentAnswersLikes(commentId, postId, answerId),
       }),
     }),
+    /**
+     * Fetches likes for a specific comment on a post.
+     * @param GetCommentLikesArgs - Contains the comment and post IDs.
+     */
     getCommentLikes: builder.query<GetCommentAnswersLikesResponse, GetCommentLikesArgs>({
       providesTags: ['Posts'],
       query: ({ commentId, postId }) => ({
@@ -99,6 +110,10 @@ export const postsApi = baseApi.injectEndpoints({
         url: GetCommentLikes(commentId, postId),
       }),
     }),
+    /**
+     * Fetches comments for a specific post.
+     * @param GetPostCommentsArgs - Contains the post ID.
+     */
     getPostComments: builder.query<GetPostCommentsResponse, GetPostCommentsArgs>({
       providesTags: ['Posts'],
       query: ({ postId }) => ({
@@ -106,6 +121,10 @@ export const postsApi = baseApi.injectEndpoints({
         url: GetPostComments(postId),
       }),
     }),
+    /**
+     * Fetches likes for a specific post.
+     * @param GetPostLikesArgs - Contains the post ID.
+     */
     getPostLikes: builder.query<GetCommentAnswersResponse, GetPostLikesArgs>({
       providesTags: ['Posts'],
       query: ({ postId }) => ({
@@ -113,6 +132,10 @@ export const postsApi = baseApi.injectEndpoints({
         url: GetPostLikes(postId),
       }),
     }),
+    /**
+     * Fetches posts by a specific user.
+     * @param GetPostByUsernameArgs - Contains the username.
+     */
     getPostsByUsername: builder.query<GetPostByUsernameResponse, GetPostByUsernameArgs>({
       providesTags: ['Posts'],
       query: ({ userName }) => ({
@@ -133,10 +156,9 @@ export const postsApi = baseApi.injectEndpoints({
       }),
     }),
     /**
-     * Uploads an image for a post.
-     * @param {FormData} formData - The image file to upload.
+     * Updates the like status for a specific post.
+     * @param { likeStatus: LikeStatus, postId: number } - The new like status and the post ID.
      */
-
     updatePostLikeStatus: builder.mutation<void, { likeStatus: LikeStatus; postId: number }>({
       invalidatesTags: ['Posts'],
       query: ({ likeStatus, postId }) => ({
@@ -145,6 +167,10 @@ export const postsApi = baseApi.injectEndpoints({
         url: UpdatePostLikeStatus(postId),
       }),
     }),
+    /**
+     * Uploads an image for a post.
+     * @param {FormData} formData - The image file to upload.
+     */
     uploadPostImage: builder.mutation<PostsImages, FormData>({
       invalidatesTags: ['Posts'],
       query: (formData: FormData) => ({

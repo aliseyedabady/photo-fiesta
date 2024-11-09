@@ -24,6 +24,10 @@ const {
  */
 export const publicApi = baseApi.injectEndpoints({
     endpoints: builder => ({
+        /**
+         * Fetches all public posts with pagination.
+         * @param GetPublicPostsArgs - Contains an optional end cursor post ID.
+         */
         getAllPublicPosts: builder.query<GetPublicPostsResponse, GetPublicPostsArgs>({
             providesTags: ['Public-posts'],
             query: ({endCursorPostId}) => ({
@@ -42,6 +46,10 @@ export const publicApi = baseApi.injectEndpoints({
                 url: GetPostById(postId),
             }),
         }),
+        /**
+         * Fetches comments for a specific public post.
+         * @param GetPublicPostCommentArgs - Contains the post ID.
+         */
         getPublicPostComments: builder.query<GetPublicPostCommentsResponse, GetPublicPostCommentArgs>({
             providesTags: ['Public-posts'],
             query: ({postId}) => ({
@@ -49,6 +57,10 @@ export const publicApi = baseApi.injectEndpoints({
                 url: GetPublicPostComments(postId),
             }),
         }),
+        /**
+         * Fetches a public profile by its ID.
+         * @param { profileId: number } - The profile ID.
+         */
         getPublicProfileById: builder.query<GetPublicProfileResponse, { profileId: number }>({
             providesTags: ['Public-user'],
             query: ({profileId}) => ({
