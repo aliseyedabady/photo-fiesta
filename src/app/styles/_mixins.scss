@@ -118,3 +118,18 @@
     background-color: var(--dark-700);
   }
 }
+
+@mixin control-button-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--light-100);
+
+  &:active {
+    color: var(--accent-500);
+  }
+
+  &:hover {
+    color: var(--accent-500);
+  }
+}
