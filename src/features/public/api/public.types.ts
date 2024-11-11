@@ -10,7 +10,7 @@ export type GetPostResponse = {
     createdAt: string
     description: string
     id: number
-    images: ImageType[]
+    images: Image[]
     isLiked: boolean
     likesCount: number
     location: string
@@ -20,7 +20,7 @@ export type GetPostResponse = {
     userName: string
 }
 
-type ImageType = {
+type Image = {
     createdAt: string
     fileSize: number
     height: number

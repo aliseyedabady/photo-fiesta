@@ -10,10 +10,10 @@ import {
   GetPostCommentsArgs,
   GetPostCommentsResponse,
   GetPostLikesArgs,
+  GetPostResponse,
   LikeStatus,
   PostArgsType,
   PostsImages,
-  PostsType,
 } from '@/features'
 import { API_URLS, METHOD } from '@/shared/config'
 
@@ -41,10 +41,10 @@ export const postsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     /**
      * Creates a new post.
-     * @returns {Promise<PostsType>} The created post.
+     * @returns {Promise<GetPostResponse>} The created post.
      * @param {PostArgsType} params - The post data.
      */
-    createPost: builder.mutation<PostsType, PostArgsType>({
+    createPost: builder.mutation<GetPostResponse, PostArgsType>({
       invalidatesTags: ['Posts'],
       query: body => ({
         body,

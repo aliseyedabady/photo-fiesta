@@ -27,36 +27,14 @@ type PostResponseImages = {
   width: number
 }
 
-export type PostsType = {
-  avatarOwner: string
-  createdAt: string
-  description: string
-  id: number
-  images: PostsImagesType[]
-  location: string
-  owner: {
-    firstName: string
-    lastName: string
-  }
-  ownerId: number
-  updatedAt: string
-  userName: string
-}
-type ImageType = {
-  fileSize: number
-  height: number
-  url: string
-  width: number
-}
-export type PostsImagesType = ImageType & UploadIdType
 export type PostsImages = {
-  images: PostsImagesType[]
+  images: PostResponseImages[]
 }
 export type PostArgsType = {
-  childrenMetadata: UploadIdType[]
+  childrenMetadata: UploadId[]
   description: string
 }
-type UploadIdType = {
+type UploadId = {
   uploadId: string
 }
 
