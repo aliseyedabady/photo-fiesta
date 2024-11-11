@@ -1,5 +1,5 @@
 export type GetPostByUsernameResponse = {
-  items: GetPostResponse
+  items: GetPostResponse[]
   pageSize?: number
   totalCount?: number
 }
