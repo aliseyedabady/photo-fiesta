@@ -39,6 +39,7 @@ export const AuthCard = ({
   const classNames = {
     card: styles.card,
     footer: styles.footer,
+    footerTitle: styles.footerTitle,
     header: styles.header,
     icons: styles.icons,
     link: styles.link,
@@ -69,7 +70,9 @@ export const AuthCard = ({
       </div>
       {children}
       <div className={classNames.footer}>
-        <Typography variant={'text16'}>{footerText}</Typography>
+        <Typography className={classNames.footerTitle} variant={'text16'}>
+          {footerText}
+        </Typography>
         <Button asChild variant={'link'}>
           <Link className={classNames.link} href={footerLinkHref}>
             {footerLinkText}
