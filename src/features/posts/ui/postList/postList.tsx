@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { Avatar } from '@/features'
-import { ImagePostModal, useGetUserPostsQuery } from '@/features/posts'
+import { Avatar, useGetUserPostsQuery } from '@/features'
+import { ImagePostModal } from '@/features/posts'
 import { ImageOutline } from '@/shared/assets'
 import Image from 'next/image'
 

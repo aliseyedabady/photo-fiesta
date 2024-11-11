@@ -1,11 +1,19 @@
 import { baseApi } from '@/app/api'
 import {
+  GetCommentAnswersArgs,
+  GetCommentAnswersLikesArgs,
+  GetCommentAnswersLikesResponse,
+  GetCommentAnswersResponse,
+  GetCommentLikesArgs,
+  GetPostByUsernameArgs,
+  GetPostByUsernameResponse,
+  GetPostCommentsArgs,
+  GetPostCommentsResponse,
+  GetPostLikesArgs,
   GetPostResponse,
-  GetPublicPostsResponse,
-  GetUserPublicPostsArgs,
+  LikeStatus,
   PostArgsType,
   PostsImages,
-  PostsType,
 } from '@/features'
 import { API_URLS, METHOD } from '@/shared/config'
 
@@ -14,28 +22,32 @@ const {
   CREATE_POST,
   DeletePost,
   DeleteUploadImage,
-  GetPostById,
-  GetUserPublicPosts,
+  GetCommentAnswers,
+  GetCommentAnswersLikes,
+  GetCommentLikes,
+  GetPostComments,
+  GetPostLikes,
+  GetPostsByUsername,
   UPLOAD_POST_IMAGE,
   UpdatePost,
+  UpdatePostLikeStatus,
 } = API_URLS.POSTS
 
 /**
- * @module postsApi
- * @description API endpoints for handling posts.
+ * API service for posts endpoints.
  */
 
 export const postsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     /**
      * Creates a new post.
-     * @returns {Promise<PostsType>} The created post.
+     * @returns {Promise<GetPostResponse>} The created post.
      * @param {PostArgsType} params - The post data.
      */
-    createPost: builder.mutation<PostsType, PostArgsType>({
+    createPost: builder.mutation<GetPostResponse, PostArgsType>({
       invalidatesTags: ['Posts'],
-      query: params => ({
-        body: params,
+      query: body => ({
+        body,
         method: POST,
         url: CREATE_POST,
       }),
@@ -63,25 +75,72 @@ export const postsApi = baseApi.injectEndpoints({
       }),
     }),
     /**
-     * Fetches a post by its ID.
-     * @param {{ postId: number }} params - The ID of the post to fetch.
+     * Fetches replies to a specific comment on a post.
+     * @param GetCommentAnswersArgs - Contains the comment and post IDs
      */
-    getPostById: builder.query<GetPostResponse, { postId: number | undefined }>({
+    getCommentAnswers: builder.query<GetCommentAnswersResponse, GetCommentAnswersArgs>({
       providesTags: ['Posts'],
-      query: ({ postId }) => ({
+      query: ({ commentId, postId }) => ({
         method: GET,
-        url: GetPostById(postId),
+        url: GetCommentAnswers(commentId, postId),
       }),
     }),
     /**
-     * Fetches public posts for a specific user.
-     * @param {GetUserPublicPostsArgs} params - The user ID and optional end cursor post ID.
+     * Fetches likes for a specific reply to a comment on a post.
+     * @param GetCommentAnswersLikesArgs - Contains IDs for the answer, comment, and post.
      */
-    getUserPosts: builder.query<GetPublicPostsResponse, GetUserPublicPostsArgs>({
+    getCommentAnswersLikes: builder.query<
+      GetCommentAnswersLikesResponse,
+      GetCommentAnswersLikesArgs
+    >({
       providesTags: ['Posts'],
-      query: ({ endCursorPostId, userId }) => ({
+      query: ({ answerId, commentId, postId }) => ({
         method: GET,
-        url: GetUserPublicPosts(endCursorPostId, userId),
+        url: GetCommentAnswersLikes(commentId, postId, answerId),
+      }),
+    }),
+    /**
+     * Fetches likes for a specific comment on a post.
+     * @param GetCommentLikesArgs - Contains the comment and post IDs.
+     */
+    getCommentLikes: builder.query<GetCommentAnswersLikesResponse, GetCommentLikesArgs>({
+      providesTags: ['Posts'],
+      query: ({ commentId, postId }) => ({
+        method: GET,
+        url: GetCommentLikes(commentId, postId),
+      }),
+    }),
+    /**
+     * Fetches comments for a specific post.
+     * @param GetPostCommentsArgs - Contains the post ID.
+     */
+    getPostComments: builder.query<GetPostCommentsResponse, GetPostCommentsArgs>({
+      providesTags: ['Posts'],
+      query: ({ postId }) => ({
+        method: GET,
+        url: GetPostComments(postId),
+      }),
+    }),
+    /**
+     * Fetches likes for a specific post.
+     * @param GetPostLikesArgs - Contains the post ID.
+     */
+    getPostLikes: builder.query<GetCommentAnswersResponse, GetPostLikesArgs>({
+      providesTags: ['Posts'],
+      query: ({ postId }) => ({
+        method: GET,
+        url: GetPostLikes(postId),
+      }),
+    }),
+    /**
+     * Fetches posts by a specific user.
+     * @param GetPostByUsernameArgs - Contains the username.
+     */
+    getPostsByUsername: builder.query<GetPostByUsernameResponse, GetPostByUsernameArgs>({
+      providesTags: ['Posts'],
+      query: ({ userName }) => ({
+        method: GET,
+        url: GetPostsByUsername(userName),
       }),
     }),
     /**
@@ -97,10 +156,21 @@ export const postsApi = baseApi.injectEndpoints({
       }),
     }),
     /**
+     * Updates the like status for a specific post.
+     * @param { likeStatus: LikeStatus, postId: number } - The new like status and the post ID.
+     */
+    updatePostLikeStatus: builder.mutation<void, { likeStatus: LikeStatus; postId: number }>({
+      invalidatesTags: ['Posts'],
+      query: ({ likeStatus, postId }) => ({
+        body: { likeStatus },
+        method: PUT,
+        url: UpdatePostLikeStatus(postId),
+      }),
+    }),
+    /**
      * Uploads an image for a post.
      * @param {FormData} formData - The image file to upload.
      */
-
     uploadPostImage: builder.mutation<PostsImages, FormData>({
       invalidatesTags: ['Posts'],
       query: (formData: FormData) => ({
@@ -116,8 +186,13 @@ export const {
   useCreatePostMutation,
   useDeletePostMutation,
   useDeleteUploadImageMutation,
-  useGetPostByIdQuery,
-  useGetUserPostsQuery,
+  useGetCommentAnswersLikesQuery,
+  useGetCommentAnswersQuery,
+  useGetCommentLikesQuery,
+  useGetPostCommentsQuery,
+  useGetPostLikesQuery,
+  useGetPostsByUsernameQuery,
+  useUpdatePostLikeStatusMutation,
   useUpdatePostMutation,
   useUploadPostImageMutation,
 } = postsApi
