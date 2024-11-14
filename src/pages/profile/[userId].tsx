@@ -2,13 +2,12 @@ import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 
 import { Profile, useAuthMeQuery } from '@/features'
-import { Loader } from '@/shared/ui'
 import Head from 'next/head'
 /**
  * it is  responsible for rendering the user's profile page.
  */
 const ProfilePage = () => {
-  const { data: user, isError, isLoading, refetch } = useAuthMeQuery()
+  const { data: user, isError, refetch } = useAuthMeQuery()
 
   useEffect(() => {
     if (isError) {
@@ -17,10 +16,6 @@ const ProfilePage = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError])
-
-  if (isLoading) {
-    return <Loader />
-  }
 
   if (isError) {
     return <div>Error loading profile. Please try again later.</div>
