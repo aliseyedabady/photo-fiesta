@@ -1,14 +1,22 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import { PostList, useProfile } from '@/features'
-import { Loader, ProfileAvatar, ProfileStat } from '@/shared/ui'
+import { GetPublicPostsResponse, GetPublicProfileResponse, PostList } from '@/features'
+import { ROUTES } from '@/shared/config'
+import { ProfileAvatar, ProfileStat } from '@/shared/ui'
 import { useTranslation } from '@/shared/utils'
 import { Button, Typography } from '@photo-fiesta/ui-lib'
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 
 import styles from './profile.module.scss'
 
-export type ProfileProps = ComponentPropsWithoutRef<'div'>
+export type ProfileProps = {
+  getProfile: () => void
+  isOwnProfile: boolean
+  posts: GetPublicPostsResponse
+  profileId: number
+  profileInfo: GetPublicProfileResponse | undefined
+} & ComponentPropsWithoutRef<'div'>
 
 /**
  * `Profile` is a component that displays a user's profile information, including their avatar,
@@ -22,10 +30,28 @@ export type ProfileProps = ComponentPropsWithoutRef<'div'>
  * )
  */
 //TODO: add translations
-export const Profile = ({ className }: ProfileProps) => {
+export const Profile = ({
+  className,
+  getProfile,
+  isOwnProfile,
+  posts,
+  profileId,
+  profileInfo,
+}: ProfileProps) => {
   const { t } = useTranslation()
-  const { authData, handleProfileSettings, isError, isLoading, isOwnProfile, profileInfo } =
-    useProfile()
+  const router = useRouter()
+
+  console.log(profileId)
+  console.log(profileInfo?.id)
+  console.log(posts)
+
+  /**
+   * Handles navigation to profile settings and refetches profile data.
+   */
+  const handleProfileSettings = () => {
+    router.push(ROUTES.SETTINGS)
+    getProfile()
+  }
   const userAvatar = profileInfo?.avatars.length ? [profileInfo.avatars[0]] : []
   const classNames = {
     avatar: styles.avatar,
@@ -42,12 +68,6 @@ export const Profile = ({ className }: ProfileProps) => {
     wrapper: styles.wrapper,
   } as const
 
-  if (isError) {
-    return null
-  }
-  if (isLoading) {
-    return <Loader />
-  }
   const profileButton = isOwnProfile ? (
     <Button onClick={handleProfileSettings} variant={'secondary'}>
       <Typography variant={'h3'}>{t.myProfile.settings}</Typography>
@@ -69,21 +89,25 @@ export const Profile = ({ className }: ProfileProps) => {
         <ProfileAvatar avatarOwner={profileInfo?.avatars[0]?.url} className={classNames.avatar} />
         <div className={classNames.info}>
           <div className={classNames.title}>
-            <Typography variant={'h1'}>{authData?.userId}</Typography>
+            <Typography variant={'h1'}>{profileInfo?.userName}</Typography>
+            <Typography variant={'h1'}>{profileInfo?.id}</Typography>
             {profileButton}
           </div>
           <div className={classNames.counts}>
             <ProfileStat
               className={classNames.firstStat}
-              counts={2218}
+              counts={profileInfo?.userMetadata.following}
               title={t.myProfile.following}
             />
             <ProfileStat
               className={classNames.secondStat}
-              counts={2358}
+              counts={profileInfo?.userMetadata.followers}
               title={t.myProfile.followers}
             />
-            <ProfileStat counts={2764} title={t.myProfile.publications} />
+            <ProfileStat
+              counts={profileInfo?.userMetadata.publications}
+              title={t.myProfile.publications}
+            />
           </div>
           <div className={classNames.bio}>
             <Typography variant={'text16'}>{profileInfo?.aboutMe}</Typography>
@@ -92,12 +116,12 @@ export const Profile = ({ className }: ProfileProps) => {
       </div>
       {/*TODO: fix type of userId*/}
       <div className={classNames.titleMobile}>
-        <Typography variant={'textBold16'}>{authData?.userId}</Typography>
+        <Typography variant={'textBold16'}>{profileInfo?.id}</Typography>
       </div>
       <div className={classNames.bioMobile}>
         <Typography variant={'text14'}>{profileInfo?.aboutMe}</Typography>
       </div>
-      <PostList avatar={userAvatar} userId={authData?.userId ?? 0} />
+      <PostList avatar={userAvatar} posts={posts} userId={profileInfo?.id ?? 0} />
     </div>
   )
 }

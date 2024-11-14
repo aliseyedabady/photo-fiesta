@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Avatar, useGetUserPostsQuery } from '@/features'
+import { Avatar, GetPublicPostsResponse } from '@/features'
 import { ImagePostModal } from '@/features/posts'
 import { ImageOutline } from '@/shared/assets'
 import Image from 'next/image'
@@ -9,16 +9,19 @@ import styles from './postList.module.scss'
 
 type Props = {
   avatar: Avatar[] | undefined
+  posts: GetPublicPostsResponse
   userId: number
 }
 
-export const PostList = ({ avatar, userId }: Props) => {
+export const PostList = ({ avatar, posts, userId }: Props) => {
   const [openModal, setOpenModal] = useState(false)
   const [selectedPostId, setSelectedPostId] = useState<null | number>(null)
   const [selectedImage, setSelectedImage] = useState<null | string | string[]>(null)
-  const { data: userPosts } = useGetUserPostsQuery({ userId }, { skip: !userId })
 
-  if (!userPosts?.items.length) {
+  console.log(posts)
+  console.log(userId)
+
+  if (!posts?.items.length) {
     return (
       <div className={styles.placeholder}>
         <ImageOutline className={styles.icon} />
@@ -42,7 +45,7 @@ export const PostList = ({ avatar, userId }: Props) => {
   return (
     <>
       <div className={classNames.postGrid}>
-        {userPosts.items.map(post => (
+        {posts?.items.map(post => (
           <Image
             alt={'post image'}
             className={classNames.image}

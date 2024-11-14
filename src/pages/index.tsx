@@ -1,47 +1,28 @@
 import { GetPublicPostsResponse } from '@/features'
+import { API_URLS } from '@/shared/config'
 import { ProfileAvatar, RegisteredUsersCounter } from '@/shared/ui'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 import styles from '@/features/public/publicPage.module.scss'
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch('https://inctagram.work/api/v1/public-posts/all/,?pageSize=4')
+  const res = await fetch(`${API_URLS.BASE_URL}v1/public-posts/all/,?pageSize=4`)
   const data: Pick<GetPublicPostsResponse, 'items' | 'totalUsers'> = await res.json()
 
   return { props: data, revalidate: 60 }
 }
 
 const Home = ({ items, totalUsers }: Pick<GetPublicPostsResponse, 'items' | 'totalUsers'>) => {
-  // const router = useRouter()
+  const router = useRouter()
 
-  console.log(items)
-  console.log(totalUsers)
   const classNames = {
     container: styles.container,
     posts: styles.posts,
   } as const
 
-  // useEffect(() => {
-  //   const checkAuth = async () => {
-  //     const token = Storage.getToken()
-  //
-  //     if (!token) {
-  //       router.push(ROUTES.PUBLIC)
-  //
-  //       return
-  //     } else {
-  //       router.push(ROUTES.HOME)
-  //
-  //       return
-  //     }
-  //   }
-  //
-  //   checkAuth()
-  // }, [router])
-  //
-  // return <Loader />
   return (
     <>
       <Head>
@@ -61,16 +42,16 @@ const Home = ({ items, totalUsers }: Pick<GetPublicPostsResponse, 'items' | 'tot
               <div key={post.id}>
                 <Image
                   alt={'post image'}
-                  // className={classNames.image}
                   height={228}
-                  // key={post.id}
-                  // onClick={() => handleOpenImageModal(post.id, post.images[0]?.url)}
+                  onClick={() => {
+                    router.push(`/profile/${post.ownerId}/${post.id}`)
+                  }}
                   src={post.images[0]?.url}
                   width={234}
                 />
-                <div>
+                <a href={`/profile/${post.ownerId}`}>
                   <ProfileAvatar avatarOwner={post.avatarOwner} />
-                </div>
+                </a>
                 <div>{post.userName}</div>
                 <div>{post.createdAt}</div>
                 <div>{post.description}</div>
