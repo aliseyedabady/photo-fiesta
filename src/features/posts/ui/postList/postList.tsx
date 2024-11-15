@@ -10,9 +10,7 @@ import styles from './postList.module.scss'
 
 type Props = {
   avatar: Avatar[] | undefined
-  // postId: number
   posts: GetPublicPostsResponse
-  // publicPost: GetPostResponse
   userId: number
 }
 
@@ -22,24 +20,12 @@ export const PostList = ({ avatar, posts, userId }: Props) => {
   const [selectedPostId, setSelectedPostId] = useState<null | number>(null)
   const [selectedImage, setSelectedImage] = useState<null | string | string[]>(null)
 
-  console.log(posts)
-  console.log(userId)
-  // useEffect(() => {
-  //   // Если postId есть в query, открываем модалку с соответствующими данными
-  //   const postId = router.query.postId ? Number(router.query.postId) : null
-  //
-  //   if (postId) {
-  //     const post = posts.items.find(p => p.id === postId)
-  //
-  //     if (post) {
-  //       setSelectedPostId(postId)
-  //       setSelectedImage(post.images[0]?.url)
-  //       setOpenModal(true)
-  //     }
-  //   }
-  // }, [router.query.postId, posts])
+  const classNames = {
+    image: styles.image,
+    postGrid: styles.postGrid,
+  } as const
+
   useEffect(() => {
-    // Если postId есть в query, открываем модалку с соответствующими данными
     if (router.query.postId) {
       const postId = Number(router.query.postId)
       const post = posts.items.find(p => p.id === postId)
@@ -82,12 +68,7 @@ export const PostList = ({ avatar, posts, userId }: Props) => {
       { shallow: true }
     )
   }
-  const classNames = {
-    image: styles.image,
-    postGrid: styles.postGrid,
-  } as const
 
-  // TODO: scroll for posts
   if (!posts?.items.length) {
     return (
       <div className={styles.placeholder}>
@@ -96,6 +77,7 @@ export const PostList = ({ avatar, posts, userId }: Props) => {
     )
   }
 
+  // TODO: scroll for posts
   return (
     <>
       <div className={classNames.postGrid}>

@@ -19,10 +19,10 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const userPosts = await userPostsResponse.json()
 
   const publicPostById = await fetch(`${API_URLS.BASE_URL}v1/public-posts/${postId}`)
-  const publicPost = await publicPostById.json()
+  const publicPost: GetPostResponse = await publicPostById.json()
 
   const publicPostsResponse = await fetch(`${API_URLS.BASE_URL}v1/public-posts/user/${userId}`)
-  const userAllPosts = await publicPostsResponse.json()
+  const userAllPosts: GetPublicPostsResponse = await publicPostsResponse.json()
 
   return {
     props: {
@@ -35,10 +35,8 @@ export const getServerSideProps: GetServerSideProps = async context => {
   }
 }
 type ProfilePageProps = {
-  postId: number
   posts: GetPublicPostsResponse
   profileId: number
-  publicPost: GetPostResponse
 }
 
 const ProfilePage = ({ posts, profileId }: ProfilePageProps) => {
@@ -62,11 +60,9 @@ const ProfilePage = ({ posts, profileId }: ProfilePageProps) => {
       <Profile
         getProfile={getProfile}
         isOwnProfile={isOwnProfile}
-        // postId={postId}
         posts={posts}
         profileId={profileId}
         profileInfo={profileInfo}
-        // publicPost={publicPost}
       />
     </>
   )

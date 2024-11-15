@@ -1,11 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import {
-  GetPostResponse,
-  GetPublicPostsResponse,
-  GetPublicProfileResponse,
-  PostList,
-} from '@/features'
+import { GetPublicPostsResponse, GetPublicProfileResponse, PostList } from '@/features'
 import { ROUTES } from '@/shared/config'
 import { ProfileAvatar, ProfileStat } from '@/shared/ui'
 import { useTranslation } from '@/shared/utils'
@@ -18,11 +13,9 @@ import styles from './profile.module.scss'
 export type ProfileProps = {
   getProfile: () => void
   isOwnProfile: boolean
-  postId: number
   posts: GetPublicPostsResponse
   profileId: number
   profileInfo: GetPublicProfileResponse | undefined
-  publicPost: GetPostResponse
 } & ComponentPropsWithoutRef<'div'>
 
 /**
@@ -42,15 +35,10 @@ export const Profile = ({
   getProfile,
   isOwnProfile,
   posts,
-  profileId,
   profileInfo,
 }: ProfileProps) => {
   const { t } = useTranslation()
   const router = useRouter()
-
-  console.log(profileId)
-  console.log(profileInfo?.id)
-  console.log(posts)
 
   /**
    * Handles navigation to profile settings and refetches profile data.
@@ -128,13 +116,7 @@ export const Profile = ({
       <div className={classNames.bioMobile}>
         <Typography variant={'text14'}>{profileInfo?.aboutMe}</Typography>
       </div>
-      <PostList
-        avatar={userAvatar}
-        // postId={postId}
-        posts={posts}
-        // publicPost={publicPost}
-        userId={profileInfo?.id ?? 0}
-      />
+      <PostList avatar={userAvatar} posts={posts} userId={profileInfo?.id ?? 0} />
     </div>
   )
 }
