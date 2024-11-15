@@ -1,5 +1,5 @@
 import { GetPublicPostsResponse } from '@/features'
-import { API_URLS } from '@/shared/config'
+import { API_URLS, ROUTES } from '@/shared/config'
 import { ProfileAvatar, RegisteredUsersCounter } from '@/shared/ui'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
@@ -46,7 +46,7 @@ const Home = ({ items, totalUsers }: Pick<GetPublicPostsResponse, 'items' | 'tot
                   onClick={() => {
                     router.push(
                       {
-                        pathname: `/profile/${post.ownerId}`,
+                        pathname: `${ROUTES.PROFILE}/${post.ownerId}`,
                         query: { postId: post.id.toString() },
                       },
                       undefined,
@@ -56,7 +56,7 @@ const Home = ({ items, totalUsers }: Pick<GetPublicPostsResponse, 'items' | 'tot
                   src={post.images[0]?.url}
                   width={234}
                 />
-                <a href={`/profile/${post.ownerId}`}>
+                <a href={`${ROUTES.PROFILE}/${post.ownerId}`}>
                   <ProfileAvatar avatarOwner={post.avatarOwner} />
                 </a>
                 <div>{post.userName}</div>

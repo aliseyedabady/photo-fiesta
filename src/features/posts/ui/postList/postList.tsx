@@ -42,14 +42,6 @@ export const PostList = ({ avatar, posts, userId }: Props) => {
     setSelectedPostId(postId)
     setSelectedImage(imageUrl)
     setOpenModal(true)
-    router.push(
-      {
-        pathname: router.pathname,
-        query: { ...router.query, postId: postId.toString() },
-      },
-      undefined,
-      { shallow: true }
-    )
   }
   const handleCloseModal = () => {
     setOpenModal(false)

@@ -15,7 +15,7 @@ export type ProfileProps = {
   isOwnProfile: boolean
   posts: GetPublicPostsResponse
   profileId: number
-  profileInfo: GetPublicProfileResponse | undefined
+  profileInfo?: GetPublicProfileResponse
 } & ComponentPropsWithoutRef<'div'>
 
 /**

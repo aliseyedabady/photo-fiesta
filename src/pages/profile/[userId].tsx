@@ -1,6 +1,7 @@
 import {
   GetPostResponse,
   GetPublicPostsResponse,
+  GetPublicProfileResponse,
   Profile,
   useAuthMeQuery,
   useGetPublicProfileByIdQuery,
@@ -16,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const { postId, userId } = context.query
 
   const userPostsResponse = await fetch(`${API_URLS.BASE_URL}v1/public-user/profile/${userId}`)
-  const userPosts = await userPostsResponse.json()
+  const userPosts: GetPublicProfileResponse = await userPostsResponse.json()
 
   const publicPostById = await fetch(`${API_URLS.BASE_URL}v1/public-posts/${postId}`)
   const publicPost: GetPostResponse = await publicPostById.json()
@@ -34,6 +35,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
     },
   }
 }
+
 type ProfilePageProps = {
   posts: GetPublicPostsResponse
   profileId: number
@@ -43,8 +45,6 @@ const ProfilePage = ({ posts, profileId }: ProfilePageProps) => {
   const { data: user } = useAuthMeQuery()
   const { data: profileInfo, refetch: getProfile } = useGetPublicProfileByIdQuery({ profileId })
   const isOwnProfile = user?.userId === profileId
-
-  console.log(posts)
 
   return (
     <>
