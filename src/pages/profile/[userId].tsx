@@ -13,7 +13,7 @@ import Head from 'next/head'
  */
 
 export const getServerSideProps: GetServerSideProps = async context => {
-  const { postId, userId } = context.params || {}
+  const { postId, userId } = context.query
 
   const userPostsResponse = await fetch(`${API_URLS.BASE_URL}v1/public-user/profile/${userId}`)
   const userPosts = await userPostsResponse.json()
@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
 
   return {
     props: {
-      postId: Number(postId),
+      postId: postId ? Number(postId) : null,
       posts: userAllPosts,
       profileId: Number(userId),
       publicPost,
@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   }
 }
 type ProfilePageProps = {
-  postId?: number
+  postId: number
   posts: GetPublicPostsResponse
   profileId: number
   publicPost: GetPostResponse
@@ -62,9 +62,11 @@ const ProfilePage = ({ posts, profileId }: ProfilePageProps) => {
       <Profile
         getProfile={getProfile}
         isOwnProfile={isOwnProfile}
+        // postId={postId}
         posts={posts}
         profileId={profileId}
         profileInfo={profileInfo}
+        // publicPost={publicPost}
       />
     </>
   )

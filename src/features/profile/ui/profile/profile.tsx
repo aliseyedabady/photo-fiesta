@@ -1,6 +1,11 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import { GetPublicPostsResponse, GetPublicProfileResponse, PostList } from '@/features'
+import {
+  GetPostResponse,
+  GetPublicPostsResponse,
+  GetPublicProfileResponse,
+  PostList,
+} from '@/features'
 import { ROUTES } from '@/shared/config'
 import { ProfileAvatar, ProfileStat } from '@/shared/ui'
 import { useTranslation } from '@/shared/utils'
@@ -13,9 +18,11 @@ import styles from './profile.module.scss'
 export type ProfileProps = {
   getProfile: () => void
   isOwnProfile: boolean
+  postId: number
   posts: GetPublicPostsResponse
   profileId: number
   profileInfo: GetPublicProfileResponse | undefined
+  publicPost: GetPostResponse
 } & ComponentPropsWithoutRef<'div'>
 
 /**
@@ -121,7 +128,13 @@ export const Profile = ({
       <div className={classNames.bioMobile}>
         <Typography variant={'text14'}>{profileInfo?.aboutMe}</Typography>
       </div>
-      <PostList avatar={userAvatar} posts={posts} userId={profileInfo?.id ?? 0} />
+      <PostList
+        avatar={userAvatar}
+        // postId={postId}
+        posts={posts}
+        // publicPost={publicPost}
+        userId={profileInfo?.id ?? 0}
+      />
     </div>
   )
 }

@@ -44,7 +44,14 @@ const Home = ({ items, totalUsers }: Pick<GetPublicPostsResponse, 'items' | 'tot
                   alt={'post image'}
                   height={228}
                   onClick={() => {
-                    router.push(`/profile/${post.ownerId}/${post.id}`)
+                    router.push(
+                      {
+                        pathname: `/profile/${post.ownerId}`,
+                        query: { postId: post.id.toString() },
+                      },
+                      undefined,
+                      { shallow: true }
+                    )
                   }}
                   src={post.images[0]?.url}
                   width={234}
