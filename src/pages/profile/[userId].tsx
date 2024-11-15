@@ -4,7 +4,6 @@ import {
   GetPublicProfileResponse,
   Profile,
   useAuthMeQuery,
-  useGetPublicProfileByIdQuery,
 } from '@/features'
 import { API_URLS } from '@/shared/config'
 import { GetServerSideProps } from 'next'
@@ -16,8 +15,8 @@ import Head from 'next/head'
 export const getServerSideProps: GetServerSideProps = async context => {
   const { postId, userId } = context.query
 
-  const userPostsResponse = await fetch(`${API_URLS.BASE_URL}v1/public-user/profile/${userId}`)
-  const userPosts: GetPublicProfileResponse = await userPostsResponse.json()
+  const userProfileResponse = await fetch(`${API_URLS.BASE_URL}v1/public-user/profile/${userId}`)
+  const userProfile: GetPublicProfileResponse = await userProfileResponse.json()
 
   const publicPostById = await fetch(`${API_URLS.BASE_URL}v1/public-posts/${postId}`)
   const publicPost: GetPostResponse = await publicPostById.json()
@@ -31,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
       posts: userAllPosts,
       profileId: Number(userId),
       publicPost,
-      userPosts,
+      userProfile,
     },
   }
 }
@@ -39,11 +38,12 @@ export const getServerSideProps: GetServerSideProps = async context => {
 type ProfilePageProps = {
   posts: GetPublicPostsResponse
   profileId: number
+  userProfile: GetPublicProfileResponse
 }
 
-const ProfilePage = ({ posts, profileId }: ProfilePageProps) => {
+const ProfilePage = ({ posts, profileId, userProfile }: ProfilePageProps) => {
   const { data: user } = useAuthMeQuery()
-  const { data: profileInfo, refetch: getProfile } = useGetPublicProfileByIdQuery({ profileId })
+
   const isOwnProfile = user?.userId === profileId
 
   return (
@@ -58,11 +58,10 @@ const ProfilePage = ({ posts, profileId }: ProfilePageProps) => {
         <meta content={'index, follow'} name={'robots'} />
       </Head>
       <Profile
-        getProfile={getProfile}
         isOwnProfile={isOwnProfile}
         posts={posts}
         profileId={profileId}
-        profileInfo={profileInfo}
+        profileInfo={userProfile}
       />
     </>
   )

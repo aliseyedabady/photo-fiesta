@@ -11,7 +11,6 @@ import { useRouter } from 'next/router'
 import styles from './profile.module.scss'
 
 export type ProfileProps = {
-  getProfile: () => void
   isOwnProfile: boolean
   posts: GetPublicPostsResponse
   profileId: number
@@ -30,23 +29,15 @@ export type ProfileProps = {
  * )
  */
 //TODO: add translations
-export const Profile = ({
-  className,
-  getProfile,
-  isOwnProfile,
-  posts,
-  profileInfo,
-}: ProfileProps) => {
+export const Profile = ({ className, isOwnProfile, posts, profileInfo }: ProfileProps) => {
   const { t } = useTranslation()
   const router = useRouter()
 
   /**
    * Handles navigation to profile settings and refetches profile data.
    */
-  const handleProfileSettings = () => {
-    router.push(ROUTES.SETTINGS)
-    getProfile()
-  }
+  const handleProfileSettings = () => router.push(ROUTES.SETTINGS)
+
   const userAvatar = profileInfo?.avatars.length ? [profileInfo.avatars[0]] : []
   const classNames = {
     avatar: styles.avatar,
