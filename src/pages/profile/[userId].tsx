@@ -15,13 +15,19 @@ import Head from 'next/head'
 export const getServerSideProps: GetServerSideProps = async context => {
   const { postId, userId } = context.query
 
-  const userProfileResponse = await fetch(`${API_URLS.BASE_URL}v1/public-user/profile/${userId}`)
+  const userProfileResponse = await fetch(
+    `${API_URLS.BASE_URL}${API_URLS.PUBLIC.GetPublicProfileById(Number(userId))}`
+  )
   const userProfile: GetPublicProfileResponse = await userProfileResponse.json()
 
-  const publicPostById = await fetch(`${API_URLS.BASE_URL}v1/public-posts/${postId}`)
+  const publicPostById = await fetch(
+    `${API_URLS.BASE_URL}${API_URLS.PUBLIC.GetPostById(Number(postId))}`
+  )
   const publicPost: GetPostResponse = await publicPostById.json()
 
-  const publicPostsResponse = await fetch(`${API_URLS.BASE_URL}v1/public-posts/user/${userId}`)
+  const publicPostsResponse = await fetch(
+    `${API_URLS.BASE_URL}${API_URLS.PUBLIC.GetUserPublicPosts(undefined, Number(userId))}`
+  )
   const userAllPosts: GetPublicPostsResponse = await publicPostsResponse.json()
 
   return {

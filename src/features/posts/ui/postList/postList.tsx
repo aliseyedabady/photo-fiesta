@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react'
 
-import { Avatar, GetPublicPostsResponse } from '@/features'
-import { ImagePostModal } from '@/features/posts'
+import { Avatar, GetPublicPostsResponse, ImagePostModal } from '@/features'
 import { ImageOutline } from '@/shared/assets'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import styles from './postList.module.scss'
 
-type Props = {
+type PostListProps = {
   avatar: Avatar[] | undefined
   posts: GetPublicPostsResponse
   userId: number
 }
 
-export const PostList = ({ avatar, posts, userId }: Props) => {
+export const PostList = ({ avatar, posts, userId }: PostListProps) => {
   const router = useRouter()
+  const { postId, ...restQuery } = router.query
   const [openModal, setOpenModal] = useState(false)
   const [selectedPostId, setSelectedPostId] = useState<null | number>(null)
   const [selectedImage, setSelectedImage] = useState<null | string | string[]>(null)
@@ -26,17 +26,17 @@ export const PostList = ({ avatar, posts, userId }: Props) => {
   } as const
 
   useEffect(() => {
-    if (router.query.postId) {
-      const postId = Number(router.query.postId)
-      const post = posts.items.find(p => p.id === postId)
+    if (postId) {
+      const parsedPostId = Number(postId)
+      const post = posts.items.find(p => p.id === parsedPostId)
 
       if (post) {
-        setSelectedPostId(postId)
+        setSelectedPostId(parsedPostId)
         setSelectedImage(post.images[0]?.url)
         setOpenModal(true)
       }
     }
-  }, [router.query.postId, posts])
+  }, [postId, posts])
 
   const handleOpenImageModal = (postId: number, imageUrl: string) => {
     setSelectedPostId(postId)
@@ -47,9 +47,6 @@ export const PostList = ({ avatar, posts, userId }: Props) => {
     setOpenModal(false)
     setSelectedPostId(null)
     setSelectedImage(null)
-
-    /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-    const { postId, ...restQuery } = router.query
 
     router.push(
       {

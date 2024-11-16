@@ -9,7 +9,9 @@ import { useRouter } from 'next/router'
 import styles from '@/features/public/publicPage.module.scss'
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(`${API_URLS.BASE_URL}v1/public-posts/all/,?pageSize=4`)
+  const res = await fetch(
+    `${API_URLS.BASE_URL}${API_URLS.PUBLIC.GetAllPublicPosts(undefined)}?pageSize=4`
+  )
   const data: Pick<GetPublicPostsResponse, 'items' | 'totalUsers'> = await res.json()
 
   return { props: data, revalidate: 60 }
@@ -17,6 +19,17 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const Home = ({ items, totalUsers }: Pick<GetPublicPostsResponse, 'items' | 'totalUsers'>) => {
   const router = useRouter()
+
+  const handlePostClick = (ownerId: number, postId: number) => {
+    router.push(
+      {
+        pathname: `${ROUTES.PROFILE}/${ownerId}`,
+        query: { postId: postId.toString() },
+      },
+      undefined,
+      { shallow: true }
+    )
+  }
 
   const classNames = {
     container: styles.container,
@@ -43,16 +56,7 @@ const Home = ({ items, totalUsers }: Pick<GetPublicPostsResponse, 'items' | 'tot
                 <Image
                   alt={'post image'}
                   height={228}
-                  onClick={() => {
-                    router.push(
-                      {
-                        pathname: `${ROUTES.PROFILE}/${post.ownerId}`,
-                        query: { postId: post.id.toString() },
-                      },
-                      undefined,
-                      { shallow: true }
-                    )
-                  }}
+                  onClick={() => handlePostClick(post.ownerId, post.id)}
                   src={post.images[0]?.url}
                   width={234}
                 />
