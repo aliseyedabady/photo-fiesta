@@ -3,7 +3,7 @@ import {
   GetPublicPostsResponse,
   GetPublicProfileResponse,
   Profile,
-  useAuthMeQuery,
+  useGetPublicProfileByIdQuery,
 } from '@/features'
 import { API_URLS } from '@/shared/config'
 import { GetServerSideProps } from 'next'
@@ -48,9 +48,9 @@ type ProfilePageProps = {
 }
 
 const ProfilePage = ({ posts, profileId, userProfile }: ProfilePageProps) => {
-  const { data: user } = useAuthMeQuery()
+  const { data: user } = useGetPublicProfileByIdQuery({ profileId })
 
-  const isOwnProfile = user?.userId === profileId
+  const isOwnProfile = user?.id === profileId
 
   return (
     <>
