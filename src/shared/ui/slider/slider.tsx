@@ -9,6 +9,7 @@ import 'slick-carousel/slick/slick-theme.css'
 
 import styles from './slider.module.scss'
 
+//TODO: move to widgets/carousel...
 type ArrowsProps = {
   callbackFunction?: () => void
   indexArrow: number
