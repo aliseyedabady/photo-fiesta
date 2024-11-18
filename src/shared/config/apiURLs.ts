@@ -55,7 +55,7 @@ export const API_URLS = {
     GetPostById: (postId: number | undefined) => `v1/public-posts/${postId}`,
     GetPublicPostComments: (postId: number) => `/api/v1/public-posts/${postId}/comments`,
     GetPublicProfileById: (profileId: number) => `v1/public-user/profile/${profileId}`,
-    GetUserPublicPosts: (endCursorPostId: number | undefined, userId: number) =>
+    GetUserPublicPosts: (endCursorPostId: null | number, userId: number) =>
       `v1/public-posts/user/${userId}/${endCursorPostId}`,
   },
   SOCKET_URL: 'https://inctagram.work',

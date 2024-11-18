@@ -4,6 +4,7 @@ import { ProfileAvatar, RegisteredUsersCounter } from '@/shared/ui'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import styles from '@/features/public/publicPage.module.scss'
@@ -60,10 +61,10 @@ const Home = ({ items, totalUsers }: Pick<GetPublicPostsResponse, 'items' | 'tot
                   src={post.images[0]?.url}
                   width={234}
                 />
-                <a href={`${ROUTES.PROFILE}/${post.ownerId}`}>
+                <Link href={`${ROUTES.PROFILE}/${post.ownerId}`}>
                   <ProfileAvatar avatarOwner={post.avatarOwner} />
-                </a>
-                <div>{post.userName}</div>
+                  <div>{post.userName}</div>
+                </Link>
                 <div>{post.createdAt}</div>
                 <div>{post.description}</div>
               </div>

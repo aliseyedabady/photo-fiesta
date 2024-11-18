@@ -107,7 +107,7 @@ export const Profile = ({ className, isOwnProfile, posts, profileInfo }: Profile
       <div className={classNames.bioMobile}>
         <Typography variant={'text14'}>{profileInfo?.aboutMe}</Typography>
       </div>
-      <PostList avatar={userAvatar} posts={posts} userId={profileInfo?.id ?? 0} />
+      <PostList avatar={userAvatar} initialPosts={posts} userId={profileInfo?.id ?? 0} />
     </div>
   )
 }

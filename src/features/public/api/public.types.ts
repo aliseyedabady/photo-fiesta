@@ -44,7 +44,7 @@ type Metadata={
 export type GetUserPublicPostsArgs = {userId: number } & GetPublicPostsArgs
 
 export type GetPublicPostsArgs ={
-    endCursorPostId?: number
+    endCursorPostId: number
     pageSize?: number
     sortBy?: string
     sortDirection?: 'asc' | 'desc'

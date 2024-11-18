@@ -8,9 +8,6 @@ import {
 import { API_URLS } from '@/shared/config'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-/**
- * it is  responsible for rendering the user's profile page.
- */
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const { postId, userId } = context.query
@@ -26,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   const publicPost: GetPostResponse = await publicPostById.json()
 
   const publicPostsResponse = await fetch(
-    `${API_URLS.BASE_URL}${API_URLS.PUBLIC.GetUserPublicPosts(undefined, Number(userId))}`
+    `${API_URLS.BASE_URL}${API_URLS.PUBLIC.GetUserPublicPosts(null, Number(userId))}?pageSize=8`
   )
   const userAllPosts: GetPublicPostsResponse = await publicPostsResponse.json()
 
@@ -46,7 +43,9 @@ type ProfilePageProps = {
   profileId: number
   userProfile: GetPublicProfileResponse
 }
-
+/**
+ * it is  responsible for rendering the user's profile page.
+ */
 const ProfilePage = ({ posts, profileId, userProfile }: ProfilePageProps) => {
   const { data: user } = useGetPublicProfileByIdQuery({ profileId })
 
