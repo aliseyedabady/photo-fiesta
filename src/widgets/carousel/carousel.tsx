@@ -12,7 +12,7 @@ import Image from 'next/image'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
 
-import styles from './slider.module.scss'
+import styles from './carousel.module.scss'
 
 type CarouselProps = {
   handleCloseModal: () => void

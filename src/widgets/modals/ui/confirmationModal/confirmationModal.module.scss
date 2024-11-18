@@ -28,7 +28,7 @@
 .content {
   z-index: 1000;
   width: 100%;
-  max-width: 380px;
+  max-width: var(--max-width-image);
 
   @include mobile {
     --mobile-content-width: 330px;
