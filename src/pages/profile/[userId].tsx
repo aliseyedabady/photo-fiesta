@@ -9,6 +9,12 @@ import { API_URLS } from '@/shared/config'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 
+/**
+ * Fetches the user's public profile, a specific post by ID, and all their public posts.
+ * Queries based on the userId and postId parameters from the request.
+ *
+ * @returns {Promise<{ props: { posts: GetPublicPostsResponse, profileId: number, userProfile: GetPublicProfileResponse, postId: number, publicPost: GetPostResponse } }>} Server-side props.
+ */
 export const getServerSideProps: GetServerSideProps = async context => {
   const { postId, userId } = context.query
 
@@ -43,8 +49,10 @@ type ProfilePageProps = {
   profileId: number
   userProfile: GetPublicProfileResponse
 }
+
 /**
- * it is  responsible for rendering the user's profile page.
+ * ProfilePage component for rendering a user's public profile with their posts.
+ * Fetches data server-side using Next.js `getServerSideProps`.
  */
 const ProfilePage = ({ posts, profileId, userProfile }: ProfilePageProps) => {
   const { data: user } = useGetPublicProfileByIdQuery({ profileId })

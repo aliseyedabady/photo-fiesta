@@ -1,7 +1,10 @@
 import {GetPostResponse, PublicPost} from "@/features"
 
-import styles from "./publicPosts.module.scss";
+import styles from "./publicPosts.module.scss"
 
+/**
+ * PublicPosts component for displaying a grid of public posts.
+ */
 export const PublicPosts=({items}: {items: GetPostResponse[]})=>{
 
     const classNames = {

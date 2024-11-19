@@ -15,6 +15,9 @@ type PostListProps = {
   userId: number
 }
 
+/**
+ * PostList component for displaying a user's posts with infinite scroll functionality.
+ */
 export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
   const router = useRouter()
   const { postId, ...restQuery } = router.query
@@ -41,6 +44,14 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
   const [posts, setPosts] = useState(initialPosts.items)
   const [hasMore, setHasMore] = useState(posts.length < initialPosts.totalCount)
 
+  /**
+   * Updates the state of posts, the end cursor post ID, and the `hasMore` flag
+   * whenever the `userId` or `initialPosts` props change.
+   *
+   * @description This hook ensures that the state is correctly updated when user ID
+   * or initial posts data changes. It resets the `posts` array, calculates the
+   * ID of the last post, and determines whether more posts can be loaded.
+   */
   useEffect(() => {
     setPosts(initialPosts.items)
     setEndCursorPostId(initialPosts.items[initialPosts.items.length - 1]?.id || null)
@@ -52,6 +63,14 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
     postGrid: styles.postGrid,
   } as const
 
+  /**
+   * Opens the image modal and sets the selected post ID and image URL when
+   * a post ID is found in the query parameters.
+   *
+   * @description This hook checks the `postId` query parameter and attempts to
+   * find the corresponding post in the `posts` array. If a match is found, it
+   * sets the post ID and image URL in state and opens the modal.
+   */
   useEffect(() => {
     if (postId) {
       const parsedPostId = Number(postId)
@@ -85,6 +104,7 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
     )
   }
 
+  /** Fetches and appends additional posts when the user scrolls to the bottom. */
   const loadMorePosts = () => {
     if (data?.items.length) {
       setPosts(prevPosts => {
