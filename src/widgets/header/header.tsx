@@ -38,7 +38,7 @@ export const Header = forwardRef<ElementRef<'div'>, HeaderProps>(
 
     return (
       <div className={classNames.header} ref={ref} {...rest}>
-        <Link className={classNames.logo} href={ROUTES.HOME}>
+        <Link className={classNames.logo} href={ROUTES.PUBLIC}>
           Photo Fiesta
         </Link>
         <div className={classNames.buttonsContainer}>

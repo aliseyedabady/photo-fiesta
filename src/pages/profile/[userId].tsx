@@ -1,30 +1,63 @@
-import { useEffect } from 'react'
-import { toast } from 'react-toastify'
-
-import { Profile, useAuthMeQuery } from '@/features'
-import { Loader } from '@/shared/ui'
+import {
+  GetPostResponse,
+  GetPublicPostsResponse,
+  GetPublicProfileResponse,
+  Profile,
+  useGetPublicProfileByIdQuery,
+} from '@/features'
+import { API_URLS } from '@/shared/config'
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
+
 /**
- * it is  responsible for rendering the user's profile page.
+ * Fetches the user's public profile, a specific post by ID, and all their public posts.
+ * Queries based on the userId and postId parameters from the request.
+ *
+ * @returns {Promise<{ props: { posts: GetPublicPostsResponse, profileId: number, userProfile: GetPublicProfileResponse, postId: number, publicPost: GetPostResponse } }>} Server-side props.
  */
-const ProfilePage = () => {
-  const { data: user, isError, isLoading, refetch } = useAuthMeQuery()
+export const getServerSideProps: GetServerSideProps = async context => {
+  const { postId, userId } = context.query
 
-  useEffect(() => {
-    if (isError) {
-      toast.error('Failed to load profile. Retrying...')
-      refetch()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isError])
+  const userProfileResponse = await fetch(
+    `${API_URLS.BASE_URL}${API_URLS.PUBLIC.GetPublicProfileById(Number(userId))}`
+  )
+  const userProfile: GetPublicProfileResponse = await userProfileResponse.json()
 
-  if (isLoading) {
-    return <Loader />
+  const publicPostById = await fetch(
+    `${API_URLS.BASE_URL}${API_URLS.PUBLIC.GetPostById(Number(postId))}`
+  )
+  const publicPost: GetPostResponse = await publicPostById.json()
+
+  const publicPostsResponse = await fetch(
+    `${API_URLS.BASE_URL}${API_URLS.PUBLIC.GetUserPublicPosts(null, Number(userId))}?pageSize=8`
+  )
+  const userAllPosts: GetPublicPostsResponse = await publicPostsResponse.json()
+
+  return {
+    props: {
+      postId: postId ? Number(postId) : null,
+      posts: userAllPosts,
+      profileId: Number(userId),
+      publicPost,
+      userProfile,
+    },
   }
+}
 
-  if (isError) {
-    return <div>Error loading profile. Please try again later.</div>
-  }
+type ProfilePageProps = {
+  posts: GetPublicPostsResponse
+  profileId: number
+  userProfile: GetPublicProfileResponse
+}
+
+/**
+ * ProfilePage component for rendering a user's public profile with their posts.
+ * Fetches data server-side using Next.js `getServerSideProps`.
+ */
+const ProfilePage = ({ posts, profileId, userProfile }: ProfilePageProps) => {
+  const { data: user } = useGetPublicProfileByIdQuery({ profileId })
+
+  const isOwnProfile = user?.id === profileId
 
   return (
     <>
@@ -37,7 +70,12 @@ const ProfilePage = () => {
         <meta content={`profile, ${user?.userName}, GitHub`} name={'keywords'} />
         <meta content={'index, follow'} name={'robots'} />
       </Head>
-      <Profile />
+      <Profile
+        isOwnProfile={isOwnProfile}
+        posts={posts}
+        profileId={profileId}
+        profileInfo={userProfile}
+      />
     </>
   )
 }

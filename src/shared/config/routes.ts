@@ -7,7 +7,7 @@ export const ROUTES = {
   MESSENGER: '/messenger',
   PRIVACY_POLICY: '/auth/privacyPolicyPage',
   PROFILE: '/profile',
-  PUBLIC: '/public',
+  PUBLIC: '/',
   SEARCH: '/search',
   SETTINGS: '/profile/settings',
   SIGN_IN: '/auth/signInPage',

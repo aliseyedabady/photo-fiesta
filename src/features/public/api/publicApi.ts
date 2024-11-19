@@ -95,5 +95,8 @@ export const {
     useGetPublicPostCommentsQuery,
     useGetPublicProfileByIdQuery,
     useGetUserPostsQuery,
-    useGetUsersCountQuery
+    useGetUsersCountQuery,
+    useLazyGetUserPostsQuery
 } = publicApi
+
+export const {getUserPosts} = publicApi.endpoints
