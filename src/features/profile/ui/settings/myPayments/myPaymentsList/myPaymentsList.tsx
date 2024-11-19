@@ -11,9 +11,12 @@ import {
 } from '@/widgets/table'
 
 import styles from './myPaymentsList.module.scss'
+
 /**
  * The MyPaymentsList component renders a table of user's payments with their details, such as date of payment,
  * end date of payment, price, subscription type, and payment type.
+ * The MyPaymentsList component is visible only on desktop view
+ * (replaced by MyPaymentsCardsMobile on mobile view)
  * @example
  * <MyPaymentsList payments={[
  *   { subscriptionId: 1, dateOfPayment: '2022-01-01', endDateOfSubscription: '2022-12-31',
@@ -44,9 +47,14 @@ export const MyPaymentsList = ({ payments }: { payments: DetailedPayment[] }) =>
     </TableBodyRow>
   ))
 
+  const classNames = {
+    head: styles.head,
+    root: styles.root,
+  } as const
+
   return (
-    <TableWrapper>
-      <TableHead className={styles.head}>{tableHeaders}</TableHead>
+    <TableWrapper className={classNames.root}>
+      <TableHead className={classNames.head}>{tableHeaders}</TableHead>
       <TableBody>{paymentsCells}</TableBody>
     </TableWrapper>
   )

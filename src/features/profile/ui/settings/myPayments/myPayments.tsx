@@ -6,8 +6,11 @@ import { Pagination, Select, SelectContainer, SelectItem } from '@photo-fiesta/u
 
 import styles from './myPayments.module.scss'
 
+import { MyPaymentsCardsMobile } from './myPaymentsCardsMobile'
+
 const classNames = {
   container: styles.container,
+  myPaymentsCardsMobile: styles.myPaymentsCardsMobile,
   pagination: styles.pagination,
   root: styles.root,
 } as const
@@ -18,7 +21,6 @@ const classNames = {
  */
 export const MyPayments = () => {
   const { data: myPayments, isLoading } = useGetMyPaymentsQuery()
-
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [pageSize, setPageSize] = useState<number>(5)
 
@@ -56,7 +58,12 @@ export const MyPayments = () => {
       {myPayments && myPayments.length && (
         <div className={classNames.container}>
           <MyPaymentsList payments={paginatedPayments} />
+          <MyPaymentsCardsMobile
+            className={classNames.myPaymentsCardsMobile}
+            payments={paginatedPayments}
+          />
           <Pagination
+            className={classNames.pagination}
             currentPage={currentPage}
             onChangePage={handlePageChange}
             pageSize={pageSize}
