@@ -112,6 +112,7 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
   return (
     <>
       <InfiniteScroll
+        className={styles.infiniteScrollWrapper}
         dataLength={posts.length}
         hasMore={hasMore}
         loader={isLoading ? <Loader /> : null}
