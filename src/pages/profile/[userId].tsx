@@ -3,6 +3,7 @@ import {
   GetPublicPostsResponse,
   GetPublicProfileResponse,
   Profile,
+  useAuthMeQuery,
   useGetPublicProfileByIdQuery,
 } from '@/features'
 import { API_URLS } from '@/shared/config'
@@ -55,9 +56,10 @@ type ProfilePageProps = {
  * Fetches data server-side using Next.js `getServerSideProps`.
  */
 const ProfilePage = ({ posts, profileId, userProfile }: ProfilePageProps) => {
-  const { data: user } = useGetPublicProfileByIdQuery({ profileId })
+  const { data: currentUser } = useAuthMeQuery()
 
-  const isOwnProfile = user?.id === profileId
+  const { data: user } = useGetPublicProfileByIdQuery({ profileId })
+  const isOwnProfile = currentUser?.userId === profileId
 
   return (
     <>
