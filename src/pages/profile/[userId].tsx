@@ -16,6 +16,7 @@ import Head from 'next/head'
  *
  * @returns {Promise<{ props: { posts: GetPublicPostsResponse, profileId: number, userProfile: GetPublicProfileResponse, postId: number, publicPost: GetPostResponse } }>} Server-side props.
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export const getServerSideProps: GetServerSideProps = async context => {
   const { postId, userId } = context.query
 

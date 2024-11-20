@@ -9,6 +9,7 @@ import Head from 'next/head'
  *
  * @returns {Promise<{ props: Pick<GetPublicPostsResponse, 'items' | 'totalUsers'>, revalidate: number }>} Static props.
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(
     `${API_URLS.BASE_URL}${API_URLS.PUBLIC.GetAllPublicPosts(undefined)}?pageSize=4`
