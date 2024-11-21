@@ -43,6 +43,7 @@ export const MobileMenu = ({ className }: MobileMenuProps) => {
     root: clsx(styles.root, isProfileSettingsPage && styles.hideOnMobile, className),
   } as const
 
+  //TODO: change adding photos
   return (
     <div className={classNames.root}>
       <MenuMobile className={classNames.container}>{renderSidebarItems}</MenuMobile>
