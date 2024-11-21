@@ -130,11 +130,12 @@ export const ImagePostModal = forwardRef<HTMLFormElement, ImagePostModalProps>(
               <div className={classNames.postDetails}>
                 {isEditing ? (
                   <div>
+                    {/*TODO: add photos*/}
                     <PostForm
                       handleClose={handleClose}
                       isEditing
+                      photos={[]}
                       postId={postId}
-                      selectedImage={selectedImage}
                       setIsEditing={setIsEditing}
                     />
                     {showConfirmCloseModal && (
