@@ -1,3 +1,11 @@
+@use '@/app/styles/mixins' as *;
+
+.root {
+  @include mobile {
+    display: none;
+  }
+}
+
 .head {
   background: var(--dark-500);
 }

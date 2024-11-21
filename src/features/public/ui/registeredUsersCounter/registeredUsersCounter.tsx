@@ -1,4 +1,3 @@
-import { useGetUsersCountQuery } from '@/features'
 import { Card, Typography } from '@photo-fiesta/ui-lib'
 
 import styles from './registeredUsersCounter.module.scss'
@@ -11,11 +10,9 @@ import styles from './registeredUsersCounter.module.scss'
  * };
  */
 
-export const RegisteredUsersCounter = () => {
-  const { data: totalUsersCount } = useGetUsersCountQuery()
-
+export const RegisteredUsersCounter = ({ totalUsers }: { totalUsers: number }) => {
   // Converting the total count into an array of characters, padded to be 6 digits long
-  const totalUsersCountArr = totalUsersCount?.totalCount.toString().padStart(6, '0').split('') || []
+  const totalUsersCountArr = totalUsers?.toString().padStart(6, '0').split('') || []
 
   const classNames = {
     counter: styles.counter,

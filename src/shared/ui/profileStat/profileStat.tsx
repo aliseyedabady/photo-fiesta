@@ -5,7 +5,7 @@ import styles from './profileStat.module.scss'
 
 type ProfileStatProps = {
   className?: string
-  counts: number
+  counts: number | undefined
   title: string
 }
 
@@ -27,7 +27,7 @@ export const ProfileStat = ({ className, counts, title }: ProfileStatProps) => {
   }
 
   // transform number to string and divide the first digit
-  const formattedCounts = counts.toString().replace(NUMBER_WITH_SEPARATOR_REGEX, ' ')
+  const formattedCounts = counts?.toString().replace(NUMBER_WITH_SEPARATOR_REGEX, ' ')
 
   return (
     <div className={classNames.root}>

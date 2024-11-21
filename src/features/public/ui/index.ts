@@ -1,1 +1,3 @@
-export * from './public'
+export * from './publicPost'
+export * from './publicPosts'
+export * from './registeredUsersCounter'
