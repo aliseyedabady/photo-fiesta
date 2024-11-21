@@ -1,0 +1,14 @@
+@use '@/app/styles/mixins' as *;
+
+.icon {
+  @include control-button-size;
+}
+
+.wrapper {
+  @include icon-wrapper;
+
+  &.addPhoto {
+    right: 11px;
+    bottom: 11px;
+  }
+}
