@@ -180,8 +180,8 @@ export const AccountManagements = memo(() => {
         <ConfirmationModal
           buttonTitle={buttonTitleModal}
           closeModal={handleModalClose}
-          confirmation={handleConfirmation}
           content={contentModal}
+          handleConfirmation={handleConfirmation}
           isOpen={isModalOpen}
           isTwoButtons={false}
           title={modalTitle}

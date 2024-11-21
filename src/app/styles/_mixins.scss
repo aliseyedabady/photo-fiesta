@@ -134,17 +134,23 @@
   }
 }
 
-@mixin control-button-block {
+@mixin icon-wrapper {
+  cursor: pointer;
+
+  position: absolute;
+  z-index: 20;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--light-100);
 
-  &:active {
-    color: var(--accent-500);
-  }
+  width: 36px;
+  height: 36px;
 
-  &:hover {
-    color: var(--accent-500);
-  }
+  background-color: var(--dark-300);
+}
+
+@mixin control-button-size {
+  width: 24px;
+  height: 24px;
 }

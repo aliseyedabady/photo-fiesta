@@ -196,8 +196,8 @@ export const PhotoPreview = ({ image, onDeletePhoto, preview, size }: PhotoPrevi
         {isOpen && (
           <ConfirmationModal
             closeModal={handleCloseModal}
-            confirmation={handleConfirmation}
             content={'Are you sure you want to delete the photo?'}
+            handleConfirmation={handleConfirmation}
             isOpen={isOpen}
             title={'Delete Photo'}
           />

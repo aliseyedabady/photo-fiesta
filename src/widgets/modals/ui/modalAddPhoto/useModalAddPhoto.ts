@@ -3,13 +3,15 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { ALLOWED_FORMATS, MAX_FILE_SIZE } from '@/shared/config'
 
 type UseModalAddPhotoProps = {
+  handleAddPhoto?: (photo: string) => void
   handleCloseModal: () => void
   isOpen: boolean
   postPhoto?: boolean
-  setImage: (image: null | string) => void
+  setImage: ((image: null | string) => void) | undefined
 }
 
 export const useModalAddPhoto = ({
+  handleAddPhoto,
   handleCloseModal,
   isOpen,
   postPhoto = false,
@@ -59,7 +61,8 @@ export const useModalAddPhoto = ({
         setError(null)
 
         if (postPhoto) {
-          setImage(image)
+          setImage && setImage(image)
+          handleAddPhoto && handleAddPhoto(image)
           setIsSaved(true)
           handleCloseModal()
         }
@@ -72,7 +75,7 @@ export const useModalAddPhoto = ({
 
   const handleSave = () => {
     if (selectedImage) {
-      setImage(selectedImage)
+      setImage && setImage(selectedImage)
       setError(null)
       setIsSaved(true)
       handleCloseModal()
@@ -82,6 +85,7 @@ export const useModalAddPhoto = ({
   return {
     error,
     fileInputRef,
+    handleAddPhoto,
     handleClick,
     handleFileChange,
     handleSave,

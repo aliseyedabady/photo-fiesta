@@ -10,8 +10,8 @@ export type Step = 'cropping' | 'filters' | 'publication'
 type PostProps = {
   avatar: Avatar[] | undefined
   handleClose: () => void
+  photos: string[]
   postId?: number
-  selectedImage: null | string | string[]
   setIsEditing: (isEditing: boolean) => void
   step: Step
   userId: number | undefined
@@ -24,8 +24,8 @@ type PostProps = {
 export const Post = ({
   avatar,
   handleClose,
+  photos,
   postId,
-  selectedImage,
   setIsEditing,
   step,
   userId,
@@ -40,8 +40,8 @@ export const Post = ({
         <div className={styles.form}>
           <PostForm
             handleClose={handleClose}
+            photos={photos}
             postId={postId}
-            selectedImage={selectedImage}
             setIsEditing={setIsEditing}
           />
         </div>

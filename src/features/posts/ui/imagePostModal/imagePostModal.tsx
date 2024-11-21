@@ -95,9 +95,9 @@ export const ImagePostModal = forwardRef<HTMLFormElement, ImagePostModalProps>(
               {selectedImage ? (
                 <Carousel
                   handleCloseModal={handleClose}
-                  photos={selectedImage}
+                  photos={typeof selectedImage === 'string' ? [selectedImage] : selectedImage}
                   // postPhoto
-                  setImage={setSelectedImage}
+                  setPhotos={setSelectedImage}
                 />
               ) : (
                 <Typography variant={'h2'}>No image selected</Typography>
@@ -140,10 +140,10 @@ export const ImagePostModal = forwardRef<HTMLFormElement, ImagePostModalProps>(
                     {showConfirmCloseModal && (
                       <ConfirmationModal
                         closeModal={() => setShowConfirmCloseModal(false)}
-                        confirmation={handleClose}
                         content={
                           'Do you really want to close the edition of the publication? If you close changes won`t be saved'
                         }
+                        handleConfirmation={handleClose}
                         isOpen={showConfirmCloseModal}
                         isTwoButtons
                         title={'Close Post'}
@@ -156,8 +156,8 @@ export const ImagePostModal = forwardRef<HTMLFormElement, ImagePostModalProps>(
                 {showConfirmDeleteModal && (
                   <ConfirmationModal
                     closeModal={() => setShowConfirmDeleteModal(false)}
-                    confirmation={confirmDelete}
                     content={'Are you sure you want to delete this post?'}
+                    handleConfirmation={confirmDelete}
                     isOpen={showConfirmDeleteModal}
                     isTwoButtons
                     title={'Delete Post'}

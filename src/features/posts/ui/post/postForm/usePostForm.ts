@@ -17,17 +17,12 @@ const badRequestSchema = createBadRequestSchema(['description'])
 
 type UsePostFormProps = {
   handleClose: () => void
+  photos?: string[]
   postId?: number | undefined
-  selectedImage?: null | string | string[]
   setIsEditing: (isEditing: boolean) => void
 }
 
-export const usePostForm = ({
-  handleClose,
-  postId,
-  selectedImage,
-  setIsEditing,
-}: UsePostFormProps) => {
+export const usePostForm = ({ handleClose, photos, postId, setIsEditing }: UsePostFormProps) => {
   const [createPost] = useCreatePostMutation()
   const [uploadImage] = useUploadPostImageMutation()
   const [updateDescription] = useUpdatePostMutation()
@@ -51,22 +46,16 @@ export const usePostForm = ({
   /** Submit function for createPage description in post modal */
   const onSubmit = handleSubmit(async (data: FormValues) => {
     try {
-      if (!selectedImage || (Array.isArray(selectedImage) && selectedImage.length === 0)) {
+      if (photos && photos.length === 0) {
         toast.error('No image selected')
 
         return
       }
       const formData = new FormData()
 
-      if (typeof selectedImage === 'string') {
-        const blob = await (await fetch(selectedImage)).blob()
-
-        formData.append('file', blob, 'image.jpg')
-      }
-
-      if (Array.isArray(selectedImage)) {
-        for (let i = 0; i < selectedImage.length; i++) {
-          const image = selectedImage[i]
+      if (photos) {
+        for (let i = 0; i < photos.length; i++) {
+          const image = photos[i]
           const blob = await (await fetch(image)).blob()
 
           formData.append('file', blob, `image_${i}.jpg`)

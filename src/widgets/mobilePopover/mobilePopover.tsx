@@ -98,8 +98,8 @@ export const MobilePopover = () => {
       {isModalOpen && (
         <ConfirmationModal
           closeModal={handleCloseLogoutModal}
-          confirmation={confirmLogout}
           content={t.auth.confirmLogout}
+          handleConfirmation={confirmLogout}
           isOpen={isModalOpen}
           title={t.sidebar.logout}
         />

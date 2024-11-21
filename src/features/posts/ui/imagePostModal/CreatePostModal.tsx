@@ -13,10 +13,10 @@ type CreatePostModalProps = {
   avatar: Avatar[] | undefined
   handleClose: () => void
   isEditing?: boolean
+  photos: string[]
   postId?: number | undefined
-  selectedImage: null | string | string[]
   setIsEditing: (isEditing: boolean) => void
-  setSelectedImage: (image: null | string | string[]) => void
+  setPhotos: (photos: string[]) => void
   userId: number | undefined
 }
 
@@ -24,10 +24,10 @@ export const CreatePostModal = ({
   avatar,
   handleClose,
   isEditing,
+  photos,
   postId,
-  selectedImage,
   setIsEditing,
-  setSelectedImage,
+  setPhotos,
   userId,
 }: CreatePostModalProps) => {
   const { changeStep, getStepTitle, step } = useChangeTitle({ isEditing })
@@ -52,9 +52,13 @@ export const CreatePostModal = ({
   }, [])
 
   /**The function aborts the process of editing a post and does not save any changes */
-  const interruptionCreatePost = () => {
+  const handleConfirmation = () => {
     setShowConfirmModal(false)
     handleClose()
+    setPhotos([])
+  }
+  const handleCloseConfirmModal = () => {
+    setShowConfirmModal(false)
   }
 
   return (
@@ -81,12 +85,11 @@ export const CreatePostModal = ({
         </div>
         <div className={styles.body}>
           <section className={styles.imageSection}>
-            {selectedImage ? (
+            {photos.length > 0 ? (
               <Carousel
                 handleCloseModal={handleClose}
-                photos={selectedImage}
-                // postPhoto
-                setImage={setSelectedImage}
+                photos={photos}
+                setPhotos={setPhotos}
                 step={step}
               />
             ) : (
@@ -96,8 +99,8 @@ export const CreatePostModal = ({
           <Post
             avatar={avatar}
             handleClose={handleClose}
+            photos={photos}
             postId={postId || undefined}
-            selectedImage={selectedImage}
             setIsEditing={setIsEditing}
             step={step}
             userId={userId}
@@ -105,12 +108,13 @@ export const CreatePostModal = ({
           {/*TODO: rename buttons*/}
           {showConfirmModal && (
             <ConfirmationModal
-              closeModal={() => setShowConfirmModal(false)}
-              confirmation={interruptionCreatePost}
+              closeModal={handleCloseConfirmModal}
               content={
                 'Do you really want to close the creation of a publication? If you close everything will be deleted.'
               }
+              handleConfirmation={handleConfirmation}
               isOpen={showConfirmModal}
+              pushNo={handleCloseConfirmModal}
               title={'Close'}
             />
           )}
