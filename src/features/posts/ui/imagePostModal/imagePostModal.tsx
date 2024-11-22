@@ -86,12 +86,12 @@ export const ImagePostModal = ({
   const ImageSection = () => (
     <section className={styles.imageSection}>
       {selectedImage ? (
-   <Carousel
-     handleCloseModal={handleClose}
-     photos={typeof selectedImage === 'string' ? [selectedImage] : selectedImage}
-     // postPhoto
-     setPhotos={setSelectedImage}
-    />
+        <Carousel
+          handleCloseModal={handleClose}
+          photos={typeof selectedImage === 'string' ? [selectedImage] : selectedImage}
+          // postPhoto
+          setPhotos={setSelectedImage}
+        />
       ) : (
         <Typography variant={'h2'}>No image selected</Typography>
       )}
@@ -133,8 +133,8 @@ export const ImagePostModal = ({
         <PostForm
           handleClose={handleClose}
           isEditing
-          postId={postId}
           photos={[]}
+          postId={postId}
           setIsEditing={setIsEditing}
         />
       ) : (
@@ -143,10 +143,10 @@ export const ImagePostModal = ({
       {confirmCloseModal.isModalOpen && (
         <ConfirmationModal
           closeModal={confirmCloseModal.closeModal}
-          handleConfirmation={handleClose}
           content={
             'Do you really want to close the edition of the publication? If you close changes won’t be saved'
           }
+          handleConfirmation={handleClose}
           isOpen={confirmCloseModal.isModalOpen}
           isTwoButtons
           title={'Close Post'}
@@ -178,8 +178,8 @@ export const ImagePostModal = ({
       {confirmDeleteModal.isModalOpen && (
         <ConfirmationModal
           closeModal={confirmDeleteModal.closeModal}
-          handleConfirmation={confirmDelete}
           content={'Are you sure you want to delete this post?'}
+          handleConfirmation={confirmDelete}
           isOpen={confirmDeleteModal.isModalOpen}
           isTwoButtons
           title={'Delete Post'}
