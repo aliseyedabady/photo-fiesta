@@ -34,16 +34,18 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
       sortDirection: 'desc',
       userId,
     },
-    { skip: !endCursorPostId === null }
+    { skip: endCursorPostId === null }
   )
 
   const [modalData, setModalData] = useState<{
     image: null | string | string[]
-    open: boolean
+    isOpen: boolean
     postId: null | number
-  }>({ image: null, open: false, postId: null })
+  }>({ image: null, isOpen: false, postId: null })
 
+  // Holds the list of posts for rendering.
   const [posts, setPosts] = useState(initialPosts.items)
+  // State to track if more posts can be loaded.
   const [hasMore, setHasMore] = useState(posts.length < initialPosts.totalCount)
 
   /**
@@ -79,16 +81,16 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
       const post = posts.find(p => p.id === parsedPostId)
 
       if (post) {
-        setModalData({ image: post.images[0]?.url, open: true, postId: parsedPostId })
+        setModalData({ image: post.images[0]?.url, isOpen: true, postId: parsedPostId })
       }
     }
   }, [postId, posts])
 
   const handleOpenImageModal = (postId: number, imageUrl: string) => {
-    setModalData({ image: imageUrl, open: true, postId })
+    setModalData({ image: imageUrl, isOpen: true, postId })
   }
   const handleCloseModal = () => {
-    setModalData({ image: null, open: false, postId: null })
+    setModalData({ image: null, isOpen: false, postId: null })
     router.push({ pathname: router.pathname, query: restQuery }, undefined, { shallow: true })
   }
 
@@ -134,7 +136,7 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
           ))}
         </div>
       </InfiniteScroll>
-      {modalData.open && modalData.postId && modalData.image && (
+      {modalData.isOpen && modalData.postId && modalData.image && (
         <div className={styles.postModal}>
           <ImagePostModal
             avatar={avatar}

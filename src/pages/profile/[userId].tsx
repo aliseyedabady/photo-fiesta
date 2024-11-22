@@ -1,10 +1,8 @@
 import {
-  GetPostResponse,
   GetPublicPostsResponse,
   GetPublicProfileResponse,
   Profile,
   useAuthMeQuery,
-  useGetPublicProfileByIdQuery,
 } from '@/features'
 import { API_URLS } from '@/shared/config'
 import { GetServerSideProps } from 'next'
@@ -25,11 +23,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
   )
   const userProfile: GetPublicProfileResponse = await userProfileResponse.json()
 
-  const publicPostById = await fetch(
-    `${API_URLS.BASE_URL}${API_URLS.PUBLIC.GetPostById(Number(postId))}`
-  )
-  const publicPost: GetPostResponse = await publicPostById.json()
-
   const publicPostsResponse = await fetch(
     `${API_URLS.BASE_URL}${API_URLS.PUBLIC.GetUserPublicPosts(null, Number(userId))}?pageSize=8`
   )
@@ -39,8 +32,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
     props: {
       postId: postId ? Number(postId) : null,
       posts: userAllPosts,
-      profileId: Number(userId),
-      publicPost,
       userProfile,
     },
   }
@@ -48,7 +39,6 @@ export const getServerSideProps: GetServerSideProps = async context => {
 
 type ProfilePageProps = {
   posts: GetPublicPostsResponse
-  profileId: number
   userProfile: GetPublicProfileResponse
 }
 
@@ -56,27 +46,26 @@ type ProfilePageProps = {
  * ProfilePage component for rendering a user's public profile with their posts.
  * Fetches data server-side using Next.js `getServerSideProps`.
  */
-const ProfilePage = ({ posts, profileId, userProfile }: ProfilePageProps) => {
+const ProfilePage = ({ posts, userProfile }: ProfilePageProps) => {
   const { data: currentUser } = useAuthMeQuery()
 
-  const { data: user } = useGetPublicProfileByIdQuery({ profileId })
-  const isOwnProfile = currentUser?.userId === profileId
+  const isOwnProfile = currentUser?.userId === userProfile.id
 
   return (
     <>
       <Head>
-        <title>Profile: {user?.userName}</title>
+        <title>Profile: {userProfile?.userName}</title>
         <meta
-          content={`Profile of ${user?.userName}. Check out the project on GitHub: https://github.com/NoName-ForTeam`}
+          content={`Profile of ${userProfile?.userName}. Check out the project on GitHub: https://github.com/NoName-ForTeam`}
           name={'description'}
         />
-        <meta content={`profile, ${user?.userName}, GitHub`} name={'keywords'} />
+        <meta content={`profile, ${userProfile?.userName}, GitHub`} name={'keywords'} />
         <meta content={'index, follow'} name={'robots'} />
       </Head>
       <Profile
         isOwnProfile={isOwnProfile}
         posts={posts}
-        profileId={profileId}
+        profileId={userProfile.id}
         profileInfo={userProfile}
       />
     </>
