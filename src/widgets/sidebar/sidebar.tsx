@@ -30,9 +30,9 @@ export const Sidebar = ({ className }: SidebarProps) => {
     isActive,
     isLoading,
     modalState,
+    photos,
     profileInfo,
-    selectedImage,
-    setSelectedImage,
+    setPhotos,
     sidebarItems,
     t,
   } = useSidebar()
@@ -75,8 +75,8 @@ export const Sidebar = ({ className }: SidebarProps) => {
       {isModalOpen && (
         <ConfirmationModal
           closeModal={handleCloseLogoutModal}
-          confirmation={confirmLogout}
           content={'Are you really want to logout of your account?'}
+          handleConfirmation={confirmLogout}
           isOpen={isModalOpen}
           title={t.sidebar.logout}
         />
@@ -84,20 +84,20 @@ export const Sidebar = ({ className }: SidebarProps) => {
       {/*TODO: optimize function*/}
       {isCreateModalOpen && (
         <ModalAddPhoto
+          handleAddPhoto={(image: string) => setPhotos(prevPhotos => [...prevPhotos, image])}
           handleCloseModal={handleCloseAddPhotoModal}
           isOpen={isCreateModalOpen}
           postPhoto
-          setImage={setSelectedImage}
         />
       )}
-      {openPostModal && selectedImage && (
+      {openPostModal && photos.length > 0 && (
         <CreatePostModal
           avatar={profileInfo?.avatars}
           handleClose={handleClosePostModal}
           isEditing={isEditing}
-          selectedImage={selectedImage}
+          photos={photos}
           setIsEditing={setIsEditing}
-          setSelectedImage={setSelectedImage}
+          setPhotos={setPhotos}
           userId={profileInfo?.id}
         />
       )}

@@ -13,8 +13,8 @@ type ProfileAvatarProps = {
 export const ProfileAvatar = ({
   avatarOwner,
   className,
-  height = 36,
-  width = 36,
+  height = 204,
+  width = 204,
 }: ProfileAvatarProps) => {
   const classNames = {
     avatar: clsx(styles.avatar, className),

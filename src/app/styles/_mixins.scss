@@ -118,3 +118,44 @@
     background-color: var(--dark-700);
   }
 }
+
+@mixin control-button-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--light-100);
+
+  &:active {
+    color: var(--accent-500);
+  }
+
+  &:hover {
+    color: var(--accent-500);
+  }
+}
+
+@mixin icon-wrapper {
+  cursor: pointer;
+
+  position: absolute;
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  background-color: var(--dark-300);
+}
+
+@mixin control-button-size {
+  width: 24px;
+  height: 24px;
+}
+
+@mixin extend-size {
+  width: 18px;
+  height: 18px;
+}

@@ -15,21 +15,23 @@ import styles from './confirmationModal.module.scss'
 type ModalProps = {
   buttonTitle?: string
   closeModal: () => void
-  confirmation: () => void
   content: string
+  handleConfirmation: () => void
   isOpen: boolean
   //*  show only one button if false, default true
   isTwoButtons?: boolean
+  pushNo?: () => void
   title: null | string
 }
 //TODO: add translations
 export const ConfirmationModal = ({
   buttonTitle = 'Ok',
   closeModal,
-  confirmation,
   content,
+  handleConfirmation,
   isOpen,
   isTwoButtons = true,
+  pushNo,
   title,
 }: ModalProps) => {
   const classNames = {
@@ -61,10 +63,10 @@ export const ConfirmationModal = ({
             {isTwoButtons && (
               // TODO: create names in buttons by props
               <>
-                <Button onClick={closeModal} variant={'secondary'}>
+                <Button onClick={pushNo ? pushNo : closeModal} variant={'secondary'}>
                   No
                 </Button>
-                <Button onClick={confirmation} variant={'primary'}>
+                <Button onClick={handleConfirmation} variant={'primary'}>
                   Yes
                 </Button>
               </>
@@ -73,7 +75,7 @@ export const ConfirmationModal = ({
               <Button
                 className={classNames.one}
                 fullWidth
-                onClick={confirmation}
+                onClick={handleConfirmation}
                 variant={'primary'}
               >
                 {buttonTitle}

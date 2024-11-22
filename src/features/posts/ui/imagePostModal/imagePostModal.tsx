@@ -88,8 +88,9 @@ export const ImagePostModal = ({
       {selectedImage ? (
         <Carousel
           handleCloseModal={handleClose}
-          photos={selectedImage}
-          setImage={setSelectedImage}
+          photos={typeof selectedImage === 'string' ? [selectedImage] : selectedImage}
+          // postPhoto
+          setPhotos={setSelectedImage}
         />
       ) : (
         <Typography variant={'h2'}>No image selected</Typography>
@@ -127,12 +128,13 @@ export const ImagePostModal = ({
 
   const PostDetails = () => (
     <div className={styles.postDetails}>
+      {/*TODO: add photos*/}
       {isEditing ? (
         <PostForm
           handleClose={handleClose}
           isEditing
+          photos={[]}
           postId={postId}
-          selectedImage={selectedImage}
           setIsEditing={setIsEditing}
         />
       ) : (
@@ -141,10 +143,10 @@ export const ImagePostModal = ({
       {confirmCloseModal.isModalOpen && (
         <ConfirmationModal
           closeModal={confirmCloseModal.closeModal}
-          confirmation={handleClose}
           content={
             'Do you really want to close the edition of the publication? If you close changes won’t be saved'
           }
+          handleConfirmation={handleClose}
           isOpen={confirmCloseModal.isModalOpen}
           isTwoButtons
           title={'Close Post'}
@@ -176,8 +178,8 @@ export const ImagePostModal = ({
       {confirmDeleteModal.isModalOpen && (
         <ConfirmationModal
           closeModal={confirmDeleteModal.closeModal}
-          confirmation={confirmDelete}
           content={'Are you sure you want to delete this post?'}
+          handleConfirmation={confirmDelete}
           isOpen={confirmDeleteModal.isModalOpen}
           isTwoButtons
           title={'Delete Post'}

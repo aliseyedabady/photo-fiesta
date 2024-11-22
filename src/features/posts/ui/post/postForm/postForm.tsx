@@ -8,8 +8,8 @@ import styles from './postForm.module.scss'
 type PostFormProps = {
   handleClose: () => void
   isEditing?: boolean
+  photos?: string[]
   postId?: number | undefined
-  selectedImage?: null | string | string[]
   setIsEditing: (isEditing: boolean) => void
 }
 /**
@@ -18,12 +18,12 @@ type PostFormProps = {
 export const PostForm = ({
   handleClose,
   isEditing,
+  photos,
   postId,
-  selectedImage,
   setIsEditing,
 }: PostFormProps) => {
   const { charCount, control, errors, onSubmit, saveDescriptionChanges, setCharCount } =
-    usePostForm({ handleClose, postId, selectedImage, setIsEditing })
+    usePostForm({ handleClose, photos, postId, setIsEditing })
 
   return (
     <div>

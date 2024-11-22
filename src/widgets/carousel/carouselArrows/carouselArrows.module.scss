@@ -1,0 +1,18 @@
+@use '@/app/styles/mixins' as *;
+
+.wrapper {
+  @include icon-wrapper;
+
+  margin: 0 11px;
+
+  @include vertical-center;
+
+  &.right {
+    right: 0;
+  }
+}
+
+.arrow {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}

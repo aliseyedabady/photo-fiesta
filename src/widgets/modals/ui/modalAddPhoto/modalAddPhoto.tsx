@@ -15,10 +15,11 @@ import styles from './modalAddPhoto.module.scss'
 import { useModalAddPhoto } from './useModalAddPhoto'
 
 type ModalAddPhotoProps = {
+  handleAddPhoto?: (photo: string) => void
   handleCloseModal: () => void
   isOpen: boolean
   postPhoto?: boolean
-  setImage: (image: null | string) => void
+  setImage?: (image: null | string) => void
 }
 
 /**
@@ -35,13 +36,14 @@ type ModalAddPhotoProps = {
  */
 //TODO: add translations
 export const ModalAddPhoto = ({
+  handleAddPhoto,
   handleCloseModal,
   isOpen,
   postPhoto,
   setImage,
 }: ModalAddPhotoProps) => {
   const { error, fileInputRef, handleClick, handleFileChange, handleSave, isSaved, selectedImage } =
-    useModalAddPhoto({ handleCloseModal, isOpen, postPhoto, setImage })
+    useModalAddPhoto({ handleAddPhoto, handleCloseModal, isOpen, postPhoto, setImage })
 
   const classNames = {
     block: styles.block,

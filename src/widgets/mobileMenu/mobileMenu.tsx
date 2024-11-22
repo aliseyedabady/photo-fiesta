@@ -12,8 +12,7 @@ type MobileMenuProps = {
 
 /** MobileMenu component for rendering the menu in a mobile view (360px width) */
 export const MobileMenu = ({ className }: MobileMenuProps) => {
-  const { handleCloseAddPhotoModal, isActive, modalState, setSelectedImage, sidebarItems } =
-    useSidebar()
+  const { handleCloseAddPhotoModal, isActive, modalState, setPhotos, sidebarItems } = useSidebar()
   const { isCreateModalOpen } = modalState
 
   const router = useRouter()
@@ -44,15 +43,16 @@ export const MobileMenu = ({ className }: MobileMenuProps) => {
     root: clsx(styles.root, isProfileSettingsPage && styles.hideOnMobile, className),
   } as const
 
+  //TODO: change adding photos
   return (
     <div className={classNames.root}>
       <MenuMobile className={classNames.container}>{renderSidebarItems}</MenuMobile>
       {isCreateModalOpen && (
         <ModalAddPhoto
+          handleAddPhoto={(image: string) => setPhotos(prevPhotos => [...prevPhotos, image])}
           handleCloseModal={handleCloseAddPhotoModal}
           isOpen={isCreateModalOpen}
           postPhoto
-          setImage={setSelectedImage}
         />
       )}
     </div>

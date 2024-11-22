@@ -59,7 +59,7 @@ export const useSidebar = () => {
     openPostModal: false,
   })
 
-  const [selectedImage, setSelectedImage] = useState<null | string | string[]>(null)
+  const [photos, setPhotos] = useState<string[]>([])
 
   //* Modal control functions
   const openCreateModal = () => setModalState(prev => ({ ...prev, isCreateModalOpen: true }))
@@ -146,7 +146,12 @@ export const useSidebar = () => {
   /** Array of sidebar items to be rendered */
   const sidebarItems: SidebarItem[] = [
     { href: ROUTES.HOME, icon: HomeOutline, text: t.sidebar.home },
-    { href: '#', icon: PlusSquareOutline, onClick: openCreateModal, text: t.sidebar.create },
+    {
+      href: getProfileLink(),
+      icon: PlusSquareOutline,
+      onClick: openCreateModal,
+      text: t.sidebar.create,
+    },
     {
       href: getProfileLink(),
       icon: Person,
@@ -169,9 +174,9 @@ export const useSidebar = () => {
     isActive,
     isLoading,
     modalState,
+    photos,
     profileInfo,
-    selectedImage,
-    setSelectedImage,
+    setPhotos,
     sidebarItems,
     t,
   }

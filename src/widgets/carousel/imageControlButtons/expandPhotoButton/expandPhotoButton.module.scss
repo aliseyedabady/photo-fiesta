@@ -1,0 +1,67 @@
+@use '@/app/styles/mixins' as *;
+
+.wrapper {
+  @include icon-wrapper;
+
+  &.expandPhoto {
+    bottom: 11px;
+    left: 11px;
+  }
+
+  & .buttonBlock {
+    @include control-button-block;
+  }
+
+  .trigger[data-state='open'] {
+    color: var(--accent-500);
+  }
+
+  & .extendContent {
+    top: -167px;
+    left: 0;
+
+    gap: 12px;
+
+    width: 156px;
+
+    opacity: 0.8;
+  }
+}
+
+.icon {
+  @include control-button-size;
+}
+
+.extendElement {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  color: var(--light-900);
+
+  &.active {
+    color: var(--light-100);
+  }
+}
+
+.extendIcon {
+  @include extend-size;
+}
+
+.extendSquare {
+  @include extend-size;
+
+  border: 2px solid var(--light-900);
+  border-radius: 3px;
+
+  &.portrait {
+    height: 26px;
+  }
+
+  &.wideScreen {
+    width: 26px;
+    height: 20px;
+  }
+}

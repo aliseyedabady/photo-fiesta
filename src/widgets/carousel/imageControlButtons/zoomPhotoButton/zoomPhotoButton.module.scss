@@ -1,0 +1,36 @@
+@use '@/app/styles/mixins' as *;
+
+.icon {
+  @include control-button-size;
+}
+
+.wrapper {
+  @include icon-wrapper;
+
+  &.zoomPhoto {
+    bottom: 11px;
+    left: 68px;
+  }
+
+  & .buttonBlock {
+    @include control-button-block;
+  }
+
+  & .zoomContent {
+    top: -44px;
+    left: 0;
+
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+
+    width: 124px;
+    height: 36px;
+
+    opacity: 0.8;
+  }
+}
+
+.trigger[data-state='open'] {
+  color: var(--accent-500);
+}
