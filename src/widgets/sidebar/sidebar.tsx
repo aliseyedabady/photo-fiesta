@@ -49,7 +49,7 @@ export const Sidebar = ({ className }: SidebarProps) => {
       href={item.href}
       icon={item.icon}
       isActive={path => isActive(item.isActiveOverride || path)}
-      key={item.href}
+      key={`${item.href}-${item.text}`}
       onClick={item.onClick}
       text={item.text}
     />
