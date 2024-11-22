@@ -56,6 +56,7 @@ type CustomSliderProps = {
  * ```
  */
 
+//TODO: move to ui library
 export const CustomSlider = ({
   NextArrow,
   PrevArrow,

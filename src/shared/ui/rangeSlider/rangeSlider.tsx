@@ -1,30 +1,22 @@
-import React, { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useCallback } from 'react'
 
 import * as SliderRadix from '@radix-ui/react-slider'
 import clsx from 'clsx'
 
 import styles from './rangeSlider.module.scss'
 
-/**
- * Props for the Slider component.
- * @typedef {Object} SliderProps
- * @property {number} [step=1] - The step value of the slider.
- * @property {number} [value=50] - The current value of the slider.
- * @property {function(number): void} [onValueChange] - Callback function when the slider value changes.
- */
-
 export type RangeSliderProps = {
+  // [step=1] - The step value of the slider.
   step?: number
+  //[value=50] - The current value of the slider.
   value?: number[]
 } & ComponentPropsWithoutRef<typeof SliderRadix.Root>
 
 /**
  * A custom Slider component using Radix UI Slider.
- * @param {RangeSliderProps} props - The props for the Slider component.
- * @param {React.Ref<ElementRef<typeof SliderRadix.Root>>} ref - The ref for the slider root element.
- * @returns {JSX.Element} - The rendered Slider component.
  */
 
+//TODO: move to ui library
 export const RangeSlider = forwardRef<ElementRef<typeof SliderRadix.Root>, RangeSliderProps>(
   ({ onValueChange, step = 1, value = [150], ...rest }: RangeSliderProps, ref) => {
     const classNames = {
@@ -36,7 +28,7 @@ export const RangeSlider = forwardRef<ElementRef<typeof SliderRadix.Root>, Range
       value: styles.value,
     } as const
 
-    const handleOnChangeValue = React.useCallback(
+    const handleOnChangeValue = useCallback(
       (values: number[]) => {
         if (onValueChange) {
           onValueChange(values)

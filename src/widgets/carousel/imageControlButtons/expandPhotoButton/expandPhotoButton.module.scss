@@ -47,21 +47,20 @@
 }
 
 .extendIcon {
-  width: 18px;
-  height: 18px;
+  @include extend-size;
 }
 
 .extendSquare {
-  width: 18px;
-  height: 18px;
+  @include extend-size;
+
   border: 2px solid var(--light-900);
   border-radius: 3px;
 
-  &.five {
+  &.portrait {
     height: 26px;
   }
 
-  &.nine {
+  &.wideScreen {
     width: 26px;
     height: 20px;
   }

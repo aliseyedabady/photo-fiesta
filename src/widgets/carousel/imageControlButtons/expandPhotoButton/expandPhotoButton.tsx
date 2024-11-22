@@ -19,10 +19,10 @@ export const ExpandPhotoButton = () => {
     extendElement: styles.extendElement,
     extendIcon: styles.extendIcon,
     extendSquare: styles.extendSquare,
-    five: styles.five,
     icon: styles.icon,
-    nine: styles.nine,
+    portrait: styles.five,
     trigger: styles.trigger,
+    wideScreen: styles.nine,
     wrapper: styles.wrapper,
   } as const
 
@@ -47,11 +47,11 @@ export const ExpandPhotoButton = () => {
           </div>
           <div className={classNames.extendElement}>
             <Typography variant={'text16'}>4:5</Typography>
-            <div className={clsx(classNames.extendSquare, classNames.five)}></div>
+            <div className={clsx(classNames.extendSquare, classNames.portrait)}></div>
           </div>
           <div className={classNames.extendElement}>
             <Typography variant={'text16'}>16:9</Typography>
-            <div className={clsx(classNames.extendSquare, classNames.nine)}></div>
+            <div className={clsx(classNames.extendSquare, classNames.wideScreen)}></div>
           </div>
         </PopoverContent>
       </PopoverRoot>
