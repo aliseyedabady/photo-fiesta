@@ -32,7 +32,7 @@ export const MobileMenu = ({ className }: MobileMenuProps) => {
       href={item.href}
       icon={item.icon}
       isActive={path => isActive(item.isActiveOverride || path)}
-      key={item.href}
+      key={`${item.href}-${item.text}`}
       onClick={item.onClick}
       text={''}
     />
