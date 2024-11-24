@@ -1,21 +1,21 @@
 import { ChangeEvent, useEffect, useState } from 'react'
-import ReactCrop, { Crop } from 'react-image-crop'
+import { Crop } from 'react-image-crop'
 
 import { Step } from '@/features'
 import { ALLOWED_FORMATS, MAX_FILE_SIZE_FOR_POST, MAX_PHOTOS } from '@/shared/config'
 import { CustomSlider } from '@/shared/ui'
 import { applyImageTransformations } from '@/shared/utils'
 import { ErrorMessage } from '@/widgets'
-import Image from 'next/image'
 
 import 'react-image-crop/dist/ReactCrop.css'
-import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import 'slick-carousel/slick/slick.css'
 
 import styles from './carousel.module.scss'
 
 import { NextArrow, PrevArrow } from './carouselArrows'
 import { ImageControlButtons } from './imageControlButtons'
+import ImageRenderer from './imageRenderer/imageRenderer'
 
 export type ImageData = {
   aspectRatio: { label: string; value: null | number }
@@ -144,40 +144,6 @@ export const Carousel = ({
     )
   }
 
-  const carousel = imagesData.map((imageData, index) => (
-    <div key={index}>
-      {step === 'cropping' ? (
-        <ReactCrop
-          aspect={imageData.aspectRatio.value ?? undefined}
-          crop={imageData.crop}
-          onChange={(_, percentCrop) => handleCropChange(percentCrop)}
-        >
-          <Image
-            alt={`Image ${index + 1}`}
-            className={styles.selectedImage}
-            height={432}
-            src={imageData.src}
-            style={{
-              transform: `scale(${imageData.zoom})`,
-            }}
-            width={492}
-          />
-        </ReactCrop>
-      ) : (
-        <Image
-          alt={`Image ${index + 1}`}
-          className={styles.selectedImage}
-          height={432}
-          src={imageData.src}
-          style={{
-            transform: `scale(${imageData.zoom})`,
-          }}
-          width={492}
-        />
-      )}
-    </div>
-  ))
-
   return (
     <div className={styles.slider}>
       <CustomSlider
@@ -189,7 +155,12 @@ export const Carousel = ({
         setActiveIndex={setActiveIndex}
         setIndexArrow={setIndexArrow}
       >
-        {carousel}
+        <ImageRenderer
+          imageData={imagesData[activeIndex]}
+          index={activeIndex}
+          onCropChange={handleCropChange}
+          step={step}
+        />
       </CustomSlider>
 
       {error && <ErrorMessage error={error} />}
