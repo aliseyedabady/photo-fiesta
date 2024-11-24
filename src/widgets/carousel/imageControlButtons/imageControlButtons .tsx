@@ -8,11 +8,22 @@ import styles from './imageControlButtons.module.scss'
 
 import { ExpandPhotoButton } from './expandPhotoButton'
 import { ZoomPhotoButton } from './zoomPhotoButton'
+
 type ButtonsBlockProps = {
+  currentAspectRatio: { label: string; value: null | number }
   handleFileChange: (event: ChangeEvent<HTMLInputElement>) => void
+  onAspectRatioChange: (newAspectRatio: { label: string; value: null | number }) => void
+  onZoomChange: (newZoom: number) => void
+  zoom: number
 }
 
-export const ImageControlButtons = ({ handleFileChange }: ButtonsBlockProps) => {
+export const ImageControlButtons = ({
+  currentAspectRatio,
+  handleFileChange,
+  onAspectRatioChange,
+  onZoomChange,
+  zoom,
+}: ButtonsBlockProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleAddPhoto = () => {
@@ -34,8 +45,11 @@ export const ImageControlButtons = ({ handleFileChange }: ButtonsBlockProps) => 
         </Button>
       </div>
 
-      <ExpandPhotoButton />
-      <ZoomPhotoButton />
+      <ExpandPhotoButton
+        currentAspectRatio={currentAspectRatio}
+        onAspectRatioChange={onAspectRatioChange}
+      />
+      <ZoomPhotoButton onZoomChange={onZoomChange} zoom={zoom} />
       <input
         accept={'image/*'}
         hidden

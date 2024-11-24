@@ -10,7 +10,15 @@ import clsx from 'clsx'
 
 import styles from './expandPhotoButton.module.scss'
 
-export const ExpandPhotoButton = () => {
+type ExpandPhotoButtonProps = {
+  currentAspectRatio: { label: string; value: null | number }
+  onAspectRatioChange: (newAspectRatio: { label: string; value: null | number }) => void
+}
+
+export const ExpandPhotoButton = ({
+  currentAspectRatio,
+  onAspectRatioChange,
+}: ExpandPhotoButtonProps) => {
   const classNames = {
     active: styles.active,
     buttonBlock: styles.buttonBlock,
@@ -26,6 +34,13 @@ export const ExpandPhotoButton = () => {
     wrapper: styles.wrapper,
   } as const
 
+  const aspectRatios = [
+    { label: 'Original', value: null },
+    { label: '1:1', value: 1 },
+    { label: '4:5', value: 4 / 5 },
+    { label: '16:9', value: 16 / 9 },
+  ]
+
   return (
     <div className={clsx(classNames.wrapper, classNames.expandPhoto)}>
       <PopoverRoot>
@@ -37,22 +52,35 @@ export const ExpandPhotoButton = () => {
           </div>
         </PopoverTrigger>
         <PopoverContent align={'start'} className={classNames.extendContent} side={'left'}>
-          <div className={clsx(classNames.extendElement, classNames.active)}>
-            <Typography variant={'h3'}>Original</Typography>
-            <ImageOutline className={classNames.extendIcon} />
-          </div>
-          <div className={classNames.extendElement}>
-            <Typography variant={'text16'}>1:1</Typography>
-            <div className={classNames.extendSquare}></div>
-          </div>
-          <div className={classNames.extendElement}>
-            <Typography variant={'text16'}>4:5</Typography>
-            <div className={clsx(classNames.extendSquare, classNames.portrait)}></div>
-          </div>
-          <div className={classNames.extendElement}>
-            <Typography variant={'text16'}>16:9</Typography>
-            <div className={clsx(classNames.extendSquare, classNames.wideScreen)}></div>
-          </div>
+          {aspectRatios.map(ratio => {
+            const isActive = currentAspectRatio.label === ratio.label
+
+            return (
+              <div
+                className={clsx(classNames.extendElement, isActive && classNames.active)}
+                key={ratio.label}
+                onClick={() => onAspectRatioChange(ratio)}
+              >
+                <Typography variant={ratio.label === 'Original' ? 'h3' : 'text16'}>
+                  {ratio.label}
+                </Typography>
+                {ratio.label === 'Original' ? (
+                  <ImageOutline
+                    className={clsx(classNames.extendIcon, isActive && classNames.active)}
+                  />
+                ) : (
+                  <div
+                    className={clsx(
+                      classNames.extendSquare,
+                      ratio.label === '4:5' && classNames.portrait,
+                      ratio.label === '16:9' && classNames.wideScreen,
+                      isActive && classNames.active
+                    )}
+                  ></div>
+                )}
+              </div>
+            )
+          })}
         </PopoverContent>
       </PopoverRoot>
     </div>

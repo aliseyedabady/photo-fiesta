@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
+import ReactCrop, { Crop } from 'react-image-crop'
 
 import { Step } from '@/features'
 import { ALLOWED_FORMATS, MAX_FILE_SIZE_FOR_POST, MAX_PHOTOS } from '@/shared/config'
@@ -6,14 +7,21 @@ import { CustomSlider } from '@/shared/ui'
 import { ErrorMessage } from '@/widgets'
 import Image from 'next/image'
 
-import 'slick-carousel/slick/slick-theme.css'
+import 'react-image-crop/dist/ReactCrop.css'
 import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 import styles from './carousel.module.scss'
 
 import { NextArrow, PrevArrow } from './carouselArrows'
 import { ImageControlButtons } from './imageControlButtons'
 
+type ImageData = {
+  aspectRatio: { label: string; value: null | number }
+  crop: Crop
+  src: string
+  zoom: number
+}
 type CarouselProps = {
   handleCloseModal: () => void
   photos: string[]
@@ -35,6 +43,35 @@ export const Carousel = ({
   const [activeIndex, setActiveIndex] = useState(0)
   const [indexArrow, setIndexArrow] = useState(0)
   const [error, setError] = useState<null | string>(null)
+  const [imagesData, setImagesData] = useState<ImageData[]>(
+    photos.map(photo => ({
+      aspectRatio: { label: 'Original', value: null },
+      crop: { height: 100, unit: '%', width: 100, x: 0, y: 0 },
+      src: photo,
+      zoom: 1,
+    }))
+  )
+
+  useEffect(() => {
+    setPhotos(imagesData.map(img => img.src))
+  }, [imagesData, setPhotos])
+
+  useEffect(() => {
+    const currentImage = imagesData[activeIndex]
+
+    if (currentImage && currentImage.aspectRatio.value) {
+      const { height, width } = currentImage.crop
+      const aspect = currentImage.aspectRatio.value
+      const newHeight = width / aspect
+      const newCrop = {
+        ...currentImage.crop,
+        aspect: aspect,
+        height: newHeight > height ? height : newHeight,
+      }
+
+      handleCropChange(newCrop)
+    }
+  }, [imagesData[activeIndex]?.aspectRatio, activeIndex])
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
@@ -43,7 +80,7 @@ export const Carousel = ({
       return
     }
 
-    const newImages: string[] = []
+    const newImages: ImageData[] = []
     let hasError = false
 
     if (photos.length > MAX_PHOTOS) {
@@ -67,16 +104,19 @@ export const Carousel = ({
         return
       }
 
-      newImages.push(URL.createObjectURL(file))
+      newImages.push({
+        aspectRatio: { label: 'Original', value: null },
+        crop: { height: 100, unit: '%', width: 100, x: 0, y: 0 },
+        src: URL.createObjectURL(file),
+        zoom: 1,
+      })
     })
 
     if (!hasError) {
       setError(null)
-      const updatedPhotos = [...photos, ...newImages]
-
-      setPhotos(updatedPhotos)
-      setActiveIndex(updatedPhotos.length - 1)
-      setIndexArrow(updatedPhotos.length - 1)
+      setImagesData(prev => [...prev, ...newImages])
+      setActiveIndex(imagesData.length + newImages.length - 1)
+      setIndexArrow(imagesData.length + newImages.length - 1)
 
       if (postPhoto) {
         handleCloseModal()
@@ -85,20 +125,60 @@ export const Carousel = ({
 
     event.target.value = ''
   }
+
+  const handleZoomChange = (newZoom: number) => {
+    setImagesData(prev =>
+      prev.map((img, index) => (index === activeIndex ? { ...img, zoom: newZoom } : img))
+    )
+  }
+
+  const handleAspectRatioChange = (newAspectRatio: { label: string; value: null | number }) => {
+    setImagesData(prev =>
+      prev.map((img, index) =>
+        index === activeIndex
+          ? {
+              ...img,
+              aspectRatio: newAspectRatio,
+              crop: { ...img.crop, aspect: newAspectRatio.value ?? undefined },
+            }
+          : img
+      )
+    )
+  }
+
+  const handleCropChange = (crop: Crop) => {
+    setImagesData(prev =>
+      prev.map((img, index) =>
+        index === activeIndex
+          ? { ...img, crop: { ...crop, aspect: img.aspectRatio.value ?? undefined } }
+          : img
+      )
+    )
+  }
+
   const classNames = {
     selectedImage: styles.selectedImage,
     slider: styles.slider,
   } as const
 
-  const carousel = photos.map((photo, index) => (
+  const carousel = imagesData.map((imageData, index) => (
     <div key={index}>
-      <Image
-        alt={`Image ${index + 1}`}
-        className={classNames.selectedImage}
-        height={432}
-        src={photo}
-        width={492}
-      />
+      <ReactCrop
+        aspect={imageData.aspectRatio.value ?? undefined}
+        crop={imageData.crop}
+        onChange={(_, percentCrop) => handleCropChange(percentCrop)}
+      >
+        <Image
+          alt={`Image ${index + 1}`}
+          className={styles.selectedImage}
+          height={432}
+          src={imageData.src}
+          style={{
+            transform: `scale(${imageData.zoom})`,
+          }}
+          width={492}
+        />
+      </ReactCrop>
     </div>
   ))
 
@@ -117,7 +197,15 @@ export const Carousel = ({
         {carousel}
       </CustomSlider>
       {error && <ErrorMessage error={error} />}
-      {step === 'cropping' && <ImageControlButtons handleFileChange={handleFileChange} />}
+      {step === 'cropping' && (
+        <ImageControlButtons
+          currentAspectRatio={imagesData[activeIndex].aspectRatio}
+          handleFileChange={handleFileChange}
+          onAspectRatioChange={handleAspectRatioChange}
+          onZoomChange={handleZoomChange}
+          zoom={imagesData[activeIndex].zoom}
+        />
+      )}
     </div>
   )
 }

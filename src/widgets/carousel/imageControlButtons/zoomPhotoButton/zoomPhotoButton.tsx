@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { MaximizeOutline } from '@/shared/assets'
 import { RangeSlider } from '@/shared/ui'
 import { Button, PopoverContent, PopoverRoot, PopoverTrigger } from '@photo-fiesta/ui-lib'
@@ -7,8 +5,11 @@ import clsx from 'clsx'
 
 import styles from './zoomPhotoButton.module.scss'
 
-export const ZoomPhotoButton = () => {
-  const [zoomValue, setZoomValue] = useState([50])
+type ZoomPhotoButtonProps = {
+  onZoomChange: (newZoom: number) => void
+  zoom: number
+}
+export const ZoomPhotoButton = ({ onZoomChange, zoom }: ZoomPhotoButtonProps) => {
   const classNames = {
     buttonBlock: clsx(styles.buttonBlock),
     icon: styles.icon,
@@ -29,7 +30,10 @@ export const ZoomPhotoButton = () => {
           </div>
         </PopoverTrigger>
         <PopoverContent align={'start'} className={classNames.zoomContent} side={'left'}>
-          <RangeSlider onValueChange={setZoomValue} value={zoomValue} />
+          <RangeSlider
+            onValueChange={newZoom => onZoomChange(newZoom[0] / 50)}
+            value={[zoom * 50]}
+          />
         </PopoverContent>
       </PopoverRoot>
     </div>
