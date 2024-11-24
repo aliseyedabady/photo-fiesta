@@ -16,12 +16,13 @@ import styles from './carousel.module.scss'
 import { NextArrow, PrevArrow } from './carouselArrows'
 import { ImageControlButtons } from './imageControlButtons'
 
-type ImageData = {
+export type ImageData = {
   aspectRatio: { label: string; value: null | number }
   crop: Crop
   src: string
   zoom: number
 }
+
 type CarouselProps = {
   handleCloseModal: () => void
   photos: string[]
@@ -29,10 +30,7 @@ type CarouselProps = {
   setPhotos: (image: string[]) => void
   step?: Step
 }
-/**
- * Carousel component for displaying images in a slider, with the ability to add more images.
- * It includes navigation arrows for browsing through images and logic for handling file input and image uploads.
- */
+
 export const Carousel = ({
   handleCloseModal,
   photos,
@@ -52,27 +50,59 @@ export const Carousel = ({
     }))
   )
 
+  // function for applying transformations to an image
+  const applyImageTransformations = async (imageData: ImageData) => {
+    const img = new window.Image()
+
+    img.src = imageData.src
+
+    await new Promise(resolve => {
+      img.onload = resolve
+    })
+
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+
+    if (!ctx) {
+      return imageData.src
+    }
+
+    // calculate scaling
+    const scaleX = img.naturalWidth / 100
+    const scaleY = img.naturalHeight / 100
+
+    canvas.width = imageData.crop.width * scaleX
+    canvas.height = imageData.crop.height * scaleY
+
+    ctx.drawImage(
+      img,
+      imageData.crop.x * scaleX,
+      imageData.crop.y * scaleY,
+      imageData.crop.width * scaleX,
+      imageData.crop.height * scaleY,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    )
+
+    return canvas.toDataURL('image/jpeg')
+  }
+
+  // update photos with transformed images
   useEffect(() => {
-    setPhotos(imagesData.map(img => img.src))
+    const updatePhotos = async () => {
+      const transformedPhotos = await Promise.all(
+        imagesData.map(img => applyImageTransformations(img))
+      )
+
+      setPhotos(transformedPhotos)
+    }
+
+    updatePhotos()
   }, [imagesData, setPhotos])
 
-  useEffect(() => {
-    const currentImage = imagesData[activeIndex]
-
-    if (currentImage && currentImage.aspectRatio.value) {
-      const { height, width } = currentImage.crop
-      const aspect = currentImage.aspectRatio.value
-      const newHeight = width / aspect
-      const newCrop = {
-        ...currentImage.crop,
-        aspect: aspect,
-        height: newHeight > height ? height : newHeight,
-      }
-
-      handleCropChange(newCrop)
-    }
-  }, [imagesData[activeIndex]?.aspectRatio, activeIndex])
-
+  // handle file change
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
 
@@ -83,15 +113,15 @@ export const Carousel = ({
     const newImages: ImageData[] = []
     let hasError = false
 
-    if (photos.length > MAX_PHOTOS) {
-      setError('You can only upload 10 photos')
+    if (photos.length + newImages.length > MAX_PHOTOS) {
+      setError('You can only upload up to 10 photos')
 
       return
     }
 
     Array.from(files).forEach(file => {
       if (!ALLOWED_FORMATS.includes(file.type)) {
-        setError('The format of the uploaded photo must be PNG and JPEG')
+        setError('The format of the uploaded photo must be PNG or JPEG')
         hasError = true
 
         return
@@ -148,18 +178,9 @@ export const Carousel = ({
 
   const handleCropChange = (crop: Crop) => {
     setImagesData(prev =>
-      prev.map((img, index) =>
-        index === activeIndex
-          ? { ...img, crop: { ...crop, aspect: img.aspectRatio.value ?? undefined } }
-          : img
-      )
+      prev.map((img, index) => (index === activeIndex ? { ...img, crop } : img))
     )
   }
-
-  const classNames = {
-    selectedImage: styles.selectedImage,
-    slider: styles.slider,
-  } as const
 
   const carousel = imagesData.map((imageData, index) => (
     <div key={index}>
@@ -182,9 +203,8 @@ export const Carousel = ({
     </div>
   ))
 
-  // TODO: logic for cropping step
   return (
-    <div className={classNames.slider}>
+    <div className={styles.slider}>
       <CustomSlider
         NextArrow={NextArrow}
         PrevArrow={PrevArrow}
@@ -196,7 +216,9 @@ export const Carousel = ({
       >
         {carousel}
       </CustomSlider>
+
       {error && <ErrorMessage error={error} />}
+
       {step === 'cropping' && (
         <ImageControlButtons
           currentAspectRatio={imagesData[activeIndex].aspectRatio}
