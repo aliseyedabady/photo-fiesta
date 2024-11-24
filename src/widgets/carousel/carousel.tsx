@@ -4,6 +4,7 @@ import ReactCrop, { Crop } from 'react-image-crop'
 import { Step } from '@/features'
 import { ALLOWED_FORMATS, MAX_FILE_SIZE_FOR_POST, MAX_PHOTOS } from '@/shared/config'
 import { CustomSlider } from '@/shared/ui'
+import { applyImageTransformations } from '@/shared/utils'
 import { ErrorMessage } from '@/widgets'
 import Image from 'next/image'
 
@@ -49,45 +50,6 @@ export const Carousel = ({
       zoom: 1,
     }))
   )
-
-  // function for applying transformations to an image
-  const applyImageTransformations = async (imageData: ImageData) => {
-    const img = new window.Image()
-
-    img.src = imageData.src
-
-    await new Promise(resolve => {
-      img.onload = resolve
-    })
-
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
-
-    if (!ctx) {
-      return imageData.src
-    }
-
-    // calculate scaling
-    const scaleX = img.naturalWidth / 100
-    const scaleY = img.naturalHeight / 100
-
-    canvas.width = imageData.crop.width * scaleX
-    canvas.height = imageData.crop.height * scaleY
-
-    ctx.drawImage(
-      img,
-      imageData.crop.x * scaleX,
-      imageData.crop.y * scaleY,
-      imageData.crop.width * scaleX,
-      imageData.crop.height * scaleY,
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    )
-
-    return canvas.toDataURL('image/jpeg')
-  }
 
   // update photos with transformed images
   useEffect(() => {
