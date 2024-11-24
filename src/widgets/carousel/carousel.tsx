@@ -146,11 +146,24 @@ export const Carousel = ({
 
   const carousel = imagesData.map((imageData, index) => (
     <div key={index}>
-      <ReactCrop
-        aspect={imageData.aspectRatio.value ?? undefined}
-        crop={imageData.crop}
-        onChange={(_, percentCrop) => handleCropChange(percentCrop)}
-      >
+      {step === 'cropping' ? (
+        <ReactCrop
+          aspect={imageData.aspectRatio.value ?? undefined}
+          crop={imageData.crop}
+          onChange={(_, percentCrop) => handleCropChange(percentCrop)}
+        >
+          <Image
+            alt={`Image ${index + 1}`}
+            className={styles.selectedImage}
+            height={432}
+            src={imageData.src}
+            style={{
+              transform: `scale(${imageData.zoom})`,
+            }}
+            width={492}
+          />
+        </ReactCrop>
+      ) : (
         <Image
           alt={`Image ${index + 1}`}
           className={styles.selectedImage}
@@ -161,7 +174,7 @@ export const Carousel = ({
           }}
           width={492}
         />
-      </ReactCrop>
+      )}
     </div>
   ))
 

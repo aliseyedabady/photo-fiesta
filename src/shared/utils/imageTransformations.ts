@@ -3,6 +3,7 @@ import { ImageData } from '@/widgets'
 export const applyImageTransformations = async (imageData: ImageData) => {
   const img = new window.Image()
 
+  img.crossOrigin = 'Anonymous'
   img.src = imageData.src
 
   await new Promise(resolve => {
