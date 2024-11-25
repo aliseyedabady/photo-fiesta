@@ -1,4 +1,53 @@
-.user{
+.postContainer {
+  position: relative;
+}
+
+.photo{
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.postInfo{
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--dark-700);
+
+  transition: transform 0.5s ease;
+}
+
+.user {
   display: flex;
   gap: 10px;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+
+  max-height: 72px;
+
+  text-overflow: ellipsis;
+
+  &.expanded {
+    -webkit-line-clamp: unset;
+    max-height: 1000px;
+  }
+}
+
+.trigger {
+  cursor: pointer;
+
+  margin-left: 8px;
+
+  font-size: 14px;
+  color: var(--accent-500);
+
+  background: none;
+  border: none;
 }

@@ -38,10 +38,10 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
   )
 
   const [modalData, setModalData] = useState<{
-    image: null | string | string[]
+    image: string[]
     isOpen: boolean
     postId: null | number
-  }>({ image: null, isOpen: false, postId: null })
+  }>({ image: [], isOpen: false, postId: null })
 
   // Holds the list of posts for rendering.
   const [posts, setPosts] = useState(initialPosts.items)
@@ -81,16 +81,20 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
       const post = posts.find(p => p.id === parsedPostId)
 
       if (post) {
-        setModalData({ image: post.images[0]?.url, isOpen: true, postId: parsedPostId })
+        setModalData({ image: post.images.map(img => img.url), isOpen: true, postId: parsedPostId })
       }
     }
   }, [postId, posts])
 
-  const handleOpenImageModal = (postId: number, imageUrl: string) => {
-    setModalData({ image: imageUrl, isOpen: true, postId })
+  const handleOpenImageModal = (postId: number, images: string[]) => {
+    setModalData({ image: images, isOpen: true, postId })
+    router.push({ pathname: router.pathname, query: { ...restQuery, postId } }, undefined, {
+      shallow: true,
+    })
   }
+
   const handleCloseModal = () => {
-    setModalData({ image: null, isOpen: false, postId: null })
+    setModalData({ image: [], isOpen: false, postId: null })
     router.push({ pathname: router.pathname, query: restQuery }, undefined, { shallow: true })
   }
 
@@ -129,7 +133,12 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
               className={classNames.image}
               height={228}
               key={post.id}
-              onClick={() => handleOpenImageModal(post.id, post.images[0]?.url)}
+              onClick={() =>
+                handleOpenImageModal(
+                  post.id,
+                  post.images.map(image => image.url)
+                )
+              }
               src={post.images[0]?.url}
               width={234}
             />

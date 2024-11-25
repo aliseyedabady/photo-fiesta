@@ -14,9 +14,8 @@ type ImagePostModalProps = {
   avatar: Avatar[] | undefined
   handleClose: () => void
   postId: number | undefined
-  // selectedImage: null | string
-  selectedImage: null | string | string[]
-  setSelectedImage: (image: null | string | string[]) => void
+  selectedImage: string[]
+  setSelectedImage: (image: string[]) => void
   userId: number | undefined
   viewMode?: boolean
 }
@@ -82,16 +81,12 @@ export const ImagePostModal = ({
       <Close onClick={() => confirmCloseModal.openModal('ConfirmClose')} />
     </div>
   )
+  const postImages = postById?.images.map(img => img.url) ?? []
 
   const ImageSection = () => (
     <section className={styles.imageSection}>
-      {selectedImage ? (
-        <Carousel
-          handleCloseModal={handleClose}
-          photos={typeof selectedImage === 'string' ? [selectedImage] : selectedImage}
-          // postPhoto
-          setPhotos={setSelectedImage}
-        />
+      {postById?.images?.length ? (
+        <Carousel handleCloseModal={handleClose} photos={postImages} setPhotos={setSelectedImage} />
       ) : (
         <Typography variant={'h2'}>No image selected</Typography>
       )}
@@ -133,13 +128,14 @@ export const ImagePostModal = ({
         <PostForm
           handleClose={handleClose}
           isEditing
-          photos={[]}
+          photos={selectedImage}
           postId={postId}
           setIsEditing={setIsEditing}
         />
       ) : (
         <Typography variant={'h3'}>{postById?.description}</Typography>
       )}
+      <div></div>
       {confirmCloseModal.isModalOpen && (
         <ConfirmationModal
           closeModal={confirmCloseModal.closeModal}
