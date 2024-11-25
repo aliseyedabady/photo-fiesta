@@ -6,17 +6,17 @@ import { ALLOWED_FORMATS, MAX_FILE_SIZE_FOR_POST, MAX_PHOTOS } from '@/shared/co
 import { CustomSlider } from '@/shared/ui'
 import { applyImageTransformations } from '@/shared/utils'
 import { ErrorMessage } from '@/widgets'
+import { v4 as uuidv4 } from 'uuid'
 
 import 'react-image-crop/dist/ReactCrop.css'
-import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 import styles from './carousel.module.scss'
 
 import { NextArrow, PrevArrow } from './carouselArrows'
+import { CarouselItem } from './carouselItem'
 import { ImageControlButtons } from './imageControlButtons'
-import { ImageRenderer } from './imageRenderer'
-
 export type ImageData = {
   aspectRatio: { label: string; value: null | number }
   crop: Crop
@@ -54,6 +54,8 @@ export const Carousel = ({
       zoom: 1,
     }))
   )
+
+  console.log(photos)
 
   // update photos with transformed images
   useEffect(() => {
@@ -103,24 +105,32 @@ export const Carousel = ({
         return
       }
 
-      newImages.push({
-        aspectRatio: { label: 'Original', value: null },
-        crop: { height: 100, unit: '%', width: 100, x: 0, y: 0 },
-        src: URL.createObjectURL(file),
-        zoom: 1,
-      })
-    })
+      const reader = new FileReader()
 
-    if (!hasError) {
-      setError(null)
-      setImagesData(prev => [...prev, ...newImages])
-      setActiveIndex(imagesData.length + newImages.length - 1)
-      setIndexArrow(imagesData.length + newImages.length - 1)
+      reader.onload = e => {
+        const imageSrc = e.target?.result as string
 
-      if (postPhoto) {
-        handleCloseModal()
+        newImages.push({
+          aspectRatio: { label: 'Original', value: null },
+          crop: { height: 100, unit: '%', width: 100, x: 0, y: 0 },
+          src: imageSrc,
+          zoom: 1,
+        })
+
+        if (!hasError) {
+          setError(null)
+          setImagesData(prev => [...prev, ...newImages])
+          setActiveIndex(imagesData.length + newImages.length - 1)
+          setIndexArrow(imagesData.length + newImages.length - 1)
+
+          if (postPhoto) {
+            handleCloseModal()
+          }
+        }
       }
-    }
+
+      reader.readAsDataURL(file)
+    })
 
     event.target.value = ''
   }
@@ -162,12 +172,15 @@ export const Carousel = ({
         setActiveIndex={setActiveIndex}
         setIndexArrow={setIndexArrow}
       >
-        <ImageRenderer
-          imageData={imagesData[activeIndex]}
-          index={activeIndex}
-          onCropChange={handleCropChange}
-          step={step}
-        />
+        {imagesData.map((imageData, index) => (
+          <CarouselItem
+            handleCropChange={handleCropChange}
+            imageData={imageData}
+            index={index}
+            key={uuidv4()}
+            step={step}
+          />
+        ))}
       </CustomSlider>
 
       {error && <ErrorMessage error={error} />}

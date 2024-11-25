@@ -61,6 +61,8 @@ export const ImagePostModal = ({
     handleClose()
   }
 
+  console.log(postById)
+
   const classNames = {
     body: styles.body,
     closeIcon: styles.closeIcon,
@@ -88,7 +90,7 @@ export const ImagePostModal = ({
       {selectedImage ? (
         <Carousel
           handleCloseModal={handleClose}
-          photos={typeof selectedImage === 'string' ? [selectedImage] : selectedImage}
+          photos={postById?.images.map(image => image.url) ?? ['']}
           // postPhoto
           setPhotos={setSelectedImage}
         />
