@@ -16,7 +16,7 @@ type ImageRendererProps = {
 /**
  * Renders an image with optional cropping capabilities.
  */
-const ImageRenderer = ({ imageData, index, onCropChange, step }: ImageRendererProps) => {
+export const ImageRenderer = ({ imageData, index, onCropChange, step }: ImageRendererProps) => {
   const commonProps = {
     alt: `Image ${index + 1}`,
     className: styles.selectedImage,
@@ -42,5 +42,3 @@ const ImageRenderer = ({ imageData, index, onCropChange, step }: ImageRendererPr
 
   return <Image {...commonProps} />
 }
-
-export default ImageRenderer

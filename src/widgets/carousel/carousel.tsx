@@ -15,7 +15,7 @@ import styles from './carousel.module.scss'
 
 import { NextArrow, PrevArrow } from './carouselArrows'
 import { ImageControlButtons } from './imageControlButtons'
-import ImageRenderer from './imageRenderer/imageRenderer'
+import { ImageRenderer } from './imageRenderer'
 
 export type ImageData = {
   aspectRatio: { label: string; value: null | number }
@@ -68,7 +68,10 @@ export const Carousel = ({
     updatePhotos()
   }, [imagesData, setPhotos])
 
-  // handle file change
+  /**
+   * Handles the file change event for the input element.
+   * Validates the format and size of the uploaded files and adds them to the image state.
+   */
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
 
