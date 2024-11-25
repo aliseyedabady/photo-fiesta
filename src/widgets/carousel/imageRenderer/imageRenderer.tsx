@@ -13,6 +13,9 @@ type ImageRendererProps = {
   step: string | undefined
 }
 
+/**
+ * Renders an image with optional cropping capabilities.
+ */
 const ImageRenderer = ({ imageData, index, onCropChange, step }: ImageRendererProps) => {
   const commonProps = {
     alt: `Image ${index + 1}`,

@@ -32,6 +32,10 @@ type CarouselProps = {
   step?: Step
 }
 
+/**
+ * Carousel component for displaying and editing a collection of images.
+ */
+
 export const Carousel = ({
   handleCloseModal,
   photos,

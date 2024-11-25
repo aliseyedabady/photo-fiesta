@@ -9,6 +9,11 @@ type ZoomPhotoButtonProps = {
   onZoomChange: (newZoom: number) => void
   zoom: number
 }
+
+/**
+ * ZoomPhotoButton component for adjusting the zoom level of a photo.
+ */
+
 export const ZoomPhotoButton = ({ onZoomChange, zoom }: ZoomPhotoButtonProps) => {
   const classNames = {
     buttonBlock: clsx(styles.buttonBlock),

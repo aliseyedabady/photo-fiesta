@@ -17,6 +17,9 @@ type ButtonsBlockProps = {
   zoom: number
 }
 
+/**
+ * ImageControlButtons component for managing image controls like adding photos, changing aspect ratio, and zooming.
+ */
 export const ImageControlButtons = ({
   currentAspectRatio,
   handleFileChange,

@@ -15,6 +15,10 @@ type ExpandPhotoButtonProps = {
   onAspectRatioChange: (newAspectRatio: { label: string; value: null | number }) => void
 }
 
+/**
+ * ExpandPhotoButton component for selecting different aspect ratios for a photo.
+ */
+
 export const ExpandPhotoButton = ({
   currentAspectRatio,
   onAspectRatioChange,
