@@ -55,8 +55,6 @@ export const Carousel = ({
     }))
   )
 
-  console.log(photos)
-
   // update photos with transformed images
   useEffect(() => {
     const updatePhotos = async () => {
@@ -105,32 +103,24 @@ export const Carousel = ({
         return
       }
 
-      const reader = new FileReader()
-
-      reader.onload = e => {
-        const imageSrc = e.target?.result as string
-
-        newImages.push({
-          aspectRatio: { label: 'Original', value: null },
-          crop: { height: 100, unit: '%', width: 100, x: 0, y: 0 },
-          src: imageSrc,
-          zoom: 1,
-        })
-
-        if (!hasError) {
-          setError(null)
-          setImagesData(prev => [...prev, ...newImages])
-          setActiveIndex(imagesData.length + newImages.length - 1)
-          setIndexArrow(imagesData.length + newImages.length - 1)
-
-          if (postPhoto) {
-            handleCloseModal()
-          }
-        }
-      }
-
-      reader.readAsDataURL(file)
+      newImages.push({
+        aspectRatio: { label: 'Original', value: null },
+        crop: { height: 100, unit: '%', width: 100, x: 0, y: 0 },
+        src: URL.createObjectURL(file),
+        zoom: 1,
+      })
     })
+
+    if (!hasError) {
+      setError(null)
+      setImagesData(prev => [...prev, ...newImages])
+      setActiveIndex(imagesData.length + newImages.length - 1)
+      setIndexArrow(imagesData.length + newImages.length - 1)
+
+      if (postPhoto) {
+        handleCloseModal()
+      }
+    }
 
     event.target.value = ''
   }
