@@ -4,7 +4,7 @@ import {GetPostResponse} from "@/features"
 import {ROUTES} from "@/shared/config"
 import {ProfileAvatar} from "@/shared/ui"
 import {useTimeAgo} from "@/shared/utils"
-import {Scroll, Typography} from "@photo-fiesta/ui-lib";
+import {Scroll, Typography} from "@photo-fiesta/ui-lib"
 import Image from "next/image"
 import Link from "next/link"
 import {useRouter} from "next/router"
@@ -18,7 +18,16 @@ export const PublicPost = ({post}: { post: GetPostResponse }) => {
     const router = useRouter()
     const timeAgo = useTimeAgo(post.createdAt)
 
+    /** Handles the logic for truncating and expanding long post descriptions.
+     *
+     * - If the post description exceeds 80 characters, it is truncated by default.
+     * - The user can toggle between viewing the full description and the truncated version by clicking a "Show More" or "Hide" button.
+     * - When expanded, the description is wrapped in a Scroll component for better readability in case of overflow.
+     */
     const [isExpanded, setIsExpanded] = useState(false)
+    const isDescriptionLong = post.description && post.description.length > 80
+    const truncatedText = post.description ? post.description.slice(0, 80) : ""
+    const textHeight = isExpanded ? 192 : 72
 
     const classNames = {
         description: styles.description,
@@ -42,20 +51,13 @@ export const PublicPost = ({post}: { post: GetPostResponse }) => {
         )
     }
 
-    const isDescriptionLong = post.description && post.description.length > 80
-    const truncatedText = post.description ? post.description.slice(0, 80) : ""
-
-    const textHeight = isExpanded ? 192 : 72
-    const imageBaseHeight = 240
-    const imageHeight = imageBaseHeight - (textHeight - 72);
-
     //TODO: add Carousel to publicPost
     return (
         <div className={classNames.postContainer} key={post.id}>
             <div className={classNames.photo}>
                 <Image
                     alt={'post image'}
-                    height={imageHeight}
+                    height={240 - (textHeight - 72)}
                     onClick={handlePostClick}
                     src={post.images[0]?.url}
                     style={{transition: 'height 0.5s ease'}}
@@ -69,22 +71,22 @@ export const PublicPost = ({post}: { post: GetPostResponse }) => {
                 </Link>
                 <Typography className={classNames.time} variant={"textSmall"}>{timeAgo}</Typography>
                 <div className={classNames.description}
-                     style={{ maxHeight: `${textHeight}px`}}>
+                     style={{maxHeight: `${textHeight}px`}}>
                     {isExpanded ? (
                         <Scroll>
                             {post.description}
                         </Scroll>
-                    ):(
+                    ) : (
                         <div>{truncatedText}</div>
                     )}
                 </div>
-                    {isDescriptionLong && (
-                        <span className={classNames.trigger}
-                                onClick={() => setIsExpanded(!isExpanded)}
-                        >
+                {isDescriptionLong && (
+                    <span className={classNames.trigger}
+                          onClick={() => setIsExpanded(!isExpanded)}
+                    >
                             {isExpanded ? 'Hide' : 'Show More'}
                         </span>
-                    )}
+                )}
             </div>
         </div>
     )
