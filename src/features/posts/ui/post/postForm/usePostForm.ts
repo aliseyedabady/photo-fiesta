@@ -17,7 +17,7 @@ const badRequestSchema = createBadRequestSchema(['description'])
 
 type UsePostFormProps = {
   handleClose: () => void
-  photos?: string[]
+  photos?: (File | string)[]
   postId?: number | undefined
   setIsEditing: (isEditing: boolean) => void
 }
@@ -46,27 +46,29 @@ export const usePostForm = ({ handleClose, photos, postId, setIsEditing }: UsePo
   /** Submit function for createPage description in post modal */
   const onSubmit = handleSubmit(async (data: FormValues) => {
     try {
-      if (photos && photos.length === 0) {
+      if (!photos || photos.length === 0) {
         toast.error('No image selected')
 
         return
       }
       const formData = new FormData()
 
-      if (photos) {
-        for (let i = 0; i < photos.length; i++) {
-          const image = photos[i]
-          const blob = await (await fetch(image)).blob()
+      await Promise.all(
+        photos.map(async (photo, i) => {
+          if (typeof photo === 'string') {
+            const blob = await (await fetch(photo)).blob()
 
-          formData.append('file', blob, `image_${i}.jpg`)
-        }
-      }
+            formData.append('file', blob, `image_${i}.jpg`)
+          } else if (photo instanceof File) {
+            formData.append('file', photo)
+          }
+        })
+      )
+
       const imageUploadData = await uploadImage(formData).unwrap()
 
       await createPost({
-        childrenMetadata: Array.isArray(imageUploadData)
-          ? imageUploadData.map(img => ({ uploadId: img.uploadId }))
-          : [{ uploadId: imageUploadData.images[0]?.uploadId }],
+        childrenMetadata: imageUploadData.images.map(img => ({ uploadId: img.uploadId })),
         description: data.description,
       })
 
