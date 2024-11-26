@@ -173,8 +173,8 @@ export const postsApi = baseApi.injectEndpoints({
      */
     uploadPostImage: builder.mutation<PostsImages, FormData>({
       invalidatesTags: ['Posts'],
-      query: body => ({
-        body: body,
+      query: (formData: FormData) => ({
+        body: formData,
         method: POST,
         url: UPLOAD_POST_IMAGE,
       }),
