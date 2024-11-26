@@ -155,8 +155,8 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
             avatar={avatar}
             handleClose={handleCloseModal}
             postId={modalData.postId}
-            selectedImage={modalData.images}
-            setSelectedImage={image => setModalData(prev => ({ ...prev, image }))}
+            selectedImages={modalData.images}
+            setSelectedImages={images => setModalData(prev => ({ ...prev, images }))}
             userId={userId}
             viewMode
           />

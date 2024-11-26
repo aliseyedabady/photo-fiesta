@@ -21,12 +21,13 @@ export const PublicPost = ({post}: { post: GetPostResponse }) => {
     const [isExpanded, setIsExpanded] = useState(false)
 
     const classNames = {
-        description: `${styles.description} ${isExpanded ? styles.expanded : styles.collapsed}`,
+        description: styles.description,
         photo: styles.photo,
         postContainer: styles.postContainer,
         postInfo: styles.postInfo,
+        time: styles.time,
         trigger: styles.trigger,
-        user: styles.user,
+        user: styles.user
     } as const
 
     /** Handles redirection to the user's profile page when a post image is clicked. */
@@ -44,7 +45,7 @@ export const PublicPost = ({post}: { post: GetPostResponse }) => {
     const isDescriptionLong = post.description && post.description.length > 80
     const truncatedText = post.description ? post.description.slice(0, 80) : ""
 
-    const textHeight = isExpanded ? 200 : 72
+    const textHeight = isExpanded ? 192 : 72
     const imageBaseHeight = 240
     const imageHeight = imageBaseHeight - (textHeight - 72);
 
@@ -66,8 +67,8 @@ export const PublicPost = ({post}: { post: GetPostResponse }) => {
                     <ProfileAvatar avatarOwner={post.avatarOwner}/>
                     <Typography variant={'h3'}>{post.userName}</Typography>
                 </Link>
-                <Typography className={styles.time} variant={"textSmall"}>{timeAgo}</Typography>
-                <div className={styles.description}
+                <Typography className={classNames.time} variant={"textSmall"}>{timeAgo}</Typography>
+                <div className={classNames.description}
                      style={{ maxHeight: `${textHeight}px`}}>
                     {isExpanded ? (
                         <Scroll>

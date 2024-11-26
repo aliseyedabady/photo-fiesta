@@ -14,8 +14,8 @@ type ImagePostModalProps = {
   avatar: Avatar[] | undefined
   handleClose: () => void
   postId: number | undefined
-  selectedImage: string[]
-  setSelectedImage: (image: string[]) => void
+  selectedImages: string[]
+  setSelectedImages: (images: string[]) => void
   userId: number | undefined
   viewMode?: boolean
 }
@@ -38,8 +38,8 @@ export const ImagePostModal = ({
   avatar,
   handleClose,
   postId,
-  selectedImage,
-  setSelectedImage,
+  selectedImages,
+  setSelectedImages,
   userId,
   viewMode = false,
 }: ImagePostModalProps) => {
@@ -86,7 +86,11 @@ export const ImagePostModal = ({
   const ImageSection = () => (
     <section className={styles.imageSection}>
       {postById?.images?.length ? (
-        <Carousel handleCloseModal={handleClose} photos={postImages} setPhotos={setSelectedImage} />
+        <Carousel
+          handleCloseModal={handleClose}
+          photos={postImages}
+          setPhotos={setSelectedImages}
+        />
       ) : (
         <Typography variant={'h2'}>No image selected</Typography>
       )}
@@ -123,12 +127,11 @@ export const ImagePostModal = ({
 
   const PostDetails = () => (
     <div className={styles.postDetails}>
-      {/*TODO: add photos*/}
       {isEditing ? (
         <PostForm
           handleClose={handleClose}
           isEditing
-          photos={selectedImage}
+          photos={selectedImages}
           postId={postId}
           setIsEditing={setIsEditing}
         />

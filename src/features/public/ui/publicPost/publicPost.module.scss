@@ -31,12 +31,15 @@
   display: flex;
   gap: 10px;
   align-items: center;
+
   margin: 10px 0;
+
+  text-decoration: none;
 }
 
 .description {
   overflow: hidden;
-  display: -webkit-box;
+  display: flex;
   text-overflow: ellipsis;
   transition: max-height 0.5s ease;
 
