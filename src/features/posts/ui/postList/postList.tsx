@@ -91,7 +91,7 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
   }, [postId, posts])
 
   const handleOpenImageModal = (postId: number, images: string[]) => {
-    setModalData({ images: images, isOpen: true, postId })
+    setModalData({ images, isOpen: true, postId })
     router.push({ pathname: router.pathname, query: { ...restQuery, postId } }, undefined, {
       shallow: true,
     })
@@ -100,6 +100,10 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
   const handleCloseModal = () => {
     setModalData({ images: [], isOpen: false, postId: null })
     router.push({ pathname: router.pathname, query: restQuery }, undefined, { shallow: true })
+  }
+
+  const getImageClickHandler = (postId: number, images: string[]) => () => {
+    handleOpenImageModal(postId, images)
   }
 
   /** Fetches and appends additional posts when the user scrolls to the bottom. */
@@ -137,12 +141,10 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
               className={classNames.image}
               height={228}
               key={post.id}
-              onClick={() =>
-                handleOpenImageModal(
-                  post.id,
-                  post.images.map(image => image.url)
-                )
-              }
+              onClick={getImageClickHandler(
+                post.id,
+                post.images.map(image => image.url)
+              )}
               src={post.images[0]?.url}
               width={234}
             />

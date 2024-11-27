@@ -2,6 +2,7 @@
 
 .postContainer {
   position: relative;
+  width: 100%;
   max-width: 234px;
 }
 
@@ -56,8 +57,4 @@
 
   background: none;
   border: none;
-
-  @include font(var(--font-size-s),
-          var(--line-height-m),
-          var(--font-weight-regular));
 }

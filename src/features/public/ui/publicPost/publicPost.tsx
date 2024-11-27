@@ -81,11 +81,11 @@ export const PublicPost = ({post}: { post: GetPostResponse }) => {
                     )}
                 </div>
                 {isDescriptionLong && (
-                    <span className={classNames.trigger}
-                          onClick={() => setIsExpanded(!isExpanded)}
+                    <Typography className={classNames.trigger} onClick={() => setIsExpanded(!isExpanded)}
+                          variant={'text14'}
                     >
                             {isExpanded ? 'Hide' : 'Show More'}
-                        </span>
+                        </Typography>
                 )}
             </div>
         </div>
