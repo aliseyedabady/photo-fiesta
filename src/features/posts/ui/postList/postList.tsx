@@ -38,10 +38,10 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
   )
 
   const [modalData, setModalData] = useState<{
-    image: null | string | string[]
+    images: string[]
     isOpen: boolean
     postId: null | number
-  }>({ image: null, isOpen: false, postId: null })
+  }>({ images: [], isOpen: false, postId: null })
 
   // Holds the list of posts for rendering.
   const [posts, setPosts] = useState(initialPosts.items)
@@ -81,17 +81,29 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
       const post = posts.find(p => p.id === parsedPostId)
 
       if (post) {
-        setModalData({ image: post.images[0]?.url, isOpen: true, postId: parsedPostId })
+        setModalData({
+          images: post.images.map(img => img.url),
+          isOpen: true,
+          postId: parsedPostId,
+        })
       }
     }
   }, [postId, posts])
 
-  const handleOpenImageModal = (postId: number, imageUrl: string) => {
-    setModalData({ image: imageUrl, isOpen: true, postId })
+  const handleOpenImageModal = (postId: number, images: string[]) => {
+    setModalData({ images, isOpen: true, postId })
+    router.push({ pathname: router.pathname, query: { ...restQuery, postId } }, undefined, {
+      shallow: true,
+    })
   }
+
   const handleCloseModal = () => {
-    setModalData({ image: null, isOpen: false, postId: null })
+    setModalData({ images: [], isOpen: false, postId: null })
     router.push({ pathname: router.pathname, query: restQuery }, undefined, { shallow: true })
+  }
+
+  const getImageClickHandler = (postId: number, images: string[]) => () => {
+    handleOpenImageModal(postId, images)
   }
 
   /** Fetches and appends additional posts when the user scrolls to the bottom. */
@@ -129,21 +141,24 @@ export const PostList = ({ avatar, initialPosts, userId }: PostListProps) => {
               className={classNames.image}
               height={228}
               key={post.id}
-              onClick={() => handleOpenImageModal(post.id, post.images[0]?.url)}
+              onClick={getImageClickHandler(
+                post.id,
+                post.images.map(image => image.url)
+              )}
               src={post.images[0]?.url}
               width={234}
             />
           ))}
         </div>
       </InfiniteScroll>
-      {modalData.isOpen && modalData.postId && modalData.image && (
+      {modalData.isOpen && modalData.postId && modalData.images && (
         <div className={styles.postModal}>
           <ImagePostModal
             avatar={avatar}
             handleClose={handleCloseModal}
             postId={modalData.postId}
-            selectedImage={modalData.image}
-            setSelectedImage={image => setModalData(prev => ({ ...prev, image }))}
+            selectedImages={modalData.images}
+            setSelectedImages={images => setModalData(prev => ({ ...prev, images }))}
             userId={userId}
             viewMode
           />

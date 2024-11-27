@@ -14,9 +14,8 @@ type ImagePostModalProps = {
   avatar: Avatar[] | undefined
   handleClose: () => void
   postId: number | undefined
-  // selectedImage: null | string
-  selectedImage: null | string | string[]
-  setSelectedImage: (image: null | string | string[]) => void
+  selectedImages: string[]
+  setSelectedImages: (images: string[]) => void
   userId: number | undefined
   viewMode?: boolean
 }
@@ -39,8 +38,8 @@ export const ImagePostModal = ({
   avatar,
   handleClose,
   postId,
-  selectedImage,
-  setSelectedImage,
+  selectedImages,
+  setSelectedImages,
   userId,
   viewMode = false,
 }: ImagePostModalProps) => {
@@ -50,7 +49,10 @@ export const ImagePostModal = ({
   const confirmDeleteModal = useModal()
   const { getStepTitle } = useChangeTitle({ isEditing, viewMode })
 
-  const { data: postById } = useGetPostByIdQuery({ postId }, { skip: !postId })
+  const { data: postById } = useGetPostByIdQuery(
+    { postId },
+    { refetchOnMountOrArgChange: true, skip: !postId }
+  )
   const [deletePost] = useDeletePostMutation()
 
   /** Delete post function */
@@ -60,8 +62,6 @@ export const ImagePostModal = ({
     }
     handleClose()
   }
-
-  console.log(postById)
 
   const classNames = {
     body: styles.body,
@@ -84,15 +84,15 @@ export const ImagePostModal = ({
       <Close onClick={() => confirmCloseModal.openModal('ConfirmClose')} />
     </div>
   )
+  const postImages = postById?.images.map(img => img.url) ?? []
 
   const ImageSection = () => (
     <section className={styles.imageSection}>
-      {selectedImage ? (
+      {postById?.images?.length ? (
         <Carousel
           handleCloseModal={handleClose}
-          photos={postById?.images.map(image => image.url) ?? ['']}
-          // postPhoto
-          setPhotos={setSelectedImage}
+          photos={postImages}
+          setPhotos={setSelectedImages}
         />
       ) : (
         <Typography variant={'h2'}>No image selected</Typography>
@@ -130,18 +130,18 @@ export const ImagePostModal = ({
 
   const PostDetails = () => (
     <div className={styles.postDetails}>
-      {/*TODO: add photos*/}
       {isEditing ? (
         <PostForm
           handleClose={handleClose}
           isEditing
-          photos={[]}
+          photos={selectedImages}
           postId={postId}
           setIsEditing={setIsEditing}
         />
       ) : (
         <Typography variant={'h3'}>{postById?.description}</Typography>
       )}
+      <div></div>
       {confirmCloseModal.isModalOpen && (
         <ConfirmationModal
           closeModal={confirmCloseModal.closeModal}

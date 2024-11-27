@@ -72,7 +72,7 @@ export const Profile = ({ className, isOwnProfile, posts, profileInfo }: Profile
   return (
     <div className={classNames.wrapper}>
       <div className={clsx(classNames.root, className)}>
-        <ProfileAvatar avatarOwner={profileInfo?.avatars[0]?.url} className={classNames.avatar} />
+        <ProfileAvatar avatarOwner={profileInfo?.avatars[0]?.url} height={204} width={204} />
         <div className={classNames.info}>
           <div className={classNames.title}>
             <Typography variant={'h1'}>{profileInfo?.userName}</Typography>
