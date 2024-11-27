@@ -61,6 +61,7 @@ export const usePostForm = ({ handleClose, photos, postId, setIsEditing }: UsePo
           formData.append('file', blob, `image_${i}.jpg`)
         }
       }
+
       const imageUploadData = await uploadImage(formData).unwrap()
 
       await createPost({
