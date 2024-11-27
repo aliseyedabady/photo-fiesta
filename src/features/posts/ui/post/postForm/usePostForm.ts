@@ -10,6 +10,7 @@ import {
 } from '@/features'
 import { createBadRequestSchema, handleErrorResponse, postDescriptionSchema } from '@/shared/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/router'
 import { z } from 'zod'
 
 type FormValues = z.infer<typeof postDescriptionSchema>
@@ -27,7 +28,7 @@ export const usePostForm = ({ handleClose, photos, postId, setIsEditing }: UsePo
   const [uploadImage] = useUploadPostImageMutation()
   const [updateDescription] = useUpdatePostMutation()
   const { data: post } = useGetPostByIdQuery({ postId }, { skip: !postId })
-
+  const router = useRouter()
   const [isOpenModal, setIsOpenModal] = useState<boolean>(true)
 
   const [charCount, setCharCount] = useState(0)
@@ -73,6 +74,7 @@ export const usePostForm = ({ handleClose, photos, postId, setIsEditing }: UsePo
       })
 
       handleClose()
+      await router.replace(router.asPath)
       setIsOpenModal(false)
     } catch (error) {
       console.error('Error during post creation', error)

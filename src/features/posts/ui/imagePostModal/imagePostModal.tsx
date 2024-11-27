@@ -49,7 +49,10 @@ export const ImagePostModal = ({
   const confirmDeleteModal = useModal()
   const { getStepTitle } = useChangeTitle({ isEditing, viewMode })
 
-  const { data: postById } = useGetPostByIdQuery({ postId }, { skip: !postId })
+  const { data: postById } = useGetPostByIdQuery(
+    { postId },
+    { refetchOnMountOrArgChange: true, skip: !postId }
+  )
   const [deletePost] = useDeletePostMutation()
 
   /** Delete post function */
