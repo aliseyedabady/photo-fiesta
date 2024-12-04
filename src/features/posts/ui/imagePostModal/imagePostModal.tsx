@@ -6,6 +6,7 @@ import { PopoverContent, PopoverRoot, PopoverTrigger, ProfileAvatar } from '@/sh
 import { useChangeTitle, useModal } from '@/shared/utils'
 import { Carousel, ConfirmationModal } from '@/widgets'
 import { Button, Typography } from '@photo-fiesta/ui-lib'
+
 import clsx from 'clsx'
 
 import styles from './imagePostModal.module.scss'
@@ -49,7 +50,7 @@ export const ImagePostModal = ({
   const confirmDeleteModal = useModal()
   const { getStepTitle } = useChangeTitle({ isEditing, viewMode })
 
-  const { data: postById } = useGetPostByIdQuery(
+  const { data: postById, isLoading } = useGetPostByIdQuery(
     { postId },
     { refetchOnMountOrArgChange: true, skip: !postId }
   )
@@ -165,16 +166,20 @@ export const ImagePostModal = ({
         ) : (
           <Header />
         )}
-        <div className={styles.body}>
-          <ImageSection />
-          <section className={styles.viewMode}>
-            <div className={styles.info}>
-              <ProfileInfo />
-              <PopoverActions />
-            </div>
-            <PostDetails />
-          </section>
-        </div>
+        {isLoading ? (
+          <div className={styles.body}>loading...</div>
+        ) : (
+          <div className={styles.body}>
+            <ImageSection />
+            <section className={styles.viewMode}>
+              <div className={styles.info}>
+                <ProfileInfo />
+                <PopoverActions />
+              </div>
+              <PostDetails />
+            </section>
+          </div>
+        )}
       </div>
 
       {confirmDeleteModal.isModalOpen && (
